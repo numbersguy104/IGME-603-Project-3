@@ -36,6 +36,16 @@ using UnityEngine;
         public float clumpScale;
         public List<ClumpParameters> clumpParameters;
 
+        [Header("Wind")]
+        [SerializeField] private Texture2D localWindTex;
+        [Range(0.0f, 1.0f)]
+        [SerializeField] private float localWindStrength = 0.5f;
+        [SerializeField] private float localWindScale = 0.01f;
+        [SerializeField] private float localWindSpeed = 0.1f;
+        [Range(0.0f, 1.0f)]
+        [SerializeField] private float localWindRotateAmount = 0.3f;
+
+
         private static readonly int
             grassBladesBufferID = Shader.PropertyToID("_GrassBlades"),
             resolutionID = Shader.PropertyToID("_Resolution"),
@@ -56,7 +66,13 @@ using UnityEngine;
             clumpParametersID = Shader.PropertyToID("_ClumpParameters"),
             numClumpParametersID = Shader.PropertyToID("_NumClumpParameters"),
             clumpTexID = Shader.PropertyToID("ClumpTex"),
-            clumpScaleID = Shader.PropertyToID("_ClumpScale");
+            clumpScaleID = Shader.PropertyToID("_ClumpScale"),
+            LocalWindTexID = Shader.PropertyToID("_LocalWindTex"),
+            LocalWindScaleID = Shader.PropertyToID("_LocalWindScale"),
+            LocalWindSpeedID = Shader.PropertyToID("_LocalWindSpeed"),
+            LocalWindStrengthID = Shader.PropertyToID("_LocalWindStrength"),
+            LocalWindRotateAmountID = Shader.PropertyToID("_LocalWindRotateAmount"),
+            TimeID = Shader.PropertyToID("_Time");
 
         private ComputeBuffer grassBladesBuffer;
         private ComputeBuffer meshTrianglesBuffer;
@@ -178,18 +194,18 @@ using UnityEngine;
 
             computeShader.Dispatch(0, threadGroupsX, threadGroupsZ, 1);
         }
-        
+
         private void UpdateClumpParametersBuffer()
         {
-           if (clumpParameters.Count > 0)
-           {
-               if (clumpParametersArray == null || clumpParametersArray.Length != clumpParameters.Count)
-               {
-                   clumpParametersArray = new ClumpParameters[clumpParameters.Count];
-               }
-               clumpParameters.CopyTo(clumpParametersArray);
-               clumpParametersBuffer.SetData(clumpParametersArray);
-           }
+            if (clumpParameters.Count > 0)
+            {
+                if (clumpParametersArray == null || clumpParametersArray.Length != clumpParameters.Count)
+                {
+                    clumpParametersArray = new ClumpParameters[clumpParameters.Count];
+                }
+                clumpParameters.CopyTo(clumpParametersArray);
+                clumpParametersBuffer.SetData(clumpParametersArray);
+            }
         }
 
         private void SetupComputeShader()
@@ -228,6 +244,13 @@ using UnityEngine;
             computeShader.SetBuffer(0, clumpParametersID, clumpParametersBuffer);
             computeShader.SetTexture(0, clumpTexID, clumpTexture);
             computeShader.SetFloat(clumpScaleID, clumpScale);
+
+            computeShader.SetTexture(0, LocalWindTexID, localWindTex);
+            computeShader.SetFloat(LocalWindScaleID, localWindScale);
+            computeShader.SetFloat(LocalWindSpeedID, localWindSpeed);
+            computeShader.SetFloat(LocalWindStrengthID, localWindStrength);
+            computeShader.SetFloat(LocalWindRotateAmountID, localWindRotateAmount);
+            computeShader.SetFloat(TimeID, Time.time);
         }
 
         private void RenderGrass()
@@ -260,11 +283,11 @@ using UnityEngine;
 
         private void DestroyClumpTexture()
         {
-           if (clumpTexture != null)
-           {
-               Destroy(clumpTexture);
-               clumpTexture = null;
-           }
+            if (clumpTexture != null)
+            {
+                Destroy(clumpTexture);
+                clumpTexture = null;
+            }
         }
 
     }
