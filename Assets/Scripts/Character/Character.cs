@@ -5,7 +5,7 @@ using UnityEngine;
 public class Character
 {
     #region Attributes
-    protected float health;
+    public float health;
     public float CurrentHealth => health;
     protected float maxHealth;
     public float MaxHealth => maxHealth;

@@ -21,7 +21,7 @@ public class Status
         turnsRemained += extraTurns;
     }
 
-    public virtual void OnNotifiedTurnEnd()
+    public virtual void NotifyTurnEnd()
     {
         turnsRemained--;
         if (turnsRemained == 0)

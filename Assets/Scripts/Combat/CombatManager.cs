@@ -30,15 +30,30 @@ public class CombatManager : SingletonBehavior<CombatManager>
     void SampleCombat()
     {
         PlayerCharacter player = new PlayerCharacter(Resources.Load<PlayerData>("Test/Player"));
+        player.health = 50f;
         Enemy enemy = new Enemy(Resources.Load<EnemyData>("Test/Enemy"));
         StartCombat(new List<PlayerCharacter>{player}, new List<Enemy>{enemy}, false); 
     }
 
     void StartCombat(List<PlayerCharacter> playerCharacters, List<Enemy> enemies, bool isFirstStrike)
     {
+        GridManager.Instance.Init(9,9);
+        
         this.playerCharacters = playerCharacters;
         this.enemies = enemies;
         
+        CreateCombatCharacters();
+        CreateEntities();
+        
+        PlayerController_Combat.Instance.Init(playerCharacters_Combat);
+        CombatUI.Instance.Init(playerCharacters_Combat, enemies_Combat);
+        
+        OnCombatStart?.Invoke();
+        StartCoroutine(Turns());
+    }
+
+    public void CreateCombatCharacters()
+    {
         // Create combat instance for each character
         foreach (var player in playerCharacters)
         {
@@ -53,12 +68,21 @@ public class CombatManager : SingletonBehavior<CombatManager>
             enemies_Combat.Add(enemy_combat);
             enemy_combat.OnCharacterDeath += OnNotifiedCharacterDeath;
         }
+    }
+
+    public void CreateEntities()
+    {
+        // Temp Combat Configuration for Week-1 Test
+        CombatEntity playerEntity = Instantiate(Resources.Load<GameObject>("Test/Player")).GetComponent<CombatEntity>();
+        playerCharacters_Combat[0].entity = playerEntity;
+        playerEntity.character = playerCharacters_Combat[0];
+        GridManager.Instance.Add(playerEntity.gameObject, 4, 0, true);
         
-        PlayerController_Combat.Instance.Init(playerCharacters_Combat);
-        CombatUI.Instance.Init();
-        
-        OnCombatStart?.Invoke();
-        StartCoroutine(Turns());
+        CombatEntity enemyEntity = Instantiate(Resources.Load<GameObject>("Test/Enemy")).GetComponent<CombatEntity>();
+        enemies_Combat[0].entity = enemyEntity;
+        enemyEntity.character = enemies_Combat[0];
+        GridManager.Instance.Add(enemyEntity.gameObject, 4, 8, true);
+        //
     }
 
     IEnumerator Turns()

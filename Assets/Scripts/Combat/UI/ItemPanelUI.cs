@@ -16,11 +16,12 @@ public class ItemPanelUI : MonoBehaviour
     public void UpdateItemList(List<Item> itemList)
     {
         this.itemList = itemList;
-        Transform itemButtons = transform.Find("Items");
-        for (int i = 0; i < itemButtons.childCount; i++)
-            Destroy(itemButtons.GetChild(i).gameObject);
-        foreach (Item item in itemList)
-            CreateButton(item);
+        // TODO:
+        // Transform itemButtons = transform.Find("Items");
+        // for (int i = 0; i < itemButtons.childCount; i++)
+        //     Destroy(itemButtons.GetChild(i).gameObject);
+        // foreach (Item item in itemList)
+        //     CreateButton(item);
     }
 
     public void CreateButton(Item item)

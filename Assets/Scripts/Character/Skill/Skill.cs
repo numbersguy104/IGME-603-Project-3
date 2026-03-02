@@ -16,7 +16,9 @@ public class Skill
         maxCooldown = skillData.cooldown;
     }
 
-    public virtual void Execute(Character_Combat instigator) { }
+    public virtual void Execute(Character_Combat instigator)
+    {
+    }
 
     public void NotifyTurnEnd()
     {

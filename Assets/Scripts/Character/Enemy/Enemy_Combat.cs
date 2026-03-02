@@ -2,6 +2,7 @@ public class Enemy_Combat: Character_Combat
 {
     public Enemy_Combat(Character data) : base(data)
     {
+        team = Team.Enemy;
         CombatManager.Instance.OnEnemyTurnEnd?.AddListener(OnNotifiedTurnEnd);
     }
 

@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using Utility;
 
 //Manage the grid system for combat.
 //Documentation: https://docs.google.com/document/d/1HdIbCRw4Lso9VstncTPQ-jHqG9BYdMHayuyans9pvLk/edit?usp=sharing
-public class GridManager : MonoBehaviour
+public class GridManager : SingletonBehavior<GridManager>
 {
     private GameObject[,] grid;
     [SerializeField] private GameObject tilePrefab;
@@ -12,7 +13,7 @@ public class GridManager : MonoBehaviour
     //Usually Init() should be called externally for customizable grid size
     private void Start()
     {
-        Init(10, 10);
+        // Init(10, 10);
     }
 
     //Initialize the grid
@@ -216,5 +217,23 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
+    }
+    
+    // Temporary Method for Week-1 Test. Feel free to Modify -- Shaolin
+    public void ApplyDamageToCells(Character_Combat instigator, Vector2Int[] range, float dmg, Action<Character_Combat, Character_Combat, float> onDamageDealt = null)
+    {
+        for(int x = 0; x < grid.GetLength(0); x++)
+            for(int y = 0; y < grid.GetLength(1); y++)
+            {
+                if (GetAt(x, y)!= null && GetAt(x, y).TryGetComponent<CombatEntity>(out var entity))
+                {
+                    Character_Combat character = entity.character;
+                    if (character.team != instigator.team)
+                    {
+                        character.TakeDamage(dmg);
+                        onDamageDealt?.Invoke(instigator, character, dmg);
+                    }
+                }
+            }
     }
 }

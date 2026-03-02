@@ -25,4 +25,4 @@ MonoBehaviour:
     - rid: 960499334357713000
       type: {class: HealingPotionParam, ns: , asm: Assembly-CSharp}
       data:
-        healingAmount: 50
+        healingAmount: 30

@@ -27,12 +27,12 @@ MonoBehaviour:
       data:
         ATKRatio: 1
         range:
-        - {x: -2, y: 2}
-        - {x: -1, y: 1}
         - {x: 0, y: 1}
         - {x: 0, y: 2}
-        - {x: 1, y: 1}
-        - {x: 2, y: 2}
+        - {x: 0, y: 3}
+        - {x: 0, y: 4}
+        - {x: 0, y: 5}
+        - {x: 0, y: 6}
         statusOnHit:
         - status: {fileID: 11400000, guid: eb322da60ca9afe4eab2581d930df2ff, type: 2}
           turns: 2

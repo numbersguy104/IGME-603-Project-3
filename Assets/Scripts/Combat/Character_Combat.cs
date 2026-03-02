@@ -4,6 +4,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum Team
+{
+    Player,
+    Enemy
+}
 public class Character_Combat
 {
     #region Attributes
@@ -19,8 +24,12 @@ public class Character_Combat
     public float ATK;
     public float Def;
     
-    public List<Vector2> attackRange;
+    public List<Vector2Int> attackRange;
     #endregion
+
+    public Team team;
+    
+    public CombatEntity entity;
     
     public List<Skill> skills;
     public List<Status> statuses;
@@ -28,6 +37,7 @@ public class Character_Combat
     public Action OnTurnEnd;
     public Action<Character_Combat> OnCharacterDeath;
     public Action OnTakeDamage;
+    public Action OnStatusUpdated;
     
     public Character_Combat(Character character)
     {
@@ -41,8 +51,21 @@ public class Character_Combat
         skills =  new List<Skill>();
         foreach (var skillData in character.skillSet)
         {
-            Skill skill = new Skill(skillData);
-            skills.Add(skill);
+            Skill skill = null;
+            switch (skillData.skillType)
+            {
+                case SkillType.Attack: 
+                    skill = new AttackSkill(skillData);
+                    break;
+                case SkillType.Defense:
+                    skill = new Defense(skillData);
+                    break;
+                case SkillType.Buff:
+                    skill = new BuffSkill(skillData);
+                    break;
+            }
+            if(skill != null)
+                skills.Add(skill);
         }
         
         statuses = new List<Status>();
@@ -54,24 +77,22 @@ public class Character_Combat
         {
             skill.NotifyTurnEnd();
         }
-        
-        OnTurnEnd?.Invoke();
-    }
-    
-    public virtual void Attack()
-    {
-        
-    }
 
-    public virtual void UseSkill()
-    {
+        foreach (var status in statuses)
+        {
+            status.NotifyTurnEnd();
+        }
         
+        OnStatusUpdated?.Invoke();
+        OnTurnEnd?.Invoke();
     }
     
     public void Healed(float amount)
     {
         health = Mathf.Min(health + amount, maxHealth);
         // VFX?
+        
+        OnTakeDamage?.Invoke(); // Warning: Used For Trigger UI Update. Maybe at risk
     }
 
     public void TakeDamage(float amount)
@@ -101,6 +122,21 @@ public class Character_Combat
             Status newStatus = StatusFactory.GetStatus(statusData.statusName, this, turns);
             statuses.Add(newStatus);
         }
+        
+        OnStatusUpdated?.Invoke();
     }
 
+    public Vector2Int[] TransformRangeToWorld(Vector2Int[] coors)
+    {
+        Vector2Int[] result = new Vector2Int[coors.Length];
+        Vector2Int currentCoor = GridManager.Instance.PosToGrid(entity.transform.position);
+        int index = 0;
+        foreach (var coordinate in coors)
+        {
+            result[index] = coordinate + currentCoor;
+            index++;
+        }
+
+        return result;
+    }
 }
