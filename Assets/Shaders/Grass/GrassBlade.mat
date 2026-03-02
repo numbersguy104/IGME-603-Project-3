@@ -61,11 +61,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassAlbedo:
-        m_Texture: {fileID: 2800000, guid: e91d38749424649338daebb29a4db0f2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6ed848b78d32b6e46933ffda8ff8d89b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassGloss:
-        m_Texture: {fileID: 2800000, guid: f3dc2619fc3364740b27ddf6febb6f0d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 50e09dcb0188af84883f41452843a51d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -125,11 +125,12 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _PushTipForward: 0.52
     - _PushTipOscillationForward: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SideBend: -0.11
-    - _SinOffsetRange: 1
+    - _SinOffsetRange: 5.04
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -138,9 +139,9 @@ Material:
     - _Surface: 0
     - _TaperAmount: 0.78
     - _Tilt: 0.87
-    - _WaveAmplitude: 0
+    - _WaveAmplitude: 1
     - _WavePower: 1
-    - _WaveSpeed: 1
+    - _WaveSpeed: 5
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _p1Flexibility: 0.31
@@ -149,10 +150,10 @@ Material:
     - _p2Offset: 0.24
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BottomColor: {r: 0.08121218, g: 0.23584908, b: 0.118224606, a: 1}
+    - _BottomColor: {r: 0.3965609, g: 0.764151, b: 0.2775454, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TopColor: {r: 0.37201852, g: 0.8301887, b: 0.5399678, a: 1}
+    - _TopColor: {r: 0.8349056, g: 1, b: 0.8960517, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

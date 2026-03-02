@@ -3,9 +3,6 @@ Shader "BezierBlade"
     Properties
     {
         [Header(Shape)]
-        _Height ("Height", Float) = 1
-        _Tilt ("Tilt", Float) = 0.9
-        _BladeWidth ("BladeWidth", Float) = 0.1
         _TaperAmount ("Taper Amount", Float) = 0
         _CurvedNormalAmount("Curved Normal Amount", Range(0, 5)) = 1
         _p1Offset ("p1Offset", Float) = 1
@@ -16,6 +13,12 @@ Shader "BezierBlade"
         _BottomColor ("Bottom Color", Color) = (.25, .5, .5, 1)
         _GrassAlbedo("Grass albedo", 2D) = "white" {}
         _GrassGloss("Grass gloss", 2D) = "white" {}
+        
+        [Header(Wind Animation)]
+        _WaveAmplitude("Wave Amplitude", Float) = 1
+        _WaveSpeed("Wave Speed", Float) = 1
+        _SinOffsetRange("Phase Variation", Range(0, 10)) = 0.3
+        _PushTipForward("Push Tip Forward", Range(0, 2)) = 0
     }
     SubShader
     {
@@ -64,16 +67,18 @@ Shader "BezierBlade"
             StructuredBuffer<int> Triangles;
             StructuredBuffer<float4> Colors;
             StructuredBuffer<float2> Uvs;
-
-            float _Height;
-            float _Tilt;
-            float _BladeWidth;
+            
             float _TaperAmount;
             float _CurvedNormalAmount;
             float _p1Offset;
             float _p2Offset;
             float4 _TopColor;
             float4 _BottomColor;
+
+            float _WaveAmplitude;
+            float _WaveSpeed;
+            float _SinOffsetRange;
+            float _PushTipForward;
 
             TEXTURE2D(_GrassAlbedo);
             SAMPLER(sampler_GrassAlbedo);
@@ -108,7 +113,7 @@ Shader "BezierBlade"
                 return float3(-p3x, p3y, 0);
             }
 
-            void GetP1P2(float3 p0, float3 p3, out float3 p1, out float3 p2)
+            void GetP1P2P3(float3 p0, inout float3 p3, float bend, float hash, float windForce, out float3 p1, out float3 p2)
             {
                 p1 = lerp(p0, p3, 0.33);
                 p2 = lerp(p0, p3, 0.66);
@@ -116,34 +121,91 @@ Shader "BezierBlade"
                 float3 bladeDir = normalize(p3 - p0);
                 float3 bezCtrlOffsetDir = normalize(cross(bladeDir, float3(0,0,1)));
 
-                p1 += bezCtrlOffsetDir * _p1Offset;
-                p2 += bezCtrlOffsetDir * _p2Offset;
+                p1 += bezCtrlOffsetDir * bend * _p1Offset;
+                p2 += bezCtrlOffsetDir * bend * _p2Offset;
+
+                float p2WindEffect = sin((_Time.y + hash * 2 * PI) * _WaveSpeed + 0.66 * 2 * PI * _SinOffsetRange) * windForce;
+                p2WindEffect *= 0.66 * _WaveAmplitude;
+
+                float p3WindEffect = sin((_Time.y + hash * 2 * PI) * _WaveSpeed + 1.0 * 2 * PI * _SinOffsetRange) * windForce + _PushTipForward * (1 - bend);
+                p3WindEffect *= _WaveAmplitude;
+
+                p2 += bezCtrlOffsetDir * p2WindEffect;
+                p3 += bezCtrlOffsetDir * p3WindEffect;
+            }
+
+            float3x3 RotAxis3x3(float angle, float3 axis)
+            {
+                axis = normalize(axis);
+                
+                float s, c;
+                sincos(angle, s, c);
+                
+                // 1 - cos(angle)
+                float t = 1.0 - c;
+                
+                // 轴的分量
+                float x = axis.x;
+                float y = axis.y;
+                float z = axis.z;
+                
+                float xy = x * y;
+                float xz = x * z;
+                float yz = y * z;
+                float xs = x * s;
+                float ys = y * s;
+                float zs = z * s;
+                
+                float m00 = t * x * x + c;
+                float m01 = t * xy - zs;
+                float m02 = t * xz + ys;
+                
+                float m10 = t * xy + zs;
+                float m11 = t * y * y + c;
+                float m12 = t * yz - xs;
+                
+                float m20 = t * xz - ys;
+                float m21 = t * yz + xs;
+                float m22 = t * z * z + c;
+                
+                return float3x3(
+                    m00, m01, m02,
+                    m10, m11, m12,
+                    m20, m21, m22
+                );
             }
 
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
 
+                GrassBlade blade = _GrassBlades[IN.instanceID];
+                float bend = blade.bend;
+                float height = blade.height;
+                float tilt = blade.tilt;
+                float hash = blade.hash;
+                float windForce = blade.windForce;
+
                 float3 p0 = GetP0();
 
-                float3 p3 = GetP3(_Height, _Tilt);
+                float3 p3 = GetP3(height, tilt);
 
                 float3 p1 = float3(0,0,0);
                 float3 p2 = float3(0,0,0);
-                GetP1P2(p0, p3, p1, p2);
+                GetP1P2P3(p0, p3, bend, hash, windForce, p1, p2);
 
                 int positionIndex = Triangles[IN.vertexID];
                 float4 vertColor = Colors[positionIndex];
                 float2 uv = Uvs[positionIndex];
 
-                GrassBlade blade = _GrassBlades[IN.instanceID];
 
+                
                 float t = vertColor.r;
                 float3 centerPos = CubicBezier(p0, p1, p2, p3, t);
 
-                float width = _BladeWidth * (1 - _TaperAmount * t);
+                float width = blade.width * (1 - _TaperAmount * t);
                 float side = vertColor.g * 2 - 1;
-                float3 worldPos = blade.position + centerPos + float3(0, 0, side * width);
+                float3 position = centerPos + float3(0, 0, side * width);
 
                 float3 tangent = CubicBezierTangent(p0, p1, p2, p3, t);
                 float3 normal = normalize(cross(tangent, float3(0,0,1)));
@@ -152,10 +214,28 @@ Shader "BezierBlade"
                 curvedNorm.z += side * _CurvedNormalAmount;
                 curvedNorm = normalize(curvedNorm);
 
-                OUT.positionCS = TransformWorldToHClip(worldPos);
+                float angle = blade.rotAngle;
+                float sideBend = blade.sideBend;
+
+                float3x3 rotMat = RotAxis3x3(-angle, float3(0,1,0));
+
+                float3x3 sideRot = RotAxis3x3(sideBend, normalize(tangent));
+                position = position - centerPos;
+                normal = mul(sideRot, normal);
+                curvedNorm = mul(sideRot, curvedNorm);
+                position = mul(sideRot, position);
+
+                position = position + centerPos;
+                normal = mul(rotMat, normal);
+                curvedNorm = mul(rotMat, curvedNorm);
+                position = mul(rotMat, position);
+
+                position += blade.position;
+
+                OUT.positionCS = TransformWorldToHClip(position);
                 OUT.curvedNorm = curvedNorm;
                 OUT.originalNorm = normal;
-                OUT.positionWS = worldPos;
+                OUT.positionWS = position;
                 OUT.uv = uv;
                 OUT.t = t;
 

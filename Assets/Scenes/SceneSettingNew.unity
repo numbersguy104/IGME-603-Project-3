@@ -187,40 +187,45 @@ MonoBehaviour:
   computeShader: {fileID: 7200000, guid: f77c93e13acef0d4c94217fc87a9eb37, type: 3}
   material: {fileID: 2100000, guid: 92b0b66bbee23c54686eac3b94dcce01, type: 2}
   cam: {fileID: 1398760479}
-  grassSpacing: 0.1
-  resolution: 800
+  grassSpacing: 0.08
+  resolution: 1200
   jitterStrength: 0.239
   terrain: {fileID: 816202819}
   distanceCullStartDistance: 0
   distanceCullEndDistance: 60
   distanceCullMinimumGrassAmount: 0.134
-  frustumCullNearOffset: -1
+  frustumCullNearOffset: -5
   frustumCullEdgeOffset: -1
   clumpTextureHeight: 512
   clumpTextureWidth: 512
   clumpingVoronoiMaterial: {fileID: 2100000, guid: b1ca4bb945363f44289ff1d378e04308, type: 2}
   clumpScale: 0.1
   clumpParameters:
-  - pullToCentre: 0.5
+  - pullToCentre: -0.02
     pointInSameDirection: 0.9
-    baseHeight: 1
-    heightRandom: 0.2
-    baseWidth: 0.2
-    widthRandom: 0.05
+    baseHeight: 1.78
+    heightRandom: 0.08
+    baseWidth: 0.04
+    widthRandom: 0.01
     baseTilt: 0.95
     tiltRandom: 0.02
     baseBend: 0.9
     bendRandom: 0.05
   - pullToCentre: -0.15
     pointInSameDirection: 0.69
-    baseHeight: 0.85
-    heightRandom: 0.5
-    baseWidth: 0.41
-    widthRandom: 0.38
+    baseHeight: 1.69
+    heightRandom: 0.09
+    baseWidth: 0.04
+    widthRandom: 0.005
     baseTilt: 0.78
     tiltRandom: 0.11
-    baseBend: 0.99
-    bendRandom: 0.24
+    baseBend: 0.8
+    bendRandom: 0.15
+  localWindTex: {fileID: 2800000, guid: c0eae52f9d8325042ad1c0e68a5db61e, type: 3}
+  localWindStrength: 0.5
+  localWindScale: 0.01
+  localWindSpeed: 0.1
+  localWindRotateAmount: 0.3
 --- !u!1 &816202817
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,8 +506,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 3
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -517,7 +522,7 @@ MonoBehaviour:
   m_Version: 2
   m_TaaSettings:
     m_Quality: 3
-    m_FrameInfluence: 0.1
+    m_FrameInfluence: 0.100000024
     m_JitterScale: 1
     m_MipBias: 0
     m_VarianceClampScale: 0.9
@@ -589,13 +594,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398760476}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2997069, y: 0, z: 0, w: 0.9540314}
-  m_LocalPosition: {x: 38.2, y: 31.39, z: -23.95}
+  m_LocalRotation: {x: 0.2148206, y: 0, z: 0, w: 0.9766535}
+  m_LocalPosition: {x: 37.31, y: 22.69, z: -22.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 34.88, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 24.81, y: 0, z: 0}
 --- !u!1 &1668527179
 GameObject:
   m_ObjectHideFlags: 0
