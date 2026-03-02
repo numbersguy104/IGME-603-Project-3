@@ -4,7 +4,7 @@ public class Status_Weak: Status
 {
     public float ratio = 0.75f;
 
-    public Status_Weak(Character_Combat owner, int turns) : base(owner, turns)
+    public Status_Weak(StatusData data, Character_Combat owner, int turns) : base(data, owner, turns)
     {
         owner.ATK *= ratio;
     }

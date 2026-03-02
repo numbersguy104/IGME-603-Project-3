@@ -13,10 +13,4 @@ public class StatusData : ScriptableObject
 {
     public string statusName;
     public Sprite statusIcon;
-
-    [RuntimeInitializeOnLoadMethod]
-    void Register()
-    {
-        StatusFactory.RegisterStatus(statusName);
-    }
 }

@@ -46,7 +46,9 @@ public class Character_Combat
         mana = character.CurrentMana;
         maxMana = character.MaxMana;
         ATK = character.ATK;
+        
         //Get attackRange from character (according to the weapon?);
+        attackRange = new List<Vector2Int> { new(0, 1) };
         
         skills =  new List<Skill>();
         foreach (var skillData in character.skillSet)
@@ -73,18 +75,21 @@ public class Character_Combat
     
     public virtual void OnNotifiedTurnEnd()
     {
+        OnTurnEnd?.Invoke();
+        
         foreach (Skill skill in skills)
         {
             skill.NotifyTurnEnd();
         }
-
-        foreach (var status in statuses)
+        for(int i = 0; i < statuses.Count;)
         {
+            Status status = statuses[i];
             status.NotifyTurnEnd();
+            if (status.TurnsRemained > 0)
+                i++;
         }
         
         OnStatusUpdated?.Invoke();
-        OnTurnEnd?.Invoke();
     }
     
     public void Healed(float amount)
@@ -119,8 +124,13 @@ public class Character_Combat
         }
         else
         {
-            Status newStatus = StatusFactory.GetStatus(statusData.statusName, this, turns);
+            Status newStatus = StatusFactory.GetStatus(statusData, this, turns);
             statuses.Add(newStatus);
+            newStatus.OnStatusCleared += () =>
+            {
+                statuses.Remove(newStatus);
+                OnStatusUpdated?.Invoke();
+            };
         }
         
         OnStatusUpdated?.Invoke();

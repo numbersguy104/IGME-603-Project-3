@@ -11,16 +11,20 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public List<Enemy> enemies;
     public List<PlayerCharacter_Combat> playerCharacters_Combat = new List<PlayerCharacter_Combat>();
     public List<Enemy_Combat> enemies_Combat = new List<Enemy_Combat>();
+    
+    public bool isPlayerTurn;
+    public float expEarnedAfterCombat;
+    
     public UnityEvent OnCombatStart;
     public UnityEvent OnPlayerTurnStart;
     public UnityEvent OnPlayerTurnEnd;
     public UnityEvent OnEnemyTurnStart;
     public UnityEvent OnEnemyTurnEnd;
     public UnityEvent OnCombatEnd;
-    private bool isPlayerTurn;
+    public UnityEvent OnCombatWin;
+    public UnityEvent OnCombatLose;
     public void SwitchSide() {isPlayerTurn = !isPlayerTurn;}
 
-    public float expEarnedAfterCombat;
     
     void Start()
     {
@@ -32,7 +36,8 @@ public class CombatManager : SingletonBehavior<CombatManager>
         PlayerCharacter player = new PlayerCharacter(Resources.Load<PlayerData>("Test/Player"));
         player.health = 50f;
         Enemy enemy = new Enemy(Resources.Load<EnemyData>("Test/Enemy"));
-        StartCombat(new List<PlayerCharacter>{player}, new List<Enemy>{enemy}, false); 
+        StartCombat(new List<PlayerCharacter>{player}, new List<Enemy>{enemy}, false);
+        isPlayerTurn = true;
     }
 
     void StartCombat(List<PlayerCharacter> playerCharacters, List<Enemy> enemies, bool isFirstStrike)
@@ -123,31 +128,37 @@ public class CombatManager : SingletonBehavior<CombatManager>
             
             if (enemies_Combat.Count == 0)
             {
-                EndCombat();
+                EndCombat(true);
             }
         }
         else
         {
+            EndCombat(false);
             // TODO: What do we do when a player character Dies?
         }
     }
 
     public void TryFlee()
     {
-        if (true) // TODO: Flee by chances
+        if (isPlayerTurn) // TODO: Flee by chances
         {
-            EndCombat();
+            EndCombat(false);
         }
     }
 
-    public void EndCombat()
+    public void EndCombat(bool isWinner)
     {
         OnCombatEnd?.Invoke();
-        
-        foreach (var player_combat in playerCharacters_Combat)
-            player_combat.OnCharacterDeath -= OnNotifiedCharacterDeath;
-        foreach (var enemy_combat in enemies_Combat)
-            enemy_combat.OnCharacterDeath -= OnNotifiedCharacterDeath;
+
+        if (isWinner)
+        {
+            OnCombatWin?.Invoke();
+        }
+        else
+        {
+            expEarnedAfterCombat = 0;
+            OnCombatLose?.Invoke();
+        }
         
         // TODO: Reward Player
         foreach (var character in playerCharacters)
@@ -155,6 +166,15 @@ public class CombatManager : SingletonBehavior<CombatManager>
             character.GainExperience(expEarnedAfterCombat);
         }
         
-        // TODO: Exit Combat Scene
+        foreach (var player_combat in playerCharacters_Combat)
+            player_combat.OnCharacterDeath -= OnNotifiedCharacterDeath;
+        foreach (var enemy_combat in enemies_Combat)
+            enemy_combat.OnCharacterDeath -= OnNotifiedCharacterDeath;
+        
+    }
+
+    public void ExitCombatScene()
+    {
+        // TODO: Switch Scene
     }
 }

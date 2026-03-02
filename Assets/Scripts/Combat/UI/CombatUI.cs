@@ -15,7 +15,9 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private SkillPanelUI skillPanelUI;
     [SerializeField] private ItemPanelUI itemPanelUI;
     [SerializeField] private Image playerHPBar;
+    [SerializeField] private Transform playerStatuses;
     [SerializeField] private Image enemyHPBar;
+    [SerializeField] private Transform enemyStatuses;
 
     private void OnEnable()
     {
@@ -35,11 +37,13 @@ public class CombatUI : SingletonBehavior<CombatUI>
         foreach (var character in playerCharacters)
         {
             character.OnTakeDamage += UpdateCombatInfo;   
+            character.OnStatusUpdated += UpdateCombatInfo;
         }
 
         foreach (var enemy in enemyCharacters)
         {
             enemy.OnTakeDamage += UpdateCombatInfo;
+            enemy.OnStatusUpdated += UpdateCombatInfo;
         }
     }
 
@@ -57,7 +61,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
     public void UpdateItems()
     {
         //Temp
-        itemPanelUI.itemList = new List<Item> {new Item(Resources.Load<ItemData>("Test/HealPotion"))};
+        itemPanelUI.itemList = new List<Item> {new HealingPotion(Resources.Load<ItemData>("Test/HealPotion"))};
         
         // TODO: itemPanelUI.itemList = Inventory.items;
     }
@@ -66,12 +70,31 @@ public class CombatUI : SingletonBehavior<CombatUI>
     {
         float GetHealthPercentage(Character_Combat character) => character.CurrentHealth / character.MaxHealth;
         playerHPBar.fillAmount = GetHealthPercentage(PlayerController_Combat.Instance.currentCharacter);
-        enemyHPBar.fillAmount = GetHealthPercentage(CombatManager.Instance.enemies_Combat[0]);
+        if(CombatManager.Instance.enemies_Combat.Count > 0)
+            enemyHPBar.fillAmount = GetHealthPercentage(CombatManager.Instance.enemies_Combat[0]);
+        else
+            enemyHPBar.fillAmount = 0;
     }
 
     public void UpdateStatus()
     {
-        // TODO
+        // Temp
+        if (CombatManager.Instance.enemies_Combat.Count == 0)
+            return;
+        Enemy_Combat enemy = CombatManager.Instance.enemies_Combat[0];
+        StatusSlotUI[] statusSlots = enemyStatuses.GetComponentsInChildren<StatusSlotUI>();
+        for (int i = 0; i < statusSlots.Length; i++)
+        {
+            if (i < enemy.statuses.Count)
+            {
+                statusSlots[i].SetVisible(true);
+                statusSlots[i].UpdateStatus(enemy.statuses[i]);
+            }
+            else
+            {
+                statusSlots[i].SetVisible(false);
+            }
+        }
     }
 
     public void SwitchTurn(bool isPlayerTurn)

@@ -16,6 +16,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
     public void Attack()
     {
+        if (!CombatManager.Instance.isPlayerTurn)
+            return;
         Debug.Log("Player Attack");
         GridManager.Instance.ApplyDamageToCells(currentCharacter, currentCharacter.TransformRangeToWorld(currentCharacter.attackRange.ToArray()), currentCharacter.ATK);
         EndPlayerTurn();
@@ -23,6 +25,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
     public void UseSkill(Skill skill)
     {
+        if (!CombatManager.Instance.isPlayerTurn)
+            return;
         Debug.Log($"Player Use Skill: {skill.skillData.skillName}");
         switch (skill)
         {
@@ -41,6 +45,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
     public void UseItem(Item item)
     {
+        if (!CombatManager.Instance.isPlayerTurn)
+            return;
         Debug.Log($"Player Use Item: {item.itemData.itemName}");
         item.UseInCombat(currentCharacter);
         // TODO: Remove Item from inventory

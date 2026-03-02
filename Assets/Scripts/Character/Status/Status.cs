@@ -10,8 +10,9 @@ public class Status
     
     public Action OnStatusCleared;
     
-    public Status(Character_Combat owner, int turns)
+    public Status(StatusData statusData, Character_Combat owner, int turns)
     {
+        this.statusData = statusData;
         this.owner = owner;
         turnsRemained = turns;
     }

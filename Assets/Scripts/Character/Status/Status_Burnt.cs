@@ -8,7 +8,7 @@ public class Status_Burnt : Status
 
     private Action turnEndCallback;
 
-    public Status_Burnt(Character_Combat owner, int turns) : base(owner, turns)
+    public Status_Burnt(StatusData data, Character_Combat owner, int turns) : base(data, owner, turns)
     {
         turnEndCallback = () => DamagedFromBurnt(owner, dmg);
         owner.OnTurnEnd += turnEndCallback;
