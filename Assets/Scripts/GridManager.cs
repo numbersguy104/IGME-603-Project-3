@@ -218,6 +218,20 @@ public class GridManager : SingletonBehavior<GridManager>
             }
         }
     }
+
+    public Vector2Int GetHoveredTile()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector2Int hitTile = new Vector2Int();
+        if (Physics.Raycast(ray, out hit))
+        {
+            return PosToGrid(hit.point, false);
+            Debug.Log("Hit object: " + hit.collider.gameObject.name);
+        }
+
+        return new(-1, -1);
+    }
     
     // Temporary Method for Week-1 Test. Feel free to Modify -- Shaolin
     public void ApplyDamageToCells(Character_Combat instigator, Vector2Int[] range, float dmg, Action<Character_Combat, Character_Combat, float> onDamageDealt = null)

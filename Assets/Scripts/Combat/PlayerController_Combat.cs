@@ -8,10 +8,23 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     public List<PlayerCharacter_Combat> teamMembers;
     public PlayerCharacter_Combat currentCharacter;
 
+    private bool isSelectingTile = false;
+    private Vector2Int selectedTile;
     public void Init(List<PlayerCharacter_Combat> teamMembers)
     {
         this.teamMembers = teamMembers;
         currentCharacter = teamMembers[0];
+    }
+
+    private void Update()
+    {
+        if (isSelectingTile)
+        {
+            selectedTile = GridManager.Instance.GetHoveredTile();
+            if (selectedTile.x >= 0 && Input.GetMouseButtonDown(0))
+                MoveTo(selectedTile);
+        }
+            
     }
 
     public void Attack()
@@ -51,6 +64,20 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         item.UseInCombat(currentCharacter);
         // TODO: Remove Item from inventory
     }
+
+    public void PrepareMove()
+    {
+        if (!CombatManager.Instance.isPlayerTurn)
+            return;
+        isSelectingTile = true;
+    }
+
+    public void MoveTo(Vector2Int tile)
+    {
+        Vector2Int currentPosition = GridManager.Instance.PosToGrid(currentCharacter.entity.transform.position);
+        GridManager.Instance.Move(currentPosition.x, currentPosition.y, selectedTile.x, selectedTile.y, true);
+        EndPlayerTurn();
+    }
     
     public void SwitchCharacter()
     {
@@ -61,6 +88,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
     public void EndPlayerTurn()
     {
+        isSelectingTile = false;
         CombatManager.Instance.EndTurn(true);
     }
 }

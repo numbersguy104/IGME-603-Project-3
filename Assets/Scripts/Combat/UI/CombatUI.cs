@@ -12,6 +12,8 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private TMP_Text currentTurn;
     [SerializeField] private Button attackButton;
     private UnityAction attackAction = () => PlayerController_Combat.Instance.Attack();
+    [SerializeField] private Button moveButton;
+    private UnityAction moveAction = () => PlayerController_Combat.Instance.PrepareMove();
     [SerializeField] private SkillPanelUI skillPanelUI;
     [SerializeField] private ItemPanelUI itemPanelUI;
     [SerializeField] private Image playerHPBar;
@@ -22,11 +24,13 @@ public class CombatUI : SingletonBehavior<CombatUI>
     private void OnEnable()
     {
         attackButton.onClick.AddListener(attackAction);
+        moveButton.onClick.AddListener(moveAction);
     }
 
     private void OnDisable()
     {
         attackButton.onClick.RemoveListener(attackAction);
+        moveButton.onClick.RemoveListener(moveAction);
     }
 
     public void Init(List<PlayerCharacter_Combat> playerCharacters, List<Enemy_Combat> enemyCharacters)
