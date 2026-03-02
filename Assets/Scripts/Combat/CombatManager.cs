@@ -55,7 +55,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         }
         
         PlayerController_Combat.Instance.Init(playerCharacters_Combat);
-        CombatUI.Instance.UpdateInfo();
+        CombatUI.Instance.Init();
         
         OnCombatStart?.Invoke();
         StartCoroutine(Turns());
