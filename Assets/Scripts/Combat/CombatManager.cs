@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Utility;
 
 public class CombatManager : SingletonBehavior<CombatManager>
@@ -175,6 +176,6 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     public void ExitCombatScene()
     {
-        // TODO: Switch Scene
+        SceneManager.LoadScene("SceneSettingNew");
     }
 }

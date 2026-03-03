@@ -152,10 +152,6 @@ PrefabInstance:
       propertyPath: characterTeam
       value: 
       objectReference: {fileID: 1989289569}
-    - target: {fileID: 4285205364893876399, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
-      propertyPath: 'sceneOrder.Array.data[1]'
-      value: FieldTest
-      objectReference: {fileID: 0}
     - target: {fileID: 4310140496123254058, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -203,8 +199,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1582612728865145433, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 255306966}
   m_SourcePrefab: {fileID: 100100000, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
+--- !u!1 &255306965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1582612728865145433, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
+  m_PrefabInstance: {fileID: 255306964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &255306966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255306965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c743f0cc4e4a394fbe8ba7d7111f988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneA: SceneSettingNew
+  sceneB: CombatTest
 --- !u!4 &301948182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 469186825128647519, guid: 1e653dd8c73df7b40bf255662316b631, type: 3}
