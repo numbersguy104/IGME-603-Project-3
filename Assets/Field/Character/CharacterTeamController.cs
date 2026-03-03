@@ -31,6 +31,8 @@ public class CharacterTeamController : MonoBehaviour
 
     /// The character that is currently disabled and NOT player-controlled.
 
+    private bool _switchRequested;
+
     public PlayerCharacterField Inactive { get; private set; }
 
     private void Start()
@@ -57,6 +59,19 @@ public class CharacterTeamController : MonoBehaviour
         ActivateOnly(Active, Inactive);
     }
 
+    public void RequestSwitch()
+    {
+        _switchRequested = true;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_switchRequested) return;
+        _switchRequested = false;
+
+        SwitchToNext(); // Make sure to get the current character position
+    }
+
     /// <summary>
     /// Switches control to the other character.
     /// The newly activated character will be moved to the previous active character's position/rotation,
@@ -67,12 +82,22 @@ public class CharacterTeamController : MonoBehaviour
         if (Active == null || Inactive == null) return;
 
         // 1) Capture current active character state
-        Vector3 pos = Active.transform.position;
-        Quaternion rot = Active.transform.rotation;
-
+        Vector3 pos;
+        Quaternion rot;
         Vector3 vel = Vector3.zero;
+
+
         if (Active.TryGetComponent<Rigidbody>(out var rbA))
+        {
             vel = rbA.linearVelocity;
+            pos = rbA.position;
+            rot = rbA.rotation;
+        }
+        else
+        {
+            pos = Active.transform.position;
+            rot = Active.transform.rotation;
+        }
 
         // 2) Swap roles: newActive becomes the previously inactive character
         PlayerCharacterField newActive = Inactive;
@@ -80,13 +105,18 @@ public class CharacterTeamController : MonoBehaviour
 
         // 3) Enable the new character and place it at the old character's transform
         newActive.gameObject.SetActive(true);
-        newActive.transform.SetPositionAndRotation(pos, rot);
 
         // If the new character has a Rigidbody, copy velocity and clear angular velocity
         if (newActive.TryGetComponent<Rigidbody>(out var rbB))
         {
+            rbB.position = pos;
+            rbB.rotation = rot;
             rbB.linearVelocity = vel;
             rbB.angularVelocity = Vector3.zero;
+        }
+        else
+        {
+            newActive.transform.SetPositionAndRotation(pos, rot);
         }
 
         // 4) Transfer player control

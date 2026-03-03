@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
         _input.Player_Field.SwitchCharacter.performed += _ =>
         {
             if (characterTeam != null)
-                characterTeam.SwitchToNext();
+                characterTeam.RequestSwitch();
         };
     }
 
