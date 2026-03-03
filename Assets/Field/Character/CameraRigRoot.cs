@@ -1,76 +1,61 @@
 using UnityEngine;
 
 /// <summary>
-/// CameraRigFollow3D is a camera follow script for 3D games.
-/// It smoothly follows a target on the XZ plane, with optional look-ahead and boundary constraints.
+/// CameraRigFollow3D smoothly follows a target in 3D space, maintaining a fixed offset and optionally locking camera rotation.
+/// Useful for 2.5D or side-scrolling games where the camera should not rotate with the target.
 /// </summary>
 public class CameraRigFollow3D : MonoBehaviour
 {
-    [Header("Target")]
+    /// <summary>
+    /// The target transform for the camera to follow.
+    /// </summary>
     public Transform target;
 
     [Header("Follow")]
-    public float smooth = 10f;                 // Higher value means more responsive following
-    public Vector3 worldOffset = Vector3.zero; // Additional offset in world space
-
-    [Header("Look Ahead (optional)")]
-    public bool useLookAhead = false;
-    public float lookAheadDistance = 1.5f;     // Offset distance in the movement direction
-    public float lookAheadSmooth = 8f;
-
-    [Header("Bounds (optional)")]
-    public bool useBounds = false;
-    public Vector2 minXZ; // e.g. (-50, -50)
-    public Vector2 maxXZ; // e.g. ( 50,  50)
-
-    private Vector3 _prevTargetPos;
-    private Vector3 _lookAhead;
+    /// <summary>
+    /// Position smoothing factor. Higher values result in more responsive following.
+    /// </summary>
+    public float smoothPos = 10f;
 
     /// <summary>
-    /// Initializes the previous target position.
+    /// Offset from the target in world space.
     /// </summary>
-    private void Start()
+    public Vector3 worldOffset = new Vector3(0f, 6f, -6f);
+
+    [Header("Lock Rotation")]
+    /// <summary>
+    /// If true, the camera's rotation is locked to its initial value.
+    /// </summary>
+    public bool lockRotation = true;
+
+    private Quaternion _lockedRot;
+
+    /// <summary>
+    /// Caches the initial rotation to maintain a fixed camera direction if rotation locking is enabled.
+    /// </summary>
+    private void Awake()
     {
-        if (target != null) _prevTargetPos = target.position;
+        _lockedRot = transform.rotation; // Cache the initial rotation to keep the camera facing a fixed direction
     }
 
     /// <summary>
-    /// Updates the camera position each frame to follow the target smoothly,
-    /// with optional look-ahead and boundary constraints.
+    /// Updates the camera's position each frame to smoothly follow the target.
+    /// Optionally locks the camera's rotation.
     /// </summary>
     private void LateUpdate()
     {
         if (target == null) return;
 
-        // Calculate target velocity (on XZ plane)
-        Vector3 delta = target.position - _prevTargetPos;
-        _prevTargetPos = target.position;
+        // Follow position (including Y) so the camera stays centered even when the target moves uphill/downhill
+        Vector3 desiredPos = target.position + worldOffset;
+        transform.position = Vector3.Lerp(
+            transform.position,
+            desiredPos,
+            1f - Mathf.Exp(-smoothPos * Time.deltaTime)
+        );
 
-        Vector3 desiredLookAhead = Vector3.zero;
-        if (useLookAhead)
-        {
-            Vector3 dir = new Vector3(delta.x, 0f, delta.z);
-            if (dir.sqrMagnitude > 0.0001f)
-                desiredLookAhead = dir.normalized * lookAheadDistance;
-        }
-
-        _lookAhead = Vector3.Lerp(_lookAhead, desiredLookAhead, 1f - Mathf.Exp(-lookAheadSmooth * Time.deltaTime));
-
-        // Desired position: follow target's XZ, keep rig's own Y (for fixed height logic)
-        Vector3 desired = new Vector3(target.position.x, transform.position.y, target.position.z)
-                          + worldOffset
-                          + _lookAhead;
-
-        // Smooth movement
-        Vector3 smoothed = Vector3.Lerp(transform.position, desired, 1f - Mathf.Exp(-smooth * Time.deltaTime));
-
-        // Boundary constraints (optional)
-        if (useBounds)
-        {
-            smoothed.x = Mathf.Clamp(smoothed.x, minXZ.x, maxXZ.x);
-            smoothed.z = Mathf.Clamp(smoothed.z, minXZ.y, maxXZ.y);
-        }
-
-        transform.position = smoothed;
+        // Lock rotation so the camera does not rotate based on the target's movement direction (2.5D style)
+        if (lockRotation)
+            transform.rotation = _lockedRot;
     }
 }
