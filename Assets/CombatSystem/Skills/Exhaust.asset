@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
+  m_Name: Exhaust
+  m_EditorClassIdentifier: 
+  skillName: Exhaust
+  skillDescription: Weaken the units in front
+  skillIcon: {fileID: 0}
+  skillType: 2
+  cooldown: 0
+  param:
+    rid: 960499314102894700
+  references:
+    version: 2
+    RefIds:
+    - rid: 960499314102894700
+      type: {class: BuffParam, ns: , asm: Assembly-CSharp}
+      data:
+        applyOnAllies: 0
+        range:
+        - {x: 0, y: 1}
+        statusList:
+        - status: {fileID: 11400000, guid: 058b258df73f15f49b7e2639bd797b6a, type: 2}
+          turns: 3
