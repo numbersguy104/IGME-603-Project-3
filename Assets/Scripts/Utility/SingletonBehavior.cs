@@ -37,7 +37,7 @@ namespace Utility
 
         protected virtual void OnDestroy()
         {
-            applicationIsQuitting = true;
+            instance = null;
         }
     }
 }
