@@ -24,7 +24,6 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
             if (selectedTile.x >= 0 && Input.GetMouseButtonDown(0))
                 MoveTo(selectedTile);
         }
-            
     }
 
     public void Attack()
@@ -74,6 +73,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
     public void MoveTo(Vector2Int tile)
     {
+        if(GridManager.Instance.IsOccupied(tile.x, tile.y))
+            return;
         Vector2Int currentPosition = GridManager.Instance.PosToGrid(currentCharacter.entity.transform.position);
         GridManager.Instance.Move(currentPosition.x, currentPosition.y, selectedTile.x, selectedTile.y, true);
         EndPlayerTurn();
