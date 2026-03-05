@@ -17,6 +17,11 @@ public class PauseMenuFunctions : MonoBehaviour
     [SerializeField]
     GameObject configMenu;
 
+    [SerializeField]
+    GameObject skillsHugo;
+
+    [SerializeField]
+    GameObject skillsTenet;
 
     private void Update()
     {
@@ -42,5 +47,37 @@ public class PauseMenuFunctions : MonoBehaviour
                 isPaused = false;
             }
         }
+    }
+
+    public void OnSkillsMenuClick() 
+    {
+        pauseMenu.SetActive(false);
+        skillsMenu.SetActive(true);
+    }
+
+    public void OnItemsMenuClick() 
+    {
+        pauseMenu.SetActive(false);
+        itemsMenu.SetActive(true);
+    }
+
+    public void OnConfigMenuClick() 
+    {
+        pauseMenu.SetActive(false);
+        configMenu.SetActive(true);
+    }
+
+    public void OnSwapClick() 
+    {
+        skillsHugo.SetActive(!skillsHugo.activeSelf);
+        skillsTenet.SetActive(!skillsTenet.activeSelf);
+    }
+
+    public void OnBackClick()
+    {
+        skillsMenu.SetActive(false);
+        itemsMenu.SetActive(false);
+        configMenu.SetActive(false);
+        pauseMenu.SetActive(true);
     }
 }
