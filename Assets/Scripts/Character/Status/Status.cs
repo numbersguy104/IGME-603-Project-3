@@ -17,18 +17,27 @@ public class Status
         turnsRemained = turns;
     }
 
+    /// <summary>
+    /// Extend the duration of a status
+    /// </summary>
+    /// <param name="extraTurns">The number of turns to be extended</param>
     public virtual void Extend(int extraTurns)
     {
         turnsRemained += extraTurns;
     }
 
+    /// <summary>
+    /// Update turn counter. Invoked by the character OnTurnEnd event.
+    /// </summary>
     public virtual void NotifyTurnEnd()
     {
         turnsRemained--;
         if (turnsRemained == 0)
             Clear();
     }
-
+    /// <summary>
+    /// Remove a status.
+    /// </summary>
     public virtual void Clear()
     {
         OnStatusCleared?.Invoke();

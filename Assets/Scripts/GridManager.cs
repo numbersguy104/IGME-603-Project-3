@@ -219,6 +219,10 @@ public class GridManager : SingletonBehavior<GridManager>
         }
     }
 
+    /// <summary>
+    /// Get the current tile the mouse if pointing at.
+    /// </summary>
+    /// <returns>The coordinate of the tile</returns>
     public Vector2Int GetHoveredTile()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -233,7 +237,15 @@ public class GridManager : SingletonBehavior<GridManager>
         return new(-1, -1);
     }
     
-    // Temporary Method for Week-1 Test. Feel free to Modify -- Shaolin
+    /// <summary>
+    /// Apply damage to cells on the grid.
+    /// </summary>
+    /// <param name="instigator">The character that deals this damage</param>
+    /// <param name="range">The coordinates of the cells to be affected</param>
+    /// <param name="dmg">The damage to be done</param>
+    /// <param name="onDamageDealt">An action for post-damage event</param>
+
+    // This is a Temporary Version for Week-1 Test. Feel free to Modify -- Shaolin
     public void ApplyDamageToCells(Character_Combat instigator, Vector2Int[] range, float dmg, Action<Character_Combat, Character_Combat, float> onDamageDealt = null)
     {
         for(int x = 0; x < grid.GetLength(0); x++)

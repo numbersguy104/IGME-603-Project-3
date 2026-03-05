@@ -24,6 +24,14 @@ public static class StatusFactory
             statusDict[status.statusName] = constructor;
         }
     }
+    
+    /// <summary>
+    /// Get a Status Instance on a character from StatusData.
+    /// </summary>
+    /// <param name="data">StatusData of the status to be instantiated</param>
+    /// <param name="owner">The character this status is going to be applied on</param>
+    /// <param name="turns">The turns the status will last for</param>
+    /// <returns></returns>
     public static Status GetStatus(StatusData data, Character_Combat owner, int turns)
     {
         if (statusDict.TryGetValue(data.statusName, out var constructor))

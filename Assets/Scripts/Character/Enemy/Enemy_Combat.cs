@@ -17,7 +17,7 @@ public class Enemy_Combat: Character_Combat
         // TODO: Enemy State Machine
     }
     
-    public void Die()
+    public override void Die()
     {
         
     }

@@ -5,8 +5,11 @@ using UnityEngine;
 [Serializable]
 public class AttackParam : SkillParam
 {
-    public float ATKRatio; // The damage this skill going to deal will be the ATK Ratio times the ATK of the skill user
+    [Tooltip("The damage this skill going to deal will be the ATK Ratio times the ATK of the skill user")]
+    public float ATKRatio;
+    [Tooltip("The relative coordinates of the cells to be affected when the skill is used.\n (x,y) means x cells to the right and y cell forward.")]
     public List<Vector2Int> range;
+    [Tooltip("List of the status to be added to the character hit by this skill")]
     public List<StatusWithTurns> statusOnHit;
 }
 
@@ -19,6 +22,7 @@ public class AttackSkill: Skill
 
     public override void Execute(Character_Combat instigator)
     {
+        base.Execute(instigator);
         AttackParam attackParam = skillData.param as AttackParam;
 
         void ApplyStatus(Character_Combat source, Character_Combat target, float dmg)

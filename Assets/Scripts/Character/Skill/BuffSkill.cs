@@ -5,8 +5,11 @@ using UnityEngine;
 [Serializable]
 public class BuffParam : SkillParam
 {
+    [Tooltip("If this buff is applied to all allies at any position")]
     public bool applyOnAllies;
+    [Tooltip("The relative coordinates of the cells to be affected. Only used when applyOnAllies is false")]
     public List<Vector2> range;
+    [Tooltip("The status to be applied along with the turns it will last for")]
     public List<StatusWithTurns> statusList;
 }
 
@@ -18,6 +21,7 @@ public class BuffSkill: Skill
 
     public override void Execute(Character_Combat instigator)
     {
+        base.Execute(instigator);
         BuffParam buffParam = skillData.param as BuffParam;
         // TODO: Implement applying status
         // foreach status,turns in buffParam.statusList

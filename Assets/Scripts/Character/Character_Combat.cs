@@ -39,6 +39,10 @@ public class Character_Combat
     public Action OnTakeDamage;
     public Action OnStatusUpdated;
     
+    /// <summary>
+    /// Create Combat Character Instance from a Character
+    /// </summary>
+    /// <param name="character">The target character</param>
     public Character_Combat(Character character)
     {
         health = character.CurrentHealth;
@@ -47,8 +51,8 @@ public class Character_Combat
         maxMana = character.MaxMana;
         ATK = character.ATK;
         
-        //Get attackRange from character (according to the weapon?);
-        attackRange = new List<Vector2Int> { new(0, 1) };
+        //TODO: Get attackRange from character (according to the weapon?);
+        attackRange = new List<Vector2Int> { new(0, 1) }; // For week-1 Test Only
         
         skills =  new List<Skill>();
         foreach (var skillData in character.skillSet)
@@ -73,6 +77,9 @@ public class Character_Combat
         statuses = new List<Status>();
     }
     
+    /// <summary>
+    /// Invoked when the character's turn ends. Trigger all events that happen at the turn ending phase. After that, update skill CD and status turn counter.
+    /// </summary>
     public virtual void OnNotifiedTurnEnd()
     {
         OnTurnEnd?.Invoke();
@@ -91,16 +98,33 @@ public class Character_Combat
         
         OnStatusUpdated?.Invoke();
     }
+
+    /// <summary>
+    /// Simply cost mana. Technically can also be used to refill mana.
+    /// </summary>
+    /// <param name="cost">The amount of mana to be cost. Negative if to refill mana</param>
+    public virtual void CostMana(float cost)
+    {
+        mana -= cost;
+    }
     
-    public void Healed(float amount)
+    /// <summary>
+    /// Simply Heal the character. Technically can also be used to do damage (Not recommended). Will trigger OnTakeDamage event;
+    /// </summary>
+    /// <param name="amount">The amount of health to be healed. cannot exceed maximum HP</param>
+    public virtual void Healed(float amount)
     {
         health = Mathf.Min(health + amount, maxHealth);
         // VFX?
         
-        OnTakeDamage?.Invoke(); // Warning: Used For Trigger UI Update. Maybe at risk
+        OnTakeDamage?.Invoke(); // Warning: Currently Used to Trigger UI Update. Maybe at risk
     }
 
-    public void TakeDamage(float amount)
+    /// <summary>
+    /// Damage the character. Will trigger OnTakeDamage event and OnCharacterDeath if HP <= 0
+    /// </summary>
+    /// <param name="amount"> The amount of damage to be dealt. </param>
+    public virtual void TakeDamage(float amount)
     {
         // TODO: How does the Defense affect the damage?
         
@@ -110,12 +134,22 @@ public class Character_Combat
         
         if (health == 0)
         {
-            OnCharacterDeath?.Invoke(this);
+            Die();
         }
         
     }
 
-    public void AddStatus(StatusData statusData, int turns)
+    public virtual void Die()
+    {
+        OnCharacterDeath?.Invoke(this);
+    }
+
+    /// <summary>
+    /// Add a status to the character alone with the turns it will last for
+    /// </summary>
+    /// <param name="statusData"> The status to be applied </param>
+    /// <param name="turns">The number of turns it will last for</param>
+    public virtual void AddStatus(StatusData statusData, int turns)
     {
         Status existingStatus = statuses.FirstOrDefault(s => s.statusData.statusName == statusData.statusName);
         if (existingStatus != null)
@@ -136,6 +170,12 @@ public class Character_Combat
         OnStatusUpdated?.Invoke();
     }
 
+    /// <summary>
+    /// Used to transform the local coordinates of skill/attack range into the absolute coordinates in the grid
+    /// </summary>
+    /// <param name="coors"> The coordinates to be transformed </param>
+    /// <returns>The transformed coordinates. </returns>
+    // TODO: Add direction
     public Vector2Int[] TransformRangeToWorld(Vector2Int[] coors)
     {
         Vector2Int[] result = new Vector2Int[coors.Length];

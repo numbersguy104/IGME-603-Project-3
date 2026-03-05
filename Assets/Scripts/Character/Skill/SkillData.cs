@@ -16,6 +16,7 @@ public class SkillData : ScriptableObject
     public string skillDescription;
     public Sprite skillIcon;
     public SkillType skillType;
+    public float cost; // Mana cost
     public int cooldown; // How many turns it takes before the character can use this skill again
 
     [SerializeReference] public SkillParam param;

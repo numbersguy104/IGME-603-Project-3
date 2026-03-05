@@ -56,5 +56,5 @@ public class Character
             OnLevelUp?.Invoke();
         }
     }
-
+    
 }

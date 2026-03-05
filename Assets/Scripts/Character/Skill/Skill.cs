@@ -16,8 +16,20 @@ public class Skill
         maxCooldown = skillData.cooldown;
     }
 
+    /// <summary>
+    /// Do something special when the skill is used. Only costing mana in this base class
+    /// </summary>
+    /// <param name="instigator">The skill user</param>
     public virtual void Execute(Character_Combat instigator)
     {
+        if (instigator.CurrentMana < skillData.cost)
+        {
+            // TODO: No Enough Mana
+        }
+        else
+        {
+            instigator.CostMana(skillData.cost);
+        }
     }
 
     public void NotifyTurnEnd()

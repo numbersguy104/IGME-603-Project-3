@@ -13,7 +13,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public List<PlayerCharacter_Combat> playerCharacters_Combat = new List<PlayerCharacter_Combat>();
     public List<Enemy_Combat> enemies_Combat = new List<Enemy_Combat>();
     
-    public bool isPlayerTurn;
+    public Team currentTurn;
     public float expEarnedAfterCombat;
     
     public UnityEvent OnCombatStart;
@@ -24,7 +24,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public UnityEvent OnCombatEnd;
     public UnityEvent OnCombatWin;
     public UnityEvent OnCombatLose;
-    public void SwitchSide() {isPlayerTurn = !isPlayerTurn;}
+    public void SwitchSide() {currentTurn = 1 - currentTurn;}
 
     
     void Start()
@@ -38,9 +38,15 @@ public class CombatManager : SingletonBehavior<CombatManager>
         player.health = 50f;
         Enemy enemy = new Enemy(Resources.Load<EnemyData>("Test/Enemy"));
         StartCombat(new List<PlayerCharacter>{player}, new List<Enemy>{enemy}, false);
-        isPlayerTurn = true;
+        currentTurn = Team.Player;
     }
 
+    /// <summary>
+    /// Combat Initialization.
+    /// </summary>
+    /// <param name="playerCharacters">List of the player characters involved in the combat</param>
+    /// <param name="enemies"> List of the enemies involved in the combat</param>
+    /// <param name="isFirstStrike"> True if this combat starts with the player's first strike</param>
     void StartCombat(List<PlayerCharacter> playerCharacters, List<Enemy> enemies, bool isFirstStrike)
     {
         GridManager.Instance.Init(9,9);
@@ -58,6 +64,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
         StartCoroutine(Turns());
     }
 
+    /// <summary>
+    /// Create the combat instance for player and enemy characters
+    /// </summary>
     public void CreateCombatCharacters()
     {
         // Create combat instance for each character
@@ -76,6 +85,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
         }
     }
 
+    /// <summary>
+    /// Create GameObjects (CombatEntities) for the characters to be instantiated on the board
+    /// </summary>
     public void CreateEntities()
     {
         // Temp Combat Configuration for Week-1 Test
@@ -91,6 +103,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
         //
     }
 
+    /// <summary>
+    /// The turn system
+    /// </summary>
     IEnumerator Turns()
     {
         while (true)
@@ -98,7 +113,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
             CombatUI.Instance.SwitchTurn(true);
             
             OnPlayerTurnStart?.Invoke();
-            yield return new WaitWhile(() => isPlayerTurn);
+            yield return new WaitWhile(() => currentTurn == Team.Player);
             OnPlayerTurnEnd?.Invoke();
             
             CombatUI.Instance.SwitchTurn(false);
@@ -107,19 +122,27 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
             // Placeholder for enemies' actions
             yield return new WaitForSeconds(2f); 
-            EndTurn(false);
+            EndTurn(Team.Enemy);
             
             // TODO: yield return new WaitWhile(() => !isPlayerTurn);
             OnEnemyTurnEnd?.Invoke();
         }
     }
 
-    public void EndTurn(bool isFinishingPlayerTurn)
+    /// <summary>
+    /// Invoke this method to call for an end of one side's turn
+    /// </summary>
+    /// <param name="team">The team whose turn is to be ended</param>
+    public void EndTurn(Team team)
     {
-        if(isPlayerTurn == isFinishingPlayerTurn)
-            isPlayerTurn = !isPlayerTurn;
+        if(currentTurn == team)
+            SwitchSide();
     }
 
+    /// <summary>
+    /// Invoked when a character dies in the combat
+    /// </summary>
+    /// <param name="character">The character that dies</param>
     public void OnNotifiedCharacterDeath(Character_Combat character)
     {
         if (character is Enemy_Combat enemy)
@@ -139,19 +162,26 @@ public class CombatManager : SingletonBehavior<CombatManager>
         }
     }
 
+    /// <summary>
+    /// Try to Flee the combat. Only works when it's player's turn
+    /// </summary>
     public void TryFlee()
     {
-        if (isPlayerTurn) // TODO: Flee by chances
+        if (currentTurn == Team.Player) // TODO: Flee by chances
         {
             EndCombat(false);
         }
     }
 
-    public void EndCombat(bool isWinner)
+    /// <summary>
+    /// End the combat and reward the player.
+    /// </summary>
+    /// <param name="isWin">Set true if the player wins the combat</param>
+    public void EndCombat(bool isWin)
     {
         OnCombatEnd?.Invoke();
 
-        if (isWinner)
+        if (isWin)
         {
             OnCombatWin?.Invoke();
         }
