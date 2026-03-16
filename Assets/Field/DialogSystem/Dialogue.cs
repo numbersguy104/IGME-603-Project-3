@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NPCDialogue : MonoBehaviour, IInteractable
+public class Dialogue : MonoBehaviour, IInteractable
 {
     public enum TriggerMode
     {
@@ -10,7 +10,7 @@ public class NPCDialogue : MonoBehaviour, IInteractable
     }
 
     [Header("Dialogue")]
-    [SerializeField] private DialogueData dialogueData;
+    [SerializeField] private SO_DialogueData dialogueData;
 
     [Header("Trigger")]
     [SerializeField] private TriggerMode triggerMode = TriggerMode.InteractKey;

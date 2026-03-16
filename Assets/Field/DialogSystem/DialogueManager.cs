@@ -6,7 +6,7 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private DialogueUI dialogueUI;
 
-    private DialogueData _currentDialogue;
+    private SO_DialogueData _currentDialogue;
     private int _currentIndex;
     private bool _isPlaying;
 
@@ -33,9 +33,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue(DialogueData dialogue)
+    public void StartDialogue(SO_DialogueData dialogue)
     {
-        if (dialogue == null || dialogue.lines == null || dialogue.lines.Length == 0)
+        if (dialogue == null || dialogue.dialogueLines == null || dialogue.dialogueLines.Length == 0)
             return;
 
         _currentDialogue = dialogue;
@@ -52,7 +52,7 @@ public class DialogueManager : MonoBehaviour
 
         _currentIndex++;
 
-        if (_currentIndex >= _currentDialogue.lines.Length)
+        if (_currentIndex >= _currentDialogue.dialogueLines.Length)
         {
             EndDialogue();
             return;
@@ -77,8 +77,8 @@ public class DialogueManager : MonoBehaviour
             return;
 
         dialogueUI.Show(
-            _currentDialogue.speakerName,
-            _currentDialogue.lines[_currentIndex]
+            _currentDialogue.dialogueLines[_currentIndex].speakerName,
+            _currentDialogue.dialogueLines[_currentIndex].text
         );
     }
 }

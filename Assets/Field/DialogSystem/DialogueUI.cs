@@ -9,7 +9,6 @@ public class DialogueUI : MonoBehaviour
     [Header("Text")]
     [SerializeField] private TMP_Text speakerNameText;
     [SerializeField] private TMP_Text dialogueLineText;
-    [SerializeField] private TMP_Text continueHintText;
 
     private void Awake()
     {
@@ -21,14 +20,12 @@ public class DialogueUI : MonoBehaviour
         if (dialogueRoot != null)
             dialogueRoot.SetActive(true);
 
-        //if (speakerNameText != null)
-        //    speakerNameText.text = speakerName;
+        if (speakerNameText != null)
+            speakerNameText.text = speakerName;
 
         if (dialogueLineText != null)
             dialogueLineText.text = line;
 
-        //if (continueHintText != null)
-        //    continueHintText.text = "Space / Left Click";
     }
 
     public void Hide()

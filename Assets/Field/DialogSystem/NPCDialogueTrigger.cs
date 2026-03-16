@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class NPCDialogueTrigger : MonoBehaviour
 {
-    [SerializeField] private NPCDialogue owner;
+    [SerializeField] private Dialogue owner;
 
     private void Awake()
     {
         if (owner == null)
-            owner = GetComponentInParent<NPCDialogue>();
+            owner = GetComponentInParent<Dialogue>();
     }
 
     private void OnTriggerEnter(Collider other)
