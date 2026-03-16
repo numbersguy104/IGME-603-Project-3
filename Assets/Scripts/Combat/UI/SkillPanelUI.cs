@@ -16,12 +16,7 @@ public class SkillPanelUI : MonoBehaviour
     public void UpdateSkillList(List<Skill> skillList)
     {
         this.skillList = skillList;
-        // TODO:
-        // Transform skillButtons = transform.Find("Skills");
-        // for (int i = 0; i < skillButtons.childCount; i++)
-        //     Destroy(skillButtons.GetChild(i).gameObject);
-        // foreach (Skill skill in skillList)
-        //     CreateButton(skill);
+        // TODO
     }
 
     public void CreateButton(Skill skill)

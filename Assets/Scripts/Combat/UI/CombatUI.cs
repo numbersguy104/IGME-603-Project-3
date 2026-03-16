@@ -49,6 +49,8 @@ public class CombatUI : SingletonBehavior<CombatUI>
             enemy.OnTakeDamage += UpdateCombatInfo;
             enemy.OnStatusUpdated += UpdateCombatInfo;
         }
+        
+        //Warning: Risk of memory leak for not removed action registration
     }
 
     public void UpdateSkillList()
