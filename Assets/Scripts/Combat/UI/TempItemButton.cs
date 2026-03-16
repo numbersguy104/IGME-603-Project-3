@@ -15,12 +15,18 @@ public class TempItemButton : MonoBehaviour
 
     private void OnEnable()
     {
-        button.onClick.AddListener(UseItem);
+        if (button)
+        {
+            button.onClick.AddListener(UseItem);
+        }
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(UseItem);
+        if (button)
+        {
+            button.onClick.RemoveListener(UseItem);
+        }
     }
 
     public void UseItem()

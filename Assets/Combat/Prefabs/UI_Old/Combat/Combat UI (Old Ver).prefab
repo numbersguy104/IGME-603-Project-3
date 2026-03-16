@@ -166,7 +166,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1294,7 +1294,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3236,7 +3236,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4006,7 +4006,7 @@ GameObject:
   - component: {fileID: 1662326051875526831}
   - component: {fileID: 8427525527068517163}
   m_Layer: 5
-  m_Name: Combat UI
+  m_Name: Combat UI (Old Ver)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4091,10 +4091,12 @@ MonoBehaviour:
   moveButton: {fileID: 0}
   skillPanelUI: {fileID: 3104880266522694642}
   itemPanelUI: {fileID: 6102583001995914859}
-  playerHPBar: {fileID: 4894619674251057126}
   playerStatuses: {fileID: 4976840030550814066}
-  enemyHPBar: {fileID: 8850784341229251323}
   enemyStatuses: {fileID: 4867756444612250978}
+  characterBackground: {fileID: 0}
+  hugoButton: {fileID: 0}
+  tenetButton: {fileID: 0}
+  healthDisplayPrefab: {fileID: 0}
 --- !u!1 &8022470306605129969
 GameObject:
   m_ObjectHideFlags: 0
@@ -4360,7 +4362,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

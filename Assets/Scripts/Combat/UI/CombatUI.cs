@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using Utility;
 
@@ -16,34 +17,67 @@ public class CombatUI : SingletonBehavior<CombatUI>
     private UnityAction moveAction = () => PlayerController_Combat.Instance.PrepareMove();
     [SerializeField] private SkillPanelUI skillPanelUI;
     [SerializeField] private ItemPanelUI itemPanelUI;
-    [SerializeField] private Image playerHPBar;
+    //[SerializeField] private Image playerHPBar;
     [SerializeField] private Transform playerStatuses;
-    [SerializeField] private Image enemyHPBar;
+    //[SerializeField] private Image enemyHPBar;
     [SerializeField] private Transform enemyStatuses;
 
+    [SerializeField] private Image characterBackground;
+    [SerializeField] private Button hugoButton;
+    private UnityAction hugoAction = () => Instance.ChangeCharacter(Characters.HUGO);
+    [SerializeField] private Button tenetButton;
+    private UnityAction tenetAction = () => Instance.ChangeCharacter(Characters.TENET);
+    [SerializeField] private GameObject healthDisplayPrefab;
+
+    public enum Characters
+    {
+        HUGO,
+        TENET
+    }
     private void OnEnable()
     {
         attackButton.onClick.AddListener(attackAction);
         moveButton.onClick.AddListener(moveAction);
+
+        hugoButton.onClick.AddListener(hugoAction);
+        tenetButton.onClick.AddListener(tenetAction);
     }
 
     private void OnDisable()
     {
         attackButton.onClick.RemoveListener(attackAction);
         moveButton.onClick.RemoveListener(moveAction);
+
+        hugoButton.onClick.RemoveListener(hugoAction);
+        tenetButton.onClick.RemoveListener(tenetAction);
     }
 
     public void Init(List<PlayerCharacter_Combat> playerCharacters, List<Enemy_Combat> enemyCharacters)
     {
+        //Create health bars
+        foreach (PlayerCharacter_Combat player in CombatManager.Instance.playerCharacters_Combat)
+        {
+            HealthBarUI bar = Instantiate(healthDisplayPrefab, playerStatuses).GetComponent<HealthBarUI>();
+            bar.character = player;
+            bar.UpdateHealthValue(player.CurrentHealth, player.MaxHealth);
+
+        }
+        foreach (Enemy_Combat enemy in CombatManager.Instance.enemies_Combat)
+        {
+            HealthBarUI bar = Instantiate(healthDisplayPrefab, enemyStatuses).GetComponent<HealthBarUI>();
+            bar.character = enemy;
+            bar.UpdateHealthValue(enemy.CurrentHealth, enemy.MaxHealth);
+        }
+
         UpdateSkillList();
         UpdateItems();
         UpdateCombatInfo();
+
         foreach (var character in playerCharacters)
         {
             character.OnTakeDamage += UpdateCombatInfo;   
             character.OnStatusUpdated += UpdateCombatInfo;
         }
-
         foreach (var enemy in enemyCharacters)
         {
             enemy.OnTakeDamage += UpdateCombatInfo;
@@ -72,32 +106,50 @@ public class CombatUI : SingletonBehavior<CombatUI>
 
     public void UpdateHP()
     {
-        float GetHealthPercentage(Character_Combat character) => character.CurrentHealth / character.MaxHealth;
-        playerHPBar.fillAmount = GetHealthPercentage(PlayerController_Combat.Instance.currentCharacter);
-        if(CombatManager.Instance.enemies_Combat.Count > 0)
-            enemyHPBar.fillAmount = GetHealthPercentage(CombatManager.Instance.enemies_Combat[0]);
-        else
-            enemyHPBar.fillAmount = 0;
+        void UpdateCharHealth(Character_Combat character, int characterIndex, Transform teamStatuses)
+        {
+            HealthBarUI health = teamStatuses.GetChild(characterIndex).GetComponent<HealthBarUI>();
+            health.UpdateHealthValue(character.CurrentHealth, character.MaxHealth);
+        }
+
+        for (int i = 0; i < CombatManager.Instance.playerCharacters_Combat.Count; i++)
+        {
+            UpdateCharHealth(CombatManager.Instance.playerCharacters_Combat[i], i, playerStatuses);
+        }
+        for (int i = 0; i < CombatManager.Instance.enemies_Combat.Count; i++)
+        {
+            UpdateCharHealth(CombatManager.Instance.enemies_Combat[i], i, enemyStatuses);
+        }
     }
 
     public void UpdateStatus()
     {
-        // Temp
-        if (CombatManager.Instance.enemies_Combat.Count == 0)
-            return;
-        Enemy_Combat enemy = CombatManager.Instance.enemies_Combat[0];
-        StatusSlotUI[] statusSlots = enemyStatuses.GetComponentsInChildren<StatusSlotUI>();
-        for (int i = 0; i < statusSlots.Length; i++)
+        void UpdateCharStatus(Character_Combat character, int characterIndex, Transform teamStatuses)
         {
-            if (i < enemy.statuses.Count)
+            StatusSlotUI[] statusSlots = teamStatuses.GetChild(characterIndex).GetComponentsInChildren<StatusSlotUI>();
+            for (int i = 0; i < statusSlots.Length; i++)
             {
-                statusSlots[i].SetVisible(true);
-                statusSlots[i].UpdateStatus(enemy.statuses[i]);
+                if (i < character.statuses.Count)
+                {
+                    statusSlots[i].SetVisible(true);
+                    statusSlots[i].UpdateStatus(character.statuses[i]);
+                }
+                else
+                {
+                    statusSlots[i].SetVisible(false);
+                }
             }
-            else
-            {
-                statusSlots[i].SetVisible(false);
-            }
+        }
+
+        for (int i = 0; i < CombatManager.Instance.playerCharacters_Combat.Count; i++)
+        {
+            PlayerCharacter_Combat player = CombatManager.Instance.playerCharacters_Combat[i];
+            UpdateCharStatus(player, i, playerStatuses);
+        }
+        for (int i = 0; i < CombatManager.Instance.enemies_Combat.Count; i++)
+        {
+            Enemy_Combat enemy = CombatManager.Instance.enemies_Combat[i];
+            UpdateCharStatus(enemy, i, enemyStatuses);
         }
     }
 
@@ -107,5 +159,29 @@ public class CombatUI : SingletonBehavior<CombatUI>
             currentTurn.SetText($"Player's Turn");
         else
             currentTurn.SetText($"Enemy's Turn");
+    }
+
+    //Commented out for now since there's only one character implemented
+    public void ChangeCharacter(Characters character)
+    {
+        /*
+        //If trying to switch to the already active character, do nothing
+        PlayerCharacter_Combat activeCharacter = PlayerController_Combat.Instance.currentCharacter;
+        List<PlayerCharacter_Combat> team = PlayerController_Combat.Instance.teamMembers;
+        if ((character == Characters.HUGO && activeCharacter == team[0]) ||
+            (character == Characters.TENET && activeCharacter == team[1]))
+            return;
+
+        PlayerController_Combat.Instance.SwitchCharacter();
+
+        if (character == Characters.HUGO)
+        {
+            characterBackground.color = new Color(0.5f, 0.0f, 0.0f);
+        }
+        else
+        {
+            characterBackground.color = new Color(0.0f, 0.5f, 0.375f);
+        }
+        */
     }
 }
