@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8209109343710726802}
   - component: {fileID: 4265163011190838330}
   - component: {fileID: 5189939078080381093}
+  - component: {fileID: 5655681810270619356}
   m_Layer: 6
   m_Name: Visual
   m_TagString: Player
@@ -100,6 +101,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32cca12239d7ab4dad7ac105b33d6f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5655681810270619356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955844706194477663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5db69bde6e1f62498be97bf01e4c21d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 4265163011190838330}
+  frontSprite: {fileID: 21300000, guid: 8b0ee6e829ebb894d8208ec4a8f610b2, type: 3}
+  backSprite: {fileID: 21300000, guid: e045b506daa166a418ddbb85b76ceb13, type: 3}
+  switchThreshold: 0.1
 --- !u!1 &7395036237426770805
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  acceleration: 40
+  acceleration: 10
 --- !u!114 &6852127003770350120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 9ff3c633f19914b48a3d18a041c91424, type: 2}
   primaryAbility: {fileID: 4724721432943653292}
+  spriteView: {fileID: 5655681810270619356}
 --- !u!114 &4724721432943653292
 MonoBehaviour:
   m_ObjectHideFlags: 0

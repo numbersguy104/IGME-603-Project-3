@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef659fb6f36bdb429daea399a91329e, type: 3}
+  m_Name: DD_StartScene
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - speakerName: 
+    text: HUGO finishes packing up the campsite he set up the night prior. The fireplace
+      nearby is burnt out.
+  - speakerName: 
+    text: TENET wanders over to HUGO from nearby.
+  - speakerName: TENET
+    text: Are you not going to dismantle that fireplace of yours?
+  - speakerName: HUGO
+    text: "I don\u2019t need to. I\u2019ve stomped it out enough."
+  - speakerName: TENET
+    text: So you say. Would it not be responsible to do Thornden some justice, though?
+      We are here for answers, after all.
+  - speakerName: HUGO
+    text: "No, you\u2019re here for answers. I\u2019m only here because you can\u2019t
+      go far from me."
+  - speakerName: TENET
+    text: And I am grateful that you decided to indulge my request, master.
+  - speakerName: HUGO
+    text: "*sigh* Looks like we\u2019ll have to pass through a village to get to
+      the Twin Mountain peaks. Can you please stay quiet when we get there, Tenet?"
+  - speakerName: TENET
+    text: "Why should I? I\u2019m sure they would not mind my presence. Besides,
+      what if something happens to you and you can\u2019t fight back?"
+  - speakerName: HUGO
+    text: "Fine, but don\u2019t wander off and get me in trouble."
+  - speakerName: TENET
+    text: As you wish, master. I will protect you until we arrive!
