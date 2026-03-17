@@ -10,11 +10,6 @@ public class StatusSlotUI : MonoBehaviour
     [SerializeField] private Image statusIcon;
     [SerializeField] private TMP_Text turnRemainedText;
 
-    private void Start()
-    {
-        // SetVisible(false);
-    }
-
     public void UpdateStatus(Status status)
     {
         this.status = status;
