@@ -19,6 +19,7 @@ public class PlayerCharacterField : MonoBehaviour
     [Header("Config")]
     [SerializeField] private CharacterStatsSO stats;
     [SerializeField] private AbilityBase primaryAbility;
+    [SerializeField] private CharacterSpriteView spriteView;
 
     private CharacterMotor _motor;
     private Health _health;
@@ -30,6 +31,9 @@ public class PlayerCharacterField : MonoBehaviour
     {
         _motor = GetComponent<CharacterMotor>();
         _health = GetComponent<Health>();
+
+        if (spriteView == null)
+            spriteView = GetComponentInChildren<CharacterSpriteView>();
     }
 
     private void Start()
@@ -58,8 +62,14 @@ public class PlayerCharacterField : MonoBehaviour
         IsPlayerControlled = active;
 
         if (!active)
+        {
             _motor.SetMoveInput(Vector2.zero);
+
+            if (spriteView != null)
+                spriteView.UpdateFacing(Vector2.zero);
+        }
     }
+
 
     /// <summary>
     /// Applies movement input to the motor if this character is player-controlled.
@@ -67,7 +77,11 @@ public class PlayerCharacterField : MonoBehaviour
     public void ApplyMove(Vector2 move)
     {
         if (!IsPlayerControlled) return;
+
         _motor.SetMoveInput(move);
+
+        if (spriteView != null)
+            spriteView.UpdateFacing(move);
     }
 
     /// <summary>
