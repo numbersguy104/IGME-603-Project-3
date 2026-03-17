@@ -2,6 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Characters
+{
+    HUGO,
+    TENET
+}
+
 public class Character
 {
     #region Attributes

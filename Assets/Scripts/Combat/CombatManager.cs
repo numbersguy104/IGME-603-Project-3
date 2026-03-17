@@ -123,19 +123,22 @@ public class CombatManager : SingletonBehavior<CombatManager>
             CombatUI.Instance.SwitchTurn(true);
             
             OnPlayerTurnStart?.Invoke();
+            CombatUI.Instance.UpdateCombatInfo();
             yield return new WaitWhile(() => currentTurn == Team.Player);
             OnPlayerTurnEnd?.Invoke();
             
             CombatUI.Instance.SwitchTurn(false);
             
             OnEnemyTurnStart?.Invoke();
-
+            CombatUI.Instance.UpdateCombatInfo();
+            CombatUI.Instance.SetPanelVisible(false);
             // Placeholder for enemies' actions
             yield return new WaitForSeconds(2f); 
             EndTurn(Team.Enemy);
             
             // TODO: yield return new WaitWhile(() => !isPlayerTurn);
             OnEnemyTurnEnd?.Invoke();
+            CombatUI.Instance.SetPanelVisible(true);
         }
     }
 

@@ -151,7 +151,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 78d5234c45b885741accfcc769d4ebbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a1a8abc02a585354cba61dbcf37d9ac2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterImage: {fileID: 6157649056641697581}
-  characterSpriteFront: {fileID: 21300000, guid: 78d5234c45b885741accfcc769d4ebbf, type: 3}
-  characterSpriteBack: {fileID: 21300000, guid: 75edc53cd409c8b47aae46a2db60156d, type: 3}
+  characterSpriteFront: {fileID: 21300000, guid: a1a8abc02a585354cba61dbcf37d9ac2, type: 3}
+  characterSpriteBack: {fileID: 21300000, guid: bd9ba53664bb98049afac3a631ca60eb, type: 3}
 --- !u!1 &9054654304945112857
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,6 +26,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
             return;
         Debug.Log("Player Attack");
         GridManager.Instance.ApplyDamageToCells(currentCharacter, currentCharacter.TransformRangeToWorld(currentCharacter.attackRange.ToArray()), currentCharacter.ATK);
+        currentCharacter.attacksAvailable--;
+        CombatUI.Instance.UpdateCombatInfo();
         // EndPlayerTurn();
     }
     
@@ -186,6 +188,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         Vector2Int currentPosition = GridManager.Instance.PosToGrid(currentCharacter.entity.transform.position);
         GridManager.Instance.Move(currentPosition.x, currentPosition.y, tile.x, tile.y, true);
         EndTileSelecting();
+        currentCharacter.movesAvailable--;
+        CombatUI.Instance.UpdateCombatInfo();
         // EndPlayerTurn();
     }
     

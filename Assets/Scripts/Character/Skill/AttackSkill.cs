@@ -36,5 +36,11 @@ public class AttackSkill: Skill
             attackParam.ATKRatio * instigator.ATK,
             ApplyStatus
             );
+
+        if (instigator is PlayerCharacter_Combat playerCharacter)
+        {
+            playerCharacter.attacksAvailable--;
+            CombatUI.Instance.UpdateCombatInfo();
+        }
     }
 }

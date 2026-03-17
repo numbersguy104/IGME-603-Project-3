@@ -14,14 +14,15 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private Button attackButton;
     private UnityAction attackAction = () => PlayerController_Combat.Instance.Attack();
     [SerializeField] private Button moveButton;
-    private UnityAction moveAction = () => PlayerController_Combat.Instance.PrepareMove();
+    private UnityAction moveAction = () => PlayerController_Combat.Instance.RequestMove();
     [SerializeField] private SkillPanelUI skillPanelUI;
     [SerializeField] private ItemPanelUI itemPanelUI;
     //[SerializeField] private Image playerHPBar;
     [SerializeField] private Transform playerStatuses;
     //[SerializeField] private Image enemyHPBar;
     [SerializeField] private Transform enemyStatuses;
-
+    [SerializeField] private Button endTurnButton;
+    private UnityAction endTurnAction = () => PlayerController_Combat.Instance.EndPlayerTurn();
     [SerializeField] private Image characterBackground;
     [SerializeField] private Button hugoButton;
     private UnityAction hugoAction = () => Instance.ChangeCharacter(Characters.HUGO);
@@ -29,16 +30,18 @@ public class CombatUI : SingletonBehavior<CombatUI>
     private UnityAction tenetAction = () => Instance.ChangeCharacter(Characters.TENET);
     [SerializeField] private GameObject healthDisplayPrefab;
 
-    public enum Characters
-    {
-        HUGO,
-        TENET
-    }
+    public UnityEvent OnNotifiedWin;
+    public UnityEvent OnNotifiedLose;
+    
+    public void NotifyWin() => OnNotifiedWin?.Invoke();
+    public void NotifyLose() => OnNotifiedLose?.Invoke();
+    
     private void OnEnable()
     {
         attackButton.onClick.AddListener(attackAction);
         moveButton.onClick.AddListener(moveAction);
-
+        endTurnButton.onClick.AddListener(endTurnAction);
+        
         hugoButton.onClick.AddListener(hugoAction);
         tenetButton.onClick.AddListener(tenetAction);
     }
@@ -47,7 +50,8 @@ public class CombatUI : SingletonBehavior<CombatUI>
     {
         attackButton.onClick.RemoveListener(attackAction);
         moveButton.onClick.RemoveListener(moveAction);
-
+        endTurnButton.onClick.RemoveListener(endTurnAction);
+        
         hugoButton.onClick.RemoveListener(hugoAction);
         tenetButton.onClick.RemoveListener(tenetAction);
     }
@@ -93,6 +97,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
     public void UpdateCombatInfo()
     {
         UpdateHP();
+        UpdateSkillList();
         UpdateStatus();
     }
 
@@ -151,6 +156,10 @@ public class CombatUI : SingletonBehavior<CombatUI>
             Enemy_Combat enemy = CombatManager.Instance.enemies_Combat[i];
             UpdateCharStatus(enemy, i, enemyStatuses);
         }
+        
+        // Update available Moves
+        moveButton.interactable = (PlayerController_Combat.Instance.currentCharacter.movesAvailable > 0);
+        attackButton.interactable = (PlayerController_Combat.Instance.currentCharacter.attacksAvailable > 0);
     }
 
     public void SwitchTurn(bool isPlayerTurn)
@@ -164,24 +173,27 @@ public class CombatUI : SingletonBehavior<CombatUI>
     //Commented out for now since there's only one character implemented
     public void ChangeCharacter(Characters character)
     {
-        /*
-        //If trying to switch to the already active character, do nothing
-        PlayerCharacter_Combat activeCharacter = PlayerController_Combat.Instance.currentCharacter;
-        List<PlayerCharacter_Combat> team = PlayerController_Combat.Instance.teamMembers;
-        if ((character == Characters.HUGO && activeCharacter == team[0]) ||
-            (character == Characters.TENET && activeCharacter == team[1]))
-            return;
+         //If trying to switch to the already active character, do nothing
+         PlayerCharacter_Combat activeCharacter = PlayerController_Combat.Instance.currentCharacter;
+         List<PlayerCharacter_Combat> team = PlayerController_Combat.Instance.teamMembers;
+         if ((character == Characters.HUGO && activeCharacter == team[0]) ||
+             (character == Characters.TENET && activeCharacter == team[1]))
+             return;
 
-        PlayerController_Combat.Instance.SwitchCharacter();
+         PlayerController_Combat.Instance.SwitchCharacter();
 
-        if (character == Characters.HUGO)
-        {
-            characterBackground.color = new Color(0.5f, 0.0f, 0.0f);
-        }
-        else
-        {
-            characterBackground.color = new Color(0.0f, 0.5f, 0.375f);
-        }
-        */
+         if (character == Characters.HUGO)
+         {
+             characterBackground.color = new Color(0.5f, 0.0f, 0.0f);
+         }
+         else
+         {
+             characterBackground.color = new Color(0.0f, 0.5f, 0.375f);
+         }
+    }
+
+    public void SetPanelVisible(bool visible)
+    {
+        characterBackground.gameObject.SetActive(visible);
     }
 }
