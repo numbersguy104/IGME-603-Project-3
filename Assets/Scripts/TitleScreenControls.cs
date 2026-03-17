@@ -5,7 +5,7 @@ public class TitleScreenControls : MonoBehaviour
 {
     public void OnStartClick() 
     {
-        SceneManager.LoadScene("SceneSettingMenuTest");
+        SceneManager.LoadScene("SceneSettingNew");
     }
 
     public void OnQuitClick() 
