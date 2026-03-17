@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db6e01506bbe4da09384b4b553ca6fc0, type: 3}
-  m_Name: Enemy
+  m_Script: {fileID: 11500000, guid: c3c068e83c8a4a8da4956be1b1ddfdba, type: 3}
+  m_Name: Hugo
   m_EditorClassIdentifier: 
   maxHP: 100
   maxMP: 100
   ATK: 10
-  entity: {fileID: 8854560056607780965, guid: 6f6d928789b26674f8856fa4bdcdd83d, type: 3}
-  InitialSkillSet: []
+  entity: {fileID: 245729318324569779, guid: 3ebbf0f931ef3444baadb0c740c4bf76, type: 3}
+  InitialSkillSet:
+  - {fileID: 11400000, guid: c93b59c9b8fb7a242a545bec44d9d73f, type: 2}

@@ -4087,14 +4087,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTurn: {fileID: 2074548129075587481}
-  attackButton: {fileID: 5095034275719213997}
-  moveButton: {fileID: 0}
+  attackButton: {fileID: 0}
+  moveButton: {fileID: 7423877900292710524}
+  switchCharacterButton: {fileID: 5095034275719213997}
+  endTurnButton: {fileID: 5568786485500657345}
   skillPanelUI: {fileID: 3104880266522694642}
   itemPanelUI: {fileID: 6102583001995914859}
   playerHPBar: {fileID: 4894619674251057126}
   playerStatuses: {fileID: 4976840030550814066}
   enemyHPBar: {fileID: 8850784341229251323}
   enemyStatuses: {fileID: 4867756444612250978}
+  OnNotifiedWin:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4094288744039827337}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnNotifiedLose:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4747354113414806733}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &8022470306605129969
 GameObject:
   m_ObjectHideFlags: 0
@@ -4795,12 +4827,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
-        m_MethodName: TryFlee
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

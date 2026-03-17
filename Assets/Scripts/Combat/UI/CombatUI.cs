@@ -13,7 +13,11 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private Button attackButton;
     private UnityAction attackAction = () => PlayerController_Combat.Instance.Attack();
     [SerializeField] private Button moveButton;
-    private UnityAction moveAction = () => PlayerController_Combat.Instance.PrepareMove();
+    private UnityAction moveAction = () => PlayerController_Combat.Instance.RequestMove();
+    [SerializeField] private Button switchCharacterButton;
+    private UnityAction switchAction = () => PlayerController_Combat.Instance.SwitchCharacter();
+    [SerializeField] private Button endTurnButton;
+    private UnityAction endTurnAction = () => PlayerController_Combat.Instance.EndPlayerTurn();
     [SerializeField] private SkillPanelUI skillPanelUI;
     [SerializeField] private ItemPanelUI itemPanelUI;
     [SerializeField] private Image playerHPBar;
@@ -21,16 +25,23 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private Image enemyHPBar;
     [SerializeField] private Transform enemyStatuses;
 
+    public UnityEvent OnNotifiedWin;
+    public UnityEvent OnNotifiedLose;
+
     private void OnEnable()
     {
-        attackButton.onClick.AddListener(attackAction);
-        moveButton.onClick.AddListener(moveAction);
+        attackButton?.onClick.AddListener(attackAction);
+        moveButton?.onClick.AddListener(moveAction);
+        switchCharacterButton?.onClick.AddListener(switchAction);
+        endTurnButton?.onClick.AddListener(endTurnAction);
     }
 
     private void OnDisable()
     {
-        attackButton.onClick.RemoveListener(attackAction);
-        moveButton.onClick.RemoveListener(moveAction);
+        attackButton?.onClick.RemoveListener(attackAction);
+        moveButton?.onClick.RemoveListener(moveAction);
+        switchCharacterButton?.onClick.RemoveListener(switchAction);
+        endTurnButton?.onClick.RemoveListener(endTurnAction);
     }
 
     public void Init(List<PlayerCharacter_Combat> playerCharacters, List<Enemy_Combat> enemyCharacters)
@@ -109,5 +120,15 @@ public class CombatUI : SingletonBehavior<CombatUI>
             currentTurn.SetText($"Player's Turn");
         else
             currentTurn.SetText($"Enemy's Turn");
+    }
+
+    public void NotifyWin()
+    {
+        OnNotifiedWin?.Invoke();
+    }
+    
+    public void NotifyLose()
+    {
+        OnNotifiedLose?.Invoke();
     }
 }

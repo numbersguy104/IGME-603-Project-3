@@ -16,7 +16,9 @@ MonoBehaviour:
   skillDescription: Deal Fire Damage to a multiple cells, and apply burnt
   skillIcon: {fileID: 0}
   skillType: 0
+  cost: 0
   cooldown: 0
+  needAimingBeforeCast: 1
   param:
     rid: 960499314102894676
   references:

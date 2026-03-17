@@ -34,6 +34,7 @@ public class Character_Combat
     public List<Skill> skills;
     public List<Status> statuses;
 
+    public Action OnTurnStart;
     public Action OnTurnEnd;
     public Action<Character_Combat> OnCharacterDeath;
     public Action OnTakeDamage;
@@ -75,6 +76,14 @@ public class Character_Combat
         }
         
         statuses = new List<Status>();
+    }
+
+    /// <summary>
+    /// Invoked when the character's turn starts.
+    /// </summary>
+    public virtual void OnNotifiedTurnStart()
+    {
+        OnTurnStart?.Invoke();
     }
     
     /// <summary>
@@ -171,19 +180,33 @@ public class Character_Combat
     }
 
     /// <summary>
-    /// Used to transform the local coordinates of skill/attack range into the absolute coordinates in the grid
+    /// Use this to transform local coordinates of skill/attack range into the absolute coordinates in the grid
     /// </summary>
     /// <param name="coors"> The coordinates to be transformed </param>
     /// <returns>The transformed coordinates. </returns>
-    // TODO: Add direction
     public Vector2Int[] TransformRangeToWorld(Vector2Int[] coors)
     {
         Vector2Int[] result = new Vector2Int[coors.Length];
-        Vector2Int currentCoor = GridManager.Instance.PosToGrid(entity.transform.position);
         int index = 0;
         foreach (var coordinate in coors)
         {
-            result[index] = coordinate + currentCoor;
+            result[index] = GridManager.Instance.PosToGrid(entity.transform.position + coordinate.x * entity.transform.right +  coordinate.y * entity.transform.forward);
+            index++;
+        }
+
+        return result;
+    }
+    
+    /// <summary>
+    /// Another overload method for range that's not on the grid
+    /// </summary>
+    public Vector2Int[] TransformRangeToWorld(Vector2[] coors)
+    {
+        Vector2Int[] result = new Vector2Int[coors.Length];
+        int index = 0;
+        foreach (var coordinate in coors)
+        {
+            result[index] = GridManager.Instance.PosToGrid(entity.transform.position + coordinate.x * entity.transform.right +  coordinate.y * entity.transform.forward);
             index++;
         }
 

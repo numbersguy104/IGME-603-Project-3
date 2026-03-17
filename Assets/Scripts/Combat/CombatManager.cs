@@ -34,10 +34,10 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     void SampleCombat()
     {
-        PlayerCharacter player = new PlayerCharacter(Resources.Load<PlayerData>("Test/Player"));
-        player.health = 50f;
+        PlayerCharacter hugo = new PlayerCharacter(Resources.Load<PlayerData>("Test/Hugo"));
+        PlayerCharacter tenet = new PlayerCharacter(Resources.Load<PlayerData>("Test/Tenet"));
         Enemy enemy = new Enemy(Resources.Load<EnemyData>("Test/Enemy"));
-        StartCombat(new List<PlayerCharacter>{player}, new List<Enemy>{enemy}, false);
+        StartCombat(new List<PlayerCharacter>{hugo, tenet}, new List<Enemy>{enemy}, false);
         currentTurn = Team.Player;
     }
 
@@ -90,17 +90,27 @@ public class CombatManager : SingletonBehavior<CombatManager>
     /// </summary>
     public void CreateEntities()
     {
-        // Temp Combat Configuration for Week-1 Test
-        CombatEntity playerEntity = Instantiate(Resources.Load<GameObject>("Test/Player")).GetComponent<CombatEntity>();
-        playerCharacters_Combat[0].entity = playerEntity;
-        playerEntity.character = playerCharacters_Combat[0];
-        GridManager.Instance.Add(playerEntity.gameObject, 4, 0, true);
+        // Temp Combat Configuration
+        for (int i = 0; i < playerCharacters.Count; i++)
+        {
+            PlayerCharacter character = playerCharacters[i];
+            CombatEntity playerEntity = Instantiate(character.entityPrefab).GetComponent<CombatEntity>();
+            playerCharacters_Combat[i].entity = playerEntity;
+            playerEntity.character = playerCharacters_Combat[i];
+            GridManager.Instance.Add(playerEntity.gameObject, i, 0, true);
+        }
         
-        CombatEntity enemyEntity = Instantiate(Resources.Load<GameObject>("Test/Enemy")).GetComponent<CombatEntity>();
-        enemies_Combat[0].entity = enemyEntity;
-        enemyEntity.character = enemies_Combat[0];
-        GridManager.Instance.Add(enemyEntity.gameObject, 4, 8, true);
-        //
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            Enemy character = enemies[i];
+            CombatEntity enemyEntity = Instantiate(character.entityPrefab).GetComponent<CombatEntity>();
+            enemyEntity.transform.rotation = Quaternion.Euler(0,180,0);
+            enemies_Combat[i].entity = enemyEntity;
+            enemyEntity.character = enemies_Combat[i];
+            GridManager.Instance.Add(enemyEntity.gameObject, 8 - i, 8, true);
+        }
+        
+        // TODO: Load Initial Character Positions on board From Asset?
     }
 
     /// <summary>

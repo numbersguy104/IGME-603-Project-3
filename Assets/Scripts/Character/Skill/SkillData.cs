@@ -18,6 +18,7 @@ public class SkillData : ScriptableObject
     public SkillType skillType;
     public float cost; // Mana cost
     public int cooldown; // How many turns it takes before the character can use this skill again
+    public bool needAimingBeforeCast; // If set to false, the skill will be executed according to the current direction
 
     [SerializeReference] public SkillParam param;
 }

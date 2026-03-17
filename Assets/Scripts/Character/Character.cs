@@ -24,6 +24,8 @@ public class Character
     public Action OnLevelUp;
     
     #endregion
+
+    public GameObject entityPrefab;
     
     public List<SkillData> skillSet;
     
@@ -33,6 +35,7 @@ public class Character
         mana = maxMana = data.maxMP;
         ATK = data.ATK;
         skillSet = data.InitialSkillSet;
+        entityPrefab = data.entity;
     }
 
     public void Healed(float amount)

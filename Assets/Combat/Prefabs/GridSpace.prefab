@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4432838372269707234}
   - component: {fileID: 4045050741548837101}
   - component: {fileID: 7887192462347269397}
+  - component: {fileID: -390858162359288392}
   m_Layer: 0
   m_Name: GridSpace
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1d3a3ea9bd19324ebf314578ec9128c, type: 2}
+  - {fileID: 2100000, guid: 1a417db7313ac49428d3a546219c6355, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,3 +109,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-390858162359288392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881204189700531229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b3a50649474624692e49c6689a802f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

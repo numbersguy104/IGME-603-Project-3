@@ -1,12 +1,35 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Utility;
 
 //Manage the grid system for combat.
 //Documentation: https://docs.google.com/document/d/1HdIbCRw4Lso9VstncTPQ-jHqG9BYdMHayuyans9pvLk/edit?usp=sharing
+
+public enum HighlightType
+{
+    Attacking,
+    Hovered
+}
+
+public struct GridHighlight
+{
+    public Vector2Int[] positions;
+    public HighlightType type;
+
+    public GridHighlight(Vector2Int[] positions, HighlightType type)
+    {
+        this.positions = positions;
+        this.type = type;
+    }
+}
 public class GridManager : SingletonBehavior<GridManager>
 {
     private GameObject[,] grid;
+    private GridTile[,] tiles;
+    public Vector2Int Size;
+    public int[,] highlightMap;
+    private List<GridHighlight> highlightList =  new List<GridHighlight>();
     [SerializeField] private GameObject tilePrefab;
 
     //TEMPORARY: Initialize the grid on startup
@@ -22,6 +45,8 @@ public class GridManager : SingletonBehavior<GridManager>
     public void Init(int sizeX, int sizeY)
     {
         grid = new GameObject[sizeX, sizeY];
+        tiles = new GridTile[sizeX, sizeY];
+        Size = new Vector2Int(sizeX, sizeY);
         CreateTiles(sizeX, sizeY);
     }
     
@@ -70,6 +95,8 @@ public class GridManager : SingletonBehavior<GridManager>
 #nullable enable
     public GameObject? GetAt(int x, int y)
     {
+        if (x < 0 || x >= grid.GetLength(0) || y < 0 || y >= grid.GetLength(1))
+            return null;
         return grid[x,y];
     }
 #nullable disable
@@ -208,34 +235,37 @@ public class GridManager : SingletonBehavior<GridManager>
             for (int y = 0; y < sizeY; y++)
             {
                 GameObject tile = Instantiate(tilePrefab, transform);
+                tiles[x,y] = tile.GetComponent<GridTile>();
                 Vector3 tilePos = new Vector3(x + offset.x, 0.0f, y + offset.y);
                 tile.transform.localPosition = tilePos;
 
                 if ((x + y) % 2 == 1)
                 {
-                    tile.GetComponent<MeshRenderer>().material.color = new Color(0.9f, 0.9f, 0.9f);
+                    tile.GetComponent<MeshRenderer>().material.SetFloat("_Type", 1);
                 }
             }
         }
     }
-
+    
     /// <summary>
     /// Get the current tile the mouse if pointing at.
     /// </summary>
-    /// <returns>The coordinate of the tile</returns>
-    public Vector2Int GetHoveredTile()
+    /// <returns>The coordinate of the tile. Null if cursor pointing at nothing</returns>
+    #nullable enable
+    public Vector2Int? GetHoveredTile(bool shouldHighlight)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Vector2Int hitTile = new Vector2Int();
         if (Physics.Raycast(ray, out hit))
         {
-            return PosToGrid(hit.point, false);
+            return PosToGrid(hit.point, true);
             Debug.Log("Hit object: " + hit.collider.gameObject.name);
         }
 
-        return new(-1, -1);
+        return null;
     }
+    #nullable disable
     
     /// <summary>
     /// Apply damage to cells on the grid.
@@ -248,18 +278,64 @@ public class GridManager : SingletonBehavior<GridManager>
     // This is a Temporary Version for Week-1 Test. Feel free to Modify -- Shaolin
     public void ApplyDamageToCells(Character_Combat instigator, Vector2Int[] range, float dmg, Action<Character_Combat, Character_Combat, float> onDamageDealt = null)
     {
-        for(int x = 0; x < grid.GetLength(0); x++)
-            for(int y = 0; y < grid.GetLength(1); y++)
+        foreach (var coor in range)
+        {
+            int x = coor.x;
+            int y = coor.y;
+            if (GetAt(x, y)!= null && GetAt(x, y).TryGetComponent<CombatEntity>(out var entity))
             {
-                if (GetAt(x, y)!= null && GetAt(x, y).TryGetComponent<CombatEntity>(out var entity))
+                Character_Combat character = entity.character;
+                if (character.team != instigator.team)
                 {
-                    Character_Combat character = entity.character;
-                    if (character.team != instigator.team)
-                    {
-                        character.TakeDamage(dmg);
-                        onDamageDealt?.Invoke(instigator, character, dmg);
-                    }
+                    character.TakeDamage(dmg);
+                    onDamageDealt?.Invoke(instigator, character, dmg);
                 }
+            }
+        }
+        
+        // for(int x = 0; x < grid.GetLength(0); x++)
+        //     for(int y = 0; y < grid.GetLength(1); y++)
+        //     {
+        //         if (GetAt(x, y)!= null && GetAt(x, y).TryGetComponent<CombatEntity>(out var entity))
+        //         {
+        //             Character_Combat character = entity.character;
+        //             if (character.team != instigator.team)
+        //             {
+        //                 character.TakeDamage(dmg);
+        //                 onDamageDealt?.Invoke(instigator, character, dmg);
+        //             }
+        //         }
+        //     }
+    }
+
+    public void AddHighlight(GridHighlight highlight)
+    {
+        highlightList.Add(highlight);
+        RefreshHighlight();
+    }
+    
+    public void RemoveHighlight(GridHighlight highlight)
+    {
+        highlightList.Remove(highlight);
+        RefreshHighlight();
+    }
+    
+    public void RefreshHighlight()
+    {
+        highlightMap = new int[Size.x, Size.y];
+        foreach (var highlight in highlightList)
+        {
+            foreach (var coor in highlight.positions)
+            {
+                if (coor.x >= 0 && coor.x < Size.x && coor.y >= 0 && coor.y < Size.y)
+                    highlightMap[coor.x, coor.y] |= 1 << (int)highlight.type;
+            }
+        }
+        
+        for (int x = 0; x < Size.x; x++)
+            for (int y = 0; y < Size.y; y++)
+            {
+                tiles[x, y].SetHighlight(highlightMap[x, y]);
             }
     }
 }

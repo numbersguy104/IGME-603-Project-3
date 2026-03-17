@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3c068e83c8a4a8da4956be1b1ddfdba, type: 3}
-  m_Name: Player
+  m_Name: Tenet
   m_EditorClassIdentifier: 
   maxHP: 100
   maxMP: 100
   ATK: 10
+  entity: {fileID: 245729318324569779, guid: 54d393fe579f0e44b9231488b08cc3f5, type: 3}
   InitialSkillSet:
   - {fileID: 11400000, guid: c93b59c9b8fb7a242a545bec44d9d73f, type: 2}

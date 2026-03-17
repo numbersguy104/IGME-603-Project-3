@@ -221,11 +221,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &269847354 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4094288744039827337, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
-  m_PrefabInstance: {fileID: 1637912179}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,11 +479,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!1 &728076366 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4747354113414806733, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
-  m_PrefabInstance: {fileID: 1637912179}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &749949666
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,7 +618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99888a9325f47f14ca8695194d8648d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerTurn: 1
+  currentTurn: 0
   expEarnedAfterCombat: 0
   OnCombatStart:
     m_PersistentCalls:
@@ -651,10 +641,10 @@ MonoBehaviour:
   OnCombatWin:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 269847354}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1637912181}
+        m_TargetAssemblyTypeName: CombatUI, Assembly-CSharp
+        m_MethodName: NotifyWin
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -666,10 +656,10 @@ MonoBehaviour:
   OnCombatLose:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 728076366}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1637912181}
+        m_TargetAssemblyTypeName: CombatUI, Assembly-CSharp
+        m_MethodName: NotifyLose
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -776,7 +766,7 @@ PrefabInstance:
     - target: {fileID: 5568786485500657345, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1007048714}
+      objectReference: {fileID: 1007048712}
     - target: {fileID: 7795611727811923292, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -861,10 +851,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Combat UI
       objectReference: {fileID: 0}
-    - target: {fileID: 8427525527068517163, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
-      propertyPath: moveButton
-      value: 
-      objectReference: {fileID: 1990846712}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -875,15 +861,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7795611727811923292, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
   m_PrefabInstance: {fileID: 1637912179}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1990846712 stripped
+--- !u!114 &1637912181 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7423877900292710524, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8427525527068517163, guid: 4ea67933a27e4524188016105d224fdc, type: 3}
   m_PrefabInstance: {fileID: 1637912179}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 902126c6f5b651a46a822b4ce2feb3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2141066422
