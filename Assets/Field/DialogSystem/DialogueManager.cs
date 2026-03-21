@@ -5,6 +5,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance { get; private set; }
 
     [SerializeField] private DialogueUI dialogueUI;
+    [SerializeField] private CharacterTeamController teamController;
 
     private SO_DialogueData _currentDialogue;
     private int _currentIndex;
@@ -42,6 +43,11 @@ public class DialogueManager : MonoBehaviour
         _currentIndex = 0;
         _isPlaying = true;
 
+        if(teamController != null && teamController.Active != null)
+        {
+            teamController.Active.SetPlayerControlled(false);
+        }
+
         ShowCurrentLine();
     }
 
@@ -66,6 +72,9 @@ public class DialogueManager : MonoBehaviour
         _isPlaying = false;
         _currentDialogue = null;
         _currentIndex = 0;
+
+        if (teamController != null && teamController.Active != null)
+            teamController.Active.SetPlayerControlled(true);
 
         if (dialogueUI != null)
             dialogueUI.Hide();
