@@ -21,6 +21,10 @@ public class PlayerCharacterField : MonoBehaviour
     [SerializeField] private AbilityBase primaryAbility;
     [SerializeField] private CharacterSpriteView spriteView;
 
+    [Header("Movement Rule")]
+    [SerializeField] private bool useBlockCheck = false;
+    [SerializeField] private LayerMask blockingLayers;
+
     private CharacterMotor _motor;
     private Health _health;
 
@@ -39,6 +43,8 @@ public class PlayerCharacterField : MonoBehaviour
     private void Start()
     {
         ApplyStats();
+        _motor.SetBlockCheck(useBlockCheck);
+        _motor.SetBlockingLayers(blockingLayers);
     }
 
     /// <summary>
