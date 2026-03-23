@@ -1,0 +1,16 @@
+# File produced by Tripo
+
+newmtl tripo_material_cdea41b9-b0be-41f3-9dbf-ef69f9c0ea39
+Kd 1.00000000 1.00000000 1.00000000
+Ke 0.00000000 0.00000000 0.00000000
+d 1.00000000
+Ns 10.00000477
+illum 2
+map_Kd 卡通风格+木屋+3d+模型_basecolor.jpg
+
+newmtl $Material_1
+Kd 1.00000000 1.00000000 1.00000000
+Ke 0.00000000 0.00000000 0.00000000
+d 1.00000000
+illum 1
+
