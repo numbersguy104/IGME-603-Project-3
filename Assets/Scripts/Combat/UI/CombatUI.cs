@@ -24,6 +24,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private Button endTurnButton;
     private UnityAction endTurnAction = () => PlayerController_Combat.Instance.EndPlayerTurn();
     [SerializeField] private Image characterBackground;
+    [SerializeField] private GameObject characterBackgroundPlaceholder;
     [SerializeField] private Button hugoButton;
     private UnityAction hugoAction = () => Instance.ChangeCharacter(Characters.HUGO);
     [SerializeField] private Button tenetButton;
@@ -64,6 +65,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
             HealthBarUI bar = Instantiate(healthDisplayPrefab, playerStatuses).GetComponent<HealthBarUI>();
             bar.character = player;
             bar.UpdateHealthValue(player.CurrentHealth, player.MaxHealth);
+            bar.UpdateIcon(player.entity.characterImage.sprite);
 
         }
         foreach (Enemy_Combat enemy in CombatManager.Instance.enemies_Combat)
@@ -71,6 +73,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
             HealthBarUI bar = Instantiate(healthDisplayPrefab, enemyStatuses).GetComponent<HealthBarUI>();
             bar.character = enemy;
             bar.UpdateHealthValue(enemy.CurrentHealth, enemy.MaxHealth);
+            bar.UpdateIcon(enemy.entity.characterImage.sprite);
         }
 
         UpdateSkillList();
@@ -195,6 +198,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
     public void SetPanelVisible(bool visible)
     {
         characterBackground.gameObject.SetActive(visible);
+        characterBackgroundPlaceholder.SetActive(!visible);
     }
 
     public void EndSelecting()

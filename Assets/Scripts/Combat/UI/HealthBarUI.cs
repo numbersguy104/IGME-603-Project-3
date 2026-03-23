@@ -26,4 +26,9 @@ public class HealthBarUI : MonoBehaviour
     {
         UpdateHealthFraction(current/max);
     }
+
+    public void UpdateIcon(Sprite newIcon)
+    {
+        icon.sprite = newIcon;
+    }
 }
