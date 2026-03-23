@@ -33,5 +33,14 @@ public class CharacterSpriteView : MonoBehaviour
             if (frontSprite != null)
                 spriteRenderer.sprite = frontSprite;
         }
+
+        if (moveInput.x > switchThreshold)
+        {
+            spriteRenderer.flipX = true; // to right
+        }
+        else if (moveInput.x < -switchThreshold)
+        {
+            spriteRenderer.flipX = false;  // to left
+        }
     }
 }
