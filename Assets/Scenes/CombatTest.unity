@@ -415,6 +415,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4227316185899224209, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227316185899224209, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227316185899224209, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227316185899224209, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227316185899224209, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4815979690788885733, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
       propertyPath: m_Name
       value: Combat UI
