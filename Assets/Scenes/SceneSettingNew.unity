@@ -1264,6 +1264,10 @@ PrefabInstance:
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 522579693}
+    - target: {fileID: 1729154592725995745, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
+      propertyPath: teamController
+      value: 
+      objectReference: {fileID: 1989289569}
     - target: {fileID: 4277664120459115559, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
       propertyPath: characterTeam
       value: 
@@ -2868,7 +2872,7 @@ Transform:
   m_GameObject: {fileID: 512563612}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.11, y: 1.72, z: 3.13}
+  m_LocalPosition: {x: 28.119, y: 1.72, z: 3.13}
   m_LocalScale: {x: 1.6807854, y: 1.2832, z: 1.9605186}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9343,7 +9347,7 @@ Transform:
   m_GameObject: {fileID: 1681232502}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.71, y: 20.17, z: -44.39}
+  m_LocalPosition: {x: -4.71, y: 20.17, z: -44.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

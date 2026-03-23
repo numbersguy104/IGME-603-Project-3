@@ -20,46 +20,39 @@ MonoBehaviour:
       nearby. I hear your tribe frequents the area, but I must ask\u2026 is it just
       you here?"
   - speakerName: SOLEMN RESIDENT
-    text: The shrine, huh? You must be crazy. That place is now nothing but the spawn
+    text: The shrine, huh? I must want you, that place is now nothing but the spawn
       of our demise.
   - speakerName: HUGO
-    text: "I\u2019m sorry? Demise?"
+    text: Demise?
   - speakerName: SOLEMN RESIDENT
-    text: We used to frequently visit the place for hopeful prayers that our hunting
-      sessions would be fruitful.
+    text: We used to visit there for prayers so that our hunting sessions would be
+      fruitful.
   - speakerName: SOLEMN RESIDENT
     text: Recently, however, the shrine has fallen ill. A virus that is slowly killing
       off all life in Thornden, including us.
   - speakerName: TENET
-    text: My master! Perhaps that is why that hostile creature looked to be in pain!
-  - speakerName: SOLEMN RESIDENT
-    text: "I\u2019m sorry\u2026 who are you supposed to be?"
+    text: My master! Perhaps that is why that wolf looked to be in pain!
+  - speakerName: ' SOLEMN RESIDENT '
+    text: Who are you supposed to be?
   - speakerName: TENET
-    text: "I am a being forged out of the inner machinations of my master\u2019s
-      soul. You may call me Tenet, however. We seek answers to my existence at your
-      shrine."
+    text: You may call me Tenet. We seek answers to my existence at your shrine.
   - speakerName: SOLEMN RESIDENT
-    text: "Oh! If you\u2019re truly a linked spirit, then perhaps you may live long
-      enough to outlast the virus\u2026"
+    text: "I\u2019ll be. A living spirit\u2026 \r\nPerhaps you may live long enough
+      to outlast the virus\u2026\r"
   - speakerName: TENET
     text: My master and I are more than capable of handling anything! If you wish,
-      we can also deal with this virus of yours ourselves!
+      we can also deal with this virus ourselves!
   - speakerName: SOLEMN RESIDENT
-    text: "Someone\u2019s confident. We appreciate the help, but I must warn you\u2026"
+    text: "We appreciate the help, but I must warn you\u2026"
   - speakerName: SOLEMN RESIDENT
-    text: Should either of you fall, the other will cease to exist. In your case,
-      Hugo, should Tenet fade away, you just might become nothing more than a husk.
-  - speakerName: HUGO
-    text: "\u2026"
+    text: Should either of you fall, the other will become nothing more than a husk.
   - speakerName: TENET
     text: Not to worry, resident! My master has faced death a number of times.
   - speakerName: SOLEMN RESIDENT
     text: "Even so\u2026 nevermind. Wish you the best of luck out there."
   - speakerName: TENET
     text: "Let\u2019s get a move on, master!"
-  - speakerName: SOLEMN RESIDENT
+  - speakerName: HUGO
     text: "\u2026"
-  - speakerName: SOLEMN RESIDENT
+  - speakerName: TENET
     text: Master?
-  - speakerName: SOLEMN RESIDENT
-    text: " HUGO remains silent for the rest of the two\u2019s time in the village. "
