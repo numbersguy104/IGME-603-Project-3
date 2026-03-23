@@ -214,12 +214,13 @@ public class CombatManager : SingletonBehavior<CombatManager>
             OnCombatLose?.Invoke();
         }
         
-        // TODO: Reward Player
         foreach (var character in playerCharacters)
         {
             character.GainExperience(expEarnedAfterCombat);
         }
-        
+
+        // TODO: Update the win/lose screen with amount of EXP earned
+
         foreach (var player_combat in playerCharacters_Combat)
             player_combat.OnCharacterDeath -= OnNotifiedCharacterDeath;
         foreach (var enemy_combat in enemies_Combat)

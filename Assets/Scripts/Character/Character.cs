@@ -58,11 +58,15 @@ public class Character
     public void GainExperience(float amount)
     {
         exp += amount;
-        while (exp > expToNextLevel)
+
+        if (expToNextLevel > 0)
         {
-            exp -= expToNextLevel;
-            level++;
-            OnLevelUp?.Invoke();
+            while (exp > expToNextLevel)
+            {
+                exp -= expToNextLevel;
+                level++;
+                OnLevelUp?.Invoke();
+            }
         }
     }
     

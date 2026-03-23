@@ -1279,7 +1279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTurn: 0
-  expEarnedAfterCombat: 0
+  expEarnedAfterCombat: 10
   OnCombatStart:
     m_PersistentCalls:
       m_Calls: []

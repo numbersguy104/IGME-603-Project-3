@@ -11,8 +11,9 @@ public class StatsTextUpdater : MonoBehaviour
 
     [SerializeField] private Characters character;
     [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private TextMeshProUGUI manaText;
-    
+    [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private TextMeshProUGUI levelText;
+
     void Start()
     {
         int charIndex = 0;
@@ -27,9 +28,14 @@ public class StatsTextUpdater : MonoBehaviour
             healthText.text = characterStats.CurrentHealth + "/" + characterStats.MaxHealth;
         }
 
-        if (manaText != null)
+        if (expText != null)
         {
-            manaText.text = characterStats.CurrentMana + "/" + characterStats.MaxMana;
+            expText.text = "EXP: " + characterStats.exp + "/" + characterStats.expToNextLevel;
+        }
+
+        if (levelText != null)
+        {
+            levelText.text = "Level " + characterStats.level;
         }
     }
 }

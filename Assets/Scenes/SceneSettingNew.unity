@@ -1143,7 +1143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 1
   healthText: {fileID: 245251121}
-  manaText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1001 &255306964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2763,7 +2764,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 1
   healthText: {fileID: 554905990}
-  manaText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &591031690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4862,7 +4864,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 0
   healthText: {fileID: 1101753433}
-  manaText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &1133635718
 GameObject:
   m_ObjectHideFlags: 0
@@ -6153,7 +6156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 1
   healthText: {fileID: 1282092499}
-  manaText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &1290854842
 GameObject:
   m_ObjectHideFlags: 0
@@ -7016,6 +7020,7 @@ GameObject:
   - component: {fileID: 1467008028}
   - component: {fileID: 1467008030}
   - component: {fileID: 1467008029}
+  - component: {fileID: 1467008031}
   m_Layer: 5
   m_Name: TeamLevel
   m_TagString: Untagged
@@ -7141,6 +7146,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467008027}
   m_CullTransparentMesh: 1
+--- !u!114 &1467008031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467008027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 1467008029}
 --- !u!1 &1479807745
 GameObject:
   m_ObjectHideFlags: 0
@@ -8167,7 +8188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 0
   healthText: {fileID: 1574553254}
-  manaText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &1604969303
 GameObject:
   m_ObjectHideFlags: 0
@@ -9412,6 +9434,7 @@ GameObject:
   - component: {fileID: 2006811330}
   - component: {fileID: 2006811332}
   - component: {fileID: 2006811331}
+  - component: {fileID: 2006811333}
   m_Layer: 5
   m_Name: EXP
   m_TagString: Untagged
@@ -9537,6 +9560,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006811329}
   m_CullTransparentMesh: 1
+--- !u!114 &2006811333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006811329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 0}
+  expText: {fileID: 2006811331}
+  levelText: {fileID: 0}
 --- !u!1 &2023781916
 GameObject:
   m_ObjectHideFlags: 0
@@ -10326,7 +10365,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 0
   healthText: {fileID: 2136255945}
-  manaText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
