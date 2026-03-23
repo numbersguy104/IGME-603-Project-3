@@ -255,9 +255,7 @@ public class GridManager : SingletonBehavior<GridManager>
     public Vector2Int? GetHoveredTile(bool shouldHighlight)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Vector2Int hitTile = new Vector2Int();
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             return PosToGrid(hit.point, true);
             Debug.Log("Hit object: " + hit.collider.gameObject.name);

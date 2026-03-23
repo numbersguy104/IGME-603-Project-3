@@ -91,7 +91,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
 
     public void UpdateSkillList()
     {
-        skillPanelUI.UpdateSkillList(PlayerController_Combat.Instance.currentCharacter.skills);
+        skillPanelUI.UpdateSKillButtons();
     }
     
     public void UpdateCombatInfo()
@@ -195,5 +195,10 @@ public class CombatUI : SingletonBehavior<CombatUI>
     public void SetPanelVisible(bool visible)
     {
         characterBackground.gameObject.SetActive(visible);
+    }
+
+    public void EndSelecting()
+    {
+        PlayerController_Combat.Instance.EndAllSelecting();
     }
 }

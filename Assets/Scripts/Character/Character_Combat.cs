@@ -22,7 +22,8 @@ public class Character_Combat
     public float MaxMana => maxMana;
 
     public float ATK;
-    public float Def;
+    public float DEF;
+    public float maxMovementDistance;
     
     public List<Vector2Int> attackRange;
     #endregion
@@ -51,6 +52,8 @@ public class Character_Combat
         mana = character.CurrentMana;
         maxMana = character.MaxMana;
         ATK = character.ATK;
+        DEF = character.DEF;
+        maxMovementDistance = character.maxMovementDistance;
         
         //TODO: Get attackRange from character (according to the weapon?);
         attackRange = new List<Vector2Int> { new(0, 1) }; // For week-1 Test Only
@@ -58,19 +61,7 @@ public class Character_Combat
         skills =  new List<Skill>();
         foreach (var skillData in character.skillSet)
         {
-            Skill skill = null;
-            switch (skillData.skillType)
-            {
-                case SkillType.Attack: 
-                    skill = new AttackSkill(skillData);
-                    break;
-                case SkillType.Defense:
-                    skill = new Defense(skillData);
-                    break;
-                case SkillType.Buff:
-                    skill = new BuffSkill(skillData);
-                    break;
-            }
+            Skill skill = SkillFactory.GetSkill(skillData);
             if(skill != null)
                 skills.Add(skill);
         }

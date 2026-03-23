@@ -15,6 +15,8 @@ MonoBehaviour:
   maxHP: 100
   maxMP: 100
   ATK: 10
+  DEF: 0
+  maxMovementDistance: 1
   entity: {fileID: 245729318324569779, guid: 3ebbf0f931ef3444baadb0c740c4bf76, type: 3}
   InitialSkillSet:
-  - {fileID: 11400000, guid: c93b59c9b8fb7a242a545bec44d9d73f, type: 2}
+  - {fileID: 11400000, guid: e1643c67b3fdb3e4b9d1db6a2e5d5b1d, type: 2}

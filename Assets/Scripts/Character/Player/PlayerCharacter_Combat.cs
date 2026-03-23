@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerCharacter_Combat : Character_Combat
 {
-    public int movesAvailable;
+    public float movesAvailable;
     public int attacksAvailable;
     public PlayerCharacter_Combat(Character data) : base(data)
     {
@@ -23,7 +23,7 @@ public class PlayerCharacter_Combat : Character_Combat
     public override void OnNotifiedTurnStart()
     {
         base.OnNotifiedTurnStart();
-        movesAvailable = 1;
+        movesAvailable = maxMovementDistance;
         attacksAvailable = 1;
     }
 

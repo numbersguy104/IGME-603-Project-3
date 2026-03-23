@@ -22,6 +22,8 @@ public class Character
     public float MaxMana => maxMana;
 
     public float ATK;
+    public float DEF;
+    public float maxMovementDistance;
 
     public float level;
     public float exp;
@@ -40,6 +42,8 @@ public class Character
         health = maxHealth = data.maxHP;
         mana = maxMana = data.maxMP;
         ATK = data.ATK;
+        DEF = data.DEF;
+        maxMovementDistance = data.maxMovementDistance;
         skillSet = data.InitialSkillSet;
         entityPrefab = data.entity;
     }
