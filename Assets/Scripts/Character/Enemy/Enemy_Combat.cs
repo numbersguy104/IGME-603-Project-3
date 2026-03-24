@@ -202,14 +202,14 @@ public class Enemy_Combat: Character_Combat
                 if (skill.SkillType == SkillType.Attack)
                 {
                     AttackParam param = skill.skillData.param as AttackParam;
-                    range = param.range;
+                    range = (skill.skillData.range as GridRange).relativeCoordinates;
                     foreach (PlayerCharacter_Combat character in CombatManager.Instance.playerCharacters_Combat)
                     {
                         targets.Add(character);
                     }
                 }
 
-                chosenPosition = GetTargetingTile(movableTiles, range, targets, skill.skillData.needAimingBeforeCast);
+                chosenPosition = GetTargetingTile(movableTiles, range, targets, skill.skillData.needAiming);
 
                 if (chosenPosition != null)
                 {
