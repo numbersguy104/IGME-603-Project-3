@@ -24,14 +24,17 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private Button endTurnButton;
     private UnityAction endTurnAction = () => PlayerController_Combat.Instance.EndPlayerTurn();
     [SerializeField] private Image characterBackground;
+    [SerializeField] private GameObject characterBackgroundPlaceholder;
     [SerializeField] private Button hugoButton;
     private UnityAction hugoAction = () => Instance.ChangeCharacter(Characters.HUGO);
     [SerializeField] private Button tenetButton;
     private UnityAction tenetAction = () => Instance.ChangeCharacter(Characters.TENET);
     [SerializeField] private GameObject healthDisplayPrefab;
 
+    public UnityEvent OnCombatInfoUpdated;
     public UnityEvent OnNotifiedWin;
     public UnityEvent OnNotifiedLose;
+    
     
     public void NotifyWin() => OnNotifiedWin?.Invoke();
     public void NotifyLose() => OnNotifiedLose?.Invoke();
@@ -64,6 +67,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
             HealthBarUI bar = Instantiate(healthDisplayPrefab, playerStatuses).GetComponent<HealthBarUI>();
             bar.character = player;
             bar.UpdateHealthValue(player.CurrentHealth, player.MaxHealth);
+            bar.UpdateIcon(player.entity.characterImage.sprite);
 
         }
         foreach (Enemy_Combat enemy in CombatManager.Instance.enemies_Combat)
@@ -71,9 +75,9 @@ public class CombatUI : SingletonBehavior<CombatUI>
             HealthBarUI bar = Instantiate(healthDisplayPrefab, enemyStatuses).GetComponent<HealthBarUI>();
             bar.character = enemy;
             bar.UpdateHealthValue(enemy.CurrentHealth, enemy.MaxHealth);
+            bar.UpdateIcon(enemy.entity.characterImage.sprite);
         }
 
-        UpdateSkillList();
         UpdateItems();
         UpdateCombatInfo();
 
@@ -89,16 +93,13 @@ public class CombatUI : SingletonBehavior<CombatUI>
         }
     }
 
-    public void UpdateSkillList()
-    {
-        skillPanelUI.UpdateSkillList(PlayerController_Combat.Instance.currentCharacter.skills);
-    }
-    
     public void UpdateCombatInfo()
     {
         UpdateHP();
-        UpdateSkillList();
         UpdateStatus();
+        OnCombatInfoUpdated?.Invoke();
+
+        moveButton.interactable = PlayerController_Combat.Instance.currentCharacter.movesAvailable > 0.01f;
     }
 
     public void UpdateItems()
@@ -190,10 +191,18 @@ public class CombatUI : SingletonBehavior<CombatUI>
          {
              characterBackground.color = new Color(0.0f, 0.5f, 0.375f);
          }
+         
+         OnCombatInfoUpdated?.Invoke();
     }
 
     public void SetPanelVisible(bool visible)
     {
         characterBackground.gameObject.SetActive(visible);
+        characterBackgroundPlaceholder.SetActive(!visible);
+    }
+
+    public void EndSelecting()
+    {
+        PlayerController_Combat.Instance.EndAllSelecting();
     }
 }

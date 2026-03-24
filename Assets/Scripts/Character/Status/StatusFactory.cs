@@ -14,14 +14,14 @@ public static class StatusFactory
         StatusData[] allStatuses = Resources.LoadAll<StatusData>("Combat/Status");
         foreach (StatusData status in allStatuses)
         {
-            Type type = Type.GetType($"Status_{status.statusName}");
+            Type type = Type.GetType($"Status_{status.name}");
             if (type == null)
             {
-                Debug.LogError($"Implementation of Status_{status.statusName} not found");
+                Debug.LogError($"Implementation of Status_{status.name} not found");
                 return;
             }
             ConstructorInfo constructor = type?.GetConstructor(new Type[] { typeof(StatusData), typeof(Character_Combat), typeof(int) });
-            statusDict[status.statusName] = constructor;
+            statusDict[status.name] = constructor;
         }
     }
     
@@ -34,10 +34,10 @@ public static class StatusFactory
     /// <returns></returns>
     public static Status GetStatus(StatusData data, Character_Combat owner, int turns)
     {
-        if (statusDict.TryGetValue(data.statusName, out var constructor))
+        if (statusDict.TryGetValue(data.name, out var constructor))
             return constructor.Invoke(new object[] {data, owner, turns}) as Status;
 
-        Debug.LogError($"Unknown Status: {data.statusName}");
+        Debug.LogError($"Unknown Status: {data.name}");
         return null;
     }
 }

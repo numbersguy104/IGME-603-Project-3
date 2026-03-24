@@ -14,6 +14,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public List<Enemy_Combat> enemies_Combat = new List<Enemy_Combat>();
     
     public Team currentTurn;
+    public int SkillPointRegenEveryTurn;
     public float expEarnedAfterCombat;
     
     public UnityEvent OnCombatStart;
@@ -34,10 +35,20 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     void SampleCombat()
     {
-        PlayerCharacter hugo = new PlayerCharacter(Resources.Load<PlayerData>("Test/Hugo"));
-        PlayerCharacter tenet = new PlayerCharacter(Resources.Load<PlayerData>("Test/Tenet"));
         Enemy enemy = new Enemy(Resources.Load<EnemyData>("Test/Enemy"));
-        StartCombat(new List<PlayerCharacter>{hugo, tenet}, new List<Enemy>{enemy}, false);
+
+        //CharacterStatsManager should exist already in the main game
+        //It may be null if entering combat scene directly from the editor
+        if (CharacterStatsManager.Instance == null)
+        {
+            PlayerCharacter hugo = new PlayerCharacter(Resources.Load<PlayerData>("Test/Hugo"));
+            PlayerCharacter tenet = new PlayerCharacter(Resources.Load<PlayerData>("Test/Tenet"));
+            StartCombat(new List<PlayerCharacter> { hugo, tenet }, new List<Enemy> { enemy }, false);
+        }
+        else
+        {
+            StartCombat(CharacterStatsManager.Instance.characters, new List<Enemy> { enemy }, false);
+        }
         currentTurn = Team.Player;
     }
 
@@ -205,17 +216,22 @@ public class CombatManager : SingletonBehavior<CombatManager>
             OnCombatLose?.Invoke();
         }
         
-        // TODO: Reward Player
         foreach (var character in playerCharacters)
         {
             character.GainExperience(expEarnedAfterCombat);
         }
-        
+
+        // TODO: Update the win/lose screen with amount of EXP earned
+
         foreach (var player_combat in playerCharacters_Combat)
             player_combat.OnCharacterDeath -= OnNotifiedCharacterDeath;
         foreach (var enemy_combat in enemies_Combat)
             enemy_combat.OnCharacterDeath -= OnNotifiedCharacterDeath;
         
+        if (CharacterStatsManager.Instance != null) {
+            CharacterStatsManager.Instance.hugo.UpdateStateFromCombat(playerCharacters_Combat[0]);
+            CharacterStatsManager.Instance.tenet.UpdateStateFromCombat(playerCharacters_Combat[1]);
+        }
     }
 
     public void ExitCombatScene()

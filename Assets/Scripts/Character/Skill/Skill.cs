@@ -17,22 +17,24 @@ public class Skill
     }
 
     /// <summary>
-    /// Do something special when the skill is used. Only costing mana in this base class
+    /// Do something special when the skill is used. Only costing SP in this base class
     /// </summary>
     /// <param name="instigator">The skill user</param>
     public virtual void Execute(Character_Combat instigator)
     {
-        if (instigator.CurrentMana < skillData.cost)
+        if (instigator.CurrentSkillPoint < skillData.cost)
         {
-            // TODO: No Enough Mana
+            // TODO: No Enough SP
         }
         else
         {
-            instigator.CostMana(skillData.cost);
+            instigator.CostSP(skillData.cost);
         }
+
+        cooldownRemained = maxCooldown;
     }
 
-    public void NotifyTurnEnd()
+    public virtual void NotifyTurnEnd()
     {
         cooldownRemained = Math.Max(cooldownRemained - 1, 0);
     }

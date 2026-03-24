@@ -10,31 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
-  m_Name: FireBall
+  m_Name: NormalAttack_Hugo
   m_EditorClassIdentifier: 
-  skillName: Fire Ball
-  skillDescription: Deal Fire Damage to a multiple cells, and apply burnt
+  skillName: Normal Attack Hugo
+  skillDescription: 
   skillIcon: {fileID: 0}
   skillType: 0
+  rangeType: 0
   cost: 0
   cooldown: 0
-  needAimingBeforeCast: 1
+  needAiming: 1
+  range:
+    rid: 960499811303555625
   param:
-    rid: 960499314102894676
+    rid: 960499811303555236
   references:
     version: 2
     RefIds:
-    - rid: 960499314102894676
+    - rid: 960499811303555236
       type: {class: AttackParam, ns: , asm: Assembly-CSharp}
       data:
         ATKRatio: 1
-        range:
+        statusOnHit: []
+    - rid: 960499811303555625
+      type: {class: GridRange, ns: , asm: Assembly-CSharp}
+      data:
+        relativeCoordinates:
         - {x: 0, y: 1}
-        - {x: 0, y: 2}
-        - {x: 0, y: 3}
-        - {x: 0, y: 4}
-        - {x: 0, y: 5}
-        - {x: 0, y: 6}
-        statusOnHit:
-        - status: {fileID: 11400000, guid: eb322da60ca9afe4eab2581d930df2ff, type: 2}
-          turns: 2

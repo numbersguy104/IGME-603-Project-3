@@ -18,11 +18,14 @@ public class GridTile : MonoBehaviour
             renderer.GetPropertyBlock(mpb);
             switch (i)
             {
-                case (int)HighlightType.Attacking:
+                case (int)HighlightType.InAttackingRange:
                     mpb.SetFloat("_IsInAtkRange", (type & j) > 0 ? 1 : 0);
                     break;
                 case (int)HighlightType.Hovered:
                     mpb.SetFloat("_IsHovered", (type & j) > 0 ? 1 : 0);
+                    break;
+                case (int)HighlightType.InMovingRange:
+                    mpb.SetFloat("_IsInMoveRange", (type & j) > 0 ? 1 : 0);
                     break;
             }
             renderer.SetPropertyBlock(mpb);

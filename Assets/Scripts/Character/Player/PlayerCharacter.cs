@@ -2,9 +2,10 @@ using System.Collections.Generic;
 
 public class PlayerCharacter : Character
 {
-    public PlayerCharacter(CharacterData data) : base(data)
+    public SkillData normalAttack;
+    public PlayerCharacter(PlayerData data) : base(data)
     {
-        
+        normalAttack = data.normalAttack;
     }
 
 }
