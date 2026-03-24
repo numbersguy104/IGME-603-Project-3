@@ -310,13 +310,13 @@ public class GridManager : SingletonBehavior<GridManager>
     public Vector2Int[] GetTilesWithinRange(Vector2Int origin, int range)
     {
         List<Vector2Int> tilesInRange = new List<Vector2Int>();
-        for (int x = -range; x < range; x++)
-        for (int y = -range; y < range; y++)
+        for (int x = -range; x <= range; x++)
+        for (int y = -range; y <= range; y++)
         {
             int X = origin.x + x;
             int Y = origin.y + y;
             if( X >=0  && X < grid.GetLength(0) && Y >= 0 && Y < grid.GetLength(1))
-                if( Mathf.Abs(x) + Mathf.Abs(y) < range)
+                if( Math.Abs(x) + Math.Abs(y) <= range)
                     tilesInRange.Add(new Vector2Int(X, Y));
         }
         return tilesInRange.ToArray();

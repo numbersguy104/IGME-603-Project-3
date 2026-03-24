@@ -236,7 +236,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: a1a8abc02a585354cba61dbcf37d9ac2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -387,6 +387,8 @@ MonoBehaviour:
   characterSpriteFront: {fileID: 21300000, guid: a1a8abc02a585354cba61dbcf37d9ac2, type: 3}
   characterSpriteBack: {fileID: 21300000, guid: bd9ba53664bb98049afac3a631ca60eb, type: 3}
   rangeRenderer: {fileID: 903245118086411937}
+  moveRangeColor: {r: 0, g: 0, b: 0, a: 0}
+  attackRangeColor: {r: 0, g: 0, b: 0, a: 0}
   moveSpeed: 1
 --- !u!1 &9054654304945112857
 GameObject:
