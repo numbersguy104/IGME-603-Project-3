@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: DD_StartScene
   m_EditorClassIdentifier: 
   dialogueLines:
-  - speakerName: 
+  - speakerName: ' '
     text: HUGO finishes packing up the campsite he set up the night prior. The fireplace
-      nearby is burnt out.
-  - speakerName: 
-    text: TENET wanders over to HUGO from nearby.
+      nearby is burnt out. TENET waits nearby, looming close to HUGO.
   - speakerName: TENET
     text: Are you not going to dismantle that fireplace of yours?
   - speakerName: HUGO
@@ -34,8 +32,8 @@ MonoBehaviour:
     text: "*sigh* Looks like we\u2019ll have to pass through a village to get to
       the Twin Mountain peaks. Can you please stay quiet when we get there, Tenet?"
   - speakerName: TENET
-    text: "Why should I? I\u2019m sure they would not mind my presence. Besides,
-      what if something happens to you and you can\u2019t fight back?"
+    text: "\rWhy should I? I\u2019m sure they would not mind my presence. Besides,
+      what if something happens to you and you can\u2019t fight back?\r\n"
   - speakerName: HUGO
     text: "Fine, but don\u2019t wander off and get me in trouble."
   - speakerName: TENET

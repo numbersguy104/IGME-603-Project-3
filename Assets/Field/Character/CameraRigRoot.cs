@@ -22,6 +22,9 @@ public class CameraRigFollow3D : MonoBehaviour
     /// </summary>
     public Vector3 worldOffset = new Vector3(0f, 6f, -6f);
 
+    [Header("Camera Bounds")]
+    public BoxCollider cameraBoundsCollider;
+
     [Header("Lock Rotation")]
     /// <summary>
     /// If true, the camera's rotation is locked to its initial value.
@@ -48,6 +51,17 @@ public class CameraRigFollow3D : MonoBehaviour
 
         // Follow position (including Y) so the camera stays centered even when the target moves uphill/downhill
         Vector3 desiredPos = target.position + worldOffset;
+
+
+        // Clamp to bounds if provided
+        if (cameraBoundsCollider != null)
+        {
+            Bounds camBounds = cameraBoundsCollider.bounds;
+
+            desiredPos.x = Mathf.Clamp(desiredPos.x, camBounds.min.x, camBounds.max.x);
+            desiredPos.z = Mathf.Clamp(desiredPos.z, camBounds.min.z, camBounds.max.z);
+        }
+
         transform.position = Vector3.Lerp(
             transform.position,
             desiredPos,

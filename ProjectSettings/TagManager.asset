@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - GhostLayer
-  - Ground
-  - 
+  - PlayerGhost
+  - PlayerSolid
+  - PushableObject
   - 
   - 
   - 
