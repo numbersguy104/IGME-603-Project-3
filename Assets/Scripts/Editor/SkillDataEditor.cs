@@ -44,6 +44,7 @@ public class SkillDataEditor : Editor
     bool IsRangeTypeMatch(RangeType type, Range range)
     {
         return (type == RangeType.Grid && range is GridRange) ||
-               (type == RangeType.Sector && range is SectorRange);
+               (type == RangeType.Sector && range is SectorRange) ||
+               (type == RangeType.Circle && range is CircleRange);
     }
 }

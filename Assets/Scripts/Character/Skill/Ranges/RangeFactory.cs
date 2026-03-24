@@ -6,10 +6,10 @@ public static class RangeFactory
         {
             case RangeType.Grid:
                 return new GridRange();
-                break;
             case RangeType.Sector:
                 return new SectorRange();
-                break;
+            case RangeType.Circle:
+                return new CircleRange();
         }
 
         return null;

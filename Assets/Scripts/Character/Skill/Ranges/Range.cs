@@ -12,6 +12,6 @@ public abstract class Range
 public enum RangeType
 {
     Grid,
-    PointWithinDistance,
+    Circle,
     Sector
 }

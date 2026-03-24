@@ -5,6 +5,7 @@ using System.Numerics;
 using UnityEngine;
 using Utility;
 using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat>
@@ -18,6 +19,9 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     
     private bool isSelectingPosition = false;
     public bool IsSelectingPosition => isSelectingPosition;
+
+    private bool isSelectingTarget;
+    public bool IsSelectingTarget => isSelectingTarget;
     
     private bool isAiming = false;
     public bool IsAiming => isAiming;
@@ -31,7 +35,10 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     {
         if (CombatManager.Instance.currentTurn != Team.Player)
             return;
-        UseSkill(currentCharacter.normalAttack);
+        if(currentCharacter == teamMembers[0])
+            UseSkill(currentCharacter.normalAttack);
+        else
+            StartSelecting(SelectionType.Target);
         // EndPlayerTurn();
     }
     
@@ -117,7 +124,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     {
         Tile,
         Position,
-        Orientation
+        Orientation,
+        Target
     }
     private void StartSelecting(SelectionType selectionType, object obj = null)
     {
@@ -131,6 +139,9 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
                 break;
             case SelectionType.Orientation:
                 StartCoroutine(nameof(Aiming), obj);
+                break;
+            case SelectionType.Target:
+                StartCoroutine(nameof(TargetSelecting));
                 break;
         }
     }
@@ -146,7 +157,14 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         if (isSelectingPosition)
         {
             StopCoroutine(nameof(PositionSelecting));
+            currentCharacter.entity.HideRange();
             isSelectingPosition = false;
+        }
+        if (isSelectingTarget)
+        {
+            StopCoroutine(nameof(TargetSelecting));
+            currentCharacter.entity.HideRange();
+            isSelectingTarget = false;
         }
         if (isAiming)
         {
@@ -188,6 +206,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     {
         isSelectingPosition = true;
         Vector3? targetPosition = null;
+        currentCharacter.entity.DisplayRange(currentCharacter.movesAvailable * currentCharacter.maxMovementDistance, RoundRangeHighlight.Move);
         while (true)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -209,6 +228,45 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
             Vector3 restrictedPosition = Vector3.MoveTowards(currentCharacter.entity.transform.position, targetPosition.Value, distance);
             MoveTo(restrictedPosition);
         }
+        currentCharacter.entity.HideRange();
+        isSelectingPosition = false;
+    }
+    
+    IEnumerator TargetSelecting()
+    {
+        isSelectingTarget = true;
+        GameObject target = null;
+        Vector2Int targetPosition;
+        currentCharacter.entity.DisplayRange((currentCharacter.normalAttack.skillData.range as CircleRange).radius, RoundRangeHighlight.Attack);
+        while (true)
+        {
+            targetPosition = GridManager.Instance.GetHoveredTile(true) ?? new Vector2Int(-1,-1);
+            target = GridManager.Instance.GetAt(targetPosition.x, targetPosition.y);
+            yield return null;
+            if (Input.GetMouseButtonDown(0) && targetPosition.x >= 0 && target !=null && target.GetComponent<CombatEntity>().character.team != Team.Player)
+                break;
+            if(Input.GetMouseButtonDown(1))
+                EndAllSelecting();
+        }
+        
+        AttackParam attackParam = currentCharacter.normalAttack.skillData.param as AttackParam;
+
+        void ApplyStatus(Character_Combat source, Character_Combat target, float dmg)
+        {
+            foreach (var effectWithChances in attackParam.statusOnHit)
+                if(Random.Range(0f, 1f) < effectWithChances.chance)
+                    target.AddStatus(effectWithChances.statusWithTurns.status, effectWithChances.statusWithTurns.turns);
+        }
+
+        GridManager.Instance.ApplyDamageToCells(currentCharacter,
+            new []{targetPosition},
+            attackParam.ATKRatio * currentCharacter.ATK,
+            ApplyStatus
+        );
+        currentCharacter.attacksAvailable--;
+        CombatUI.Instance.UpdateCombatInfo();
+        
+        currentCharacter.entity.HideRange();
         isSelectingPosition = false;
     }
     

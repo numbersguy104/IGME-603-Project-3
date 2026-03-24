@@ -16,12 +16,12 @@ MonoBehaviour:
   skillDescription: 
   skillIcon: {fileID: 0}
   skillType: 0
-  rangeType: 0
+  rangeType: 1
   cost: 0
   cooldown: 0
   needAiming: 1
   range:
-    rid: 960499811303555625
+    rid: 960499832875123526
   param:
     rid: 960499811303555236
   references:
@@ -36,12 +36,7 @@ MonoBehaviour:
             status: {fileID: 11400000, guid: eb322da60ca9afe4eab2581d930df2ff, type: 2}
             turns: 2
           chance: 0.2
-    - rid: 960499811303555625
-      type: {class: GridRange, ns: , asm: Assembly-CSharp}
+    - rid: 960499832875123526
+      type: {class: CircleRange, ns: , asm: Assembly-CSharp}
       data:
-        relativeCoordinates:
-        - {x: 0, y: 1}
-        - {x: 0, y: 2}
-        - {x: 0, y: 3}
-        - {x: 0, y: 4}
-        - {x: 0, y: 5}
+        radius: 7
