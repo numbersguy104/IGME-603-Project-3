@@ -132,12 +132,11 @@ public class CombatManager : SingletonBehavior<CombatManager>
             OnEnemyTurnStart?.Invoke();
             CombatUI.Instance.UpdateCombatInfo();
             CombatUI.Instance.SetPanelVisible(false);
-            
-            foreach (Enemy_Combat enemy in enemies_Combat)
-            {
-                yield return enemy.Act();
-            } 
+            // Placeholder for enemies' actions
+            yield return new WaitForSeconds(2f); 
             EndTurn(Team.Enemy);
+            
+            // TODO: yield return new WaitWhile(() => !isPlayerTurn);
             OnEnemyTurnEnd?.Invoke();
             CombatUI.Instance.SetPanelVisible(true);
         }
