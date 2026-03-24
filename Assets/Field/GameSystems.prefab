@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueUI: {fileID: 0}
+  teamController: {fileID: 0}
 --- !u!1 &6091384763247037077
 GameObject:
   m_ObjectHideFlags: 0
