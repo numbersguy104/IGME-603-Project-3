@@ -1268,6 +1268,10 @@ PrefabInstance:
       propertyPath: teamController
       value: 
       objectReference: {fileID: 1989289569}
+    - target: {fileID: 3124031866419055727, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
+      propertyPath: sceneB
+      value: CombatTestShuyang
+      objectReference: {fileID: 0}
     - target: {fileID: 4277664120459115559, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
       propertyPath: characterTeam
       value: 
