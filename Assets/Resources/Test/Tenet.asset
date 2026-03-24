@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Tenet
   m_EditorClassIdentifier: 
   maxHP: 100
-  maxMP: 100
+  initialSkillPoint: 0
   ATK: 10
   DEF: 0
-  maxMovementDistance: 10
+  maxMovementDistance: 5
   entity: {fileID: 245729318324569779, guid: 54d393fe579f0e44b9231488b08cc3f5, type: 3}
+  normalAttack: {fileID: 11400000, guid: 564f5f2438d3c3f4bbb650f6621501fb, type: 2}
   InitialSkillSet:
   - {fileID: 11400000, guid: c93b59c9b8fb7a242a545bec44d9d73f, type: 2}

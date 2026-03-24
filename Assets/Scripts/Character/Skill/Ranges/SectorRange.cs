@@ -33,6 +33,6 @@ public class SectorRange : Range
         float angleToPoint = Quaternion.FromToRotation(from.forward, point - from.position).eulerAngles.y;
         if(angleToPoint > 180)
             angleToPoint -= 360;
-        return Mathf.Abs(angleToPoint) < angle && Vector3.Distance(point, from.position) < radius;
+        return Mathf.Abs(angleToPoint) < angle / 2 && Vector3.Distance(point, from.position) < radius;
     }
 }

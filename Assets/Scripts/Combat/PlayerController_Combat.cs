@@ -11,6 +11,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 {
     public List<PlayerCharacter_Combat> teamMembers;
     public PlayerCharacter_Combat currentCharacter;
+    public Characters currentCharacterName => currentCharacter == null || currentCharacter == teamMembers[0] ? Characters.HUGO : Characters.TENET;
 
     private bool isSelectingTile = false;
     public bool IsSelectingTile => isSelectingTile;
@@ -28,13 +29,9 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
     public void Attack()
     {
-        EndAllSelecting();
         if (CombatManager.Instance.currentTurn != Team.Player)
             return;
-        Debug.Log("Player Attack");
-        GridManager.Instance.ApplyDamageToCells(currentCharacter, currentCharacter.TransformRangeToWorld(currentCharacter.attackRange.ToArray()), currentCharacter.ATK);
-        currentCharacter.attacksAvailable--;
-        CombatUI.Instance.UpdateCombatInfo();
+        UseSkill(currentCharacter.normalAttack);
         // EndPlayerTurn();
     }
     
@@ -142,6 +139,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         if (isSelectingTile)
         {
             GridManager.Instance.RemoveHighlight(hoveredHighlight);
+            GridManager.Instance.RemoveHighlight(rangeHighlight);
             StopCoroutine(nameof(TileSelecting));
             isSelectingTile = false;
         }
@@ -159,23 +157,30 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     }
 
     private GridHighlight hoveredHighlight;
+    private GridHighlight rangeHighlight;
     IEnumerator TileSelecting()
     {
-        Vector2Int[] highlightedTile = new[] { new Vector2Int(-1, -1) };
+        Vector2Int[] selectedTile = new[] { new Vector2Int(-1, -1) };
         isSelectingTile = true;
-        hoveredHighlight = new GridHighlight(highlightedTile, HighlightType.Hovered);
+        hoveredHighlight = new GridHighlight(selectedTile, HighlightType.Hovered);
         GridManager.Instance.AddHighlight(hoveredHighlight);
+        Vector2Int[] tilesInrange = GridManager.Instance.GetTilesWithinRange(GridManager.Instance.PosToGrid(currentCharacter.entity.transform.position), (int)currentCharacter.maxMovementDistance);
+        rangeHighlight = new GridHighlight(tilesInrange, HighlightType.InMovingRange);
+        GridManager.Instance.AddHighlight(rangeHighlight);
         while (true)
         {
-            highlightedTile[0] = GridManager.Instance.GetHoveredTile(true) ?? new Vector2Int(-1,-1);
+            selectedTile[0] = GridManager.Instance.GetHoveredTile(true) ?? new Vector2Int(-1,-1);
             GridManager.Instance.RefreshHighlight();
             yield return null;
-            if (Input.GetMouseButtonDown(0) && highlightedTile[0].x != -1 && GridManager.Instance.GetAt(highlightedTile[0].x,  highlightedTile[0].y) == null && GetDistanceTo(highlightedTile[0]) < currentCharacter.maxMovementDistance)
+            if (Input.GetMouseButtonDown(0) && selectedTile[0].x != -1 && GridManager.Instance.GetAt(selectedTile[0].x,  selectedTile[0].y) == null && GetDistanceTo(selectedTile[0]) <= currentCharacter.maxMovementDistance)
                 break;
+            if(Input.GetMouseButtonDown(1))
+                EndAllSelecting();
         }
-        if(highlightedTile[0].x != -1)
-            MoveTo(highlightedTile[0]);
+        if(selectedTile[0].x != -1)
+            MoveTo(selectedTile[0]);
         GridManager.Instance.RemoveHighlight(hoveredHighlight);
+        GridManager.Instance.RemoveHighlight(rangeHighlight);
         isSelectingTile = false;
     }
 
@@ -193,12 +198,14 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
             yield return null;
             if (Input.GetMouseButtonDown(0) && targetPosition != null)
                 break;
+            if(Input.GetMouseButtonDown(1))
+                EndAllSelecting();
         }
 
         if (targetPosition != null)
         {
             float distance = Mathf.Min(Vector3.Distance(targetPosition.Value, currentCharacter.entity.transform.position),
-                currentCharacter.movesAvailable);
+                currentCharacter.movesAvailable * currentCharacter.maxMovementDistance);
             Vector3 restrictedPosition = Vector3.MoveTowards(currentCharacter.entity.transform.position, targetPosition.Value, distance);
             MoveTo(restrictedPosition);
         }
@@ -216,7 +223,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
                 Vector2Int[] tiles = attack.skillData.range.GetAllTileCovered(currentCharacter);
                 for (int i = 0; i < tiles.Length; i++)
                     highlightedTiles[i] = tiles[i];
-                attackingHighlight = new GridHighlight(highlightedTiles, HighlightType.Attacking);
+                attackingHighlight = new GridHighlight(highlightedTiles, HighlightType.InAttackingRange);
                 GridManager.Instance.AddHighlight(attackingHighlight);
                 break;
         }
@@ -258,6 +265,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
             if (Input.GetMouseButtonDown(0) && hit.transform != null)
                 break;
+            if(Input.GetMouseButtonDown(1))
+                EndAllSelecting();
         }
         
         switch (obj)
@@ -296,7 +305,6 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         GridManager.Instance.Move(currentPosition.x, currentPosition.y, targetTile.x, targetTile.y, false);
         currentCharacter.entity.MoveTo(targetPosition);
         EndAllSelecting();
-        currentCharacter.movesAvailable -= displacement.magnitude;
         CombatUI.Instance.UpdateCombatInfo();
         // EndPlayerTurn();
     }

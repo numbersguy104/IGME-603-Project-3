@@ -17,7 +17,7 @@ MonoBehaviour:
   skillIcon: {fileID: 0}
   skillType: 0
   rangeType: 0
-  cost: 0
+  cost: 3
   cooldown: 0
   needAiming: 1
   range:
@@ -31,6 +31,7 @@ MonoBehaviour:
       type: {class: AttackParam, ns: , asm: Assembly-CSharp}
       data:
         ATKRatio: 1
+        statusOnHit: []
     - rid: 960499811303555625
       type: {class: GridRange, ns: , asm: Assembly-CSharp}
       data:

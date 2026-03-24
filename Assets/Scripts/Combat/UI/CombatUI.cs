@@ -31,8 +31,10 @@ public class CombatUI : SingletonBehavior<CombatUI>
     private UnityAction tenetAction = () => Instance.ChangeCharacter(Characters.TENET);
     [SerializeField] private GameObject healthDisplayPrefab;
 
+    public UnityEvent OnCombatInfoUpdated;
     public UnityEvent OnNotifiedWin;
     public UnityEvent OnNotifiedLose;
+    
     
     public void NotifyWin() => OnNotifiedWin?.Invoke();
     public void NotifyLose() => OnNotifiedLose?.Invoke();
@@ -76,7 +78,6 @@ public class CombatUI : SingletonBehavior<CombatUI>
             bar.UpdateIcon(enemy.entity.characterImage.sprite);
         }
 
-        UpdateSkillList();
         UpdateItems();
         UpdateCombatInfo();
 
@@ -92,16 +93,13 @@ public class CombatUI : SingletonBehavior<CombatUI>
         }
     }
 
-    public void UpdateSkillList()
-    {
-        skillPanelUI.UpdateSKillButtons();
-    }
-    
     public void UpdateCombatInfo()
     {
         UpdateHP();
-        UpdateSkillList();
         UpdateStatus();
+        OnCombatInfoUpdated?.Invoke();
+
+        moveButton.interactable = PlayerController_Combat.Instance.currentCharacter.movesAvailable > 0.01f;
     }
 
     public void UpdateItems()
@@ -193,6 +191,8 @@ public class CombatUI : SingletonBehavior<CombatUI>
          {
              characterBackground.color = new Color(0.0f, 0.5f, 0.375f);
          }
+         
+         OnCombatInfoUpdated?.Invoke();
     }
 
     public void SetPanelVisible(bool visible)

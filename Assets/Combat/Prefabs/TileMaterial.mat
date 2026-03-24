@@ -52,8 +52,8 @@ Material:
     - _DefaultColor_0: {r: 1, g: 1, b: 1, a: 0}
     - _DefaultColor_1: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0}
     - _HighlightColor: {r: 1, g: 0.7719127, b: 0, a: 0}
-    - _HoveredColor: {r: 1, g: 0.7971634, b: 0, a: 0}
-    - _InMoveRangeColor: {r: 1, g: 0.9499881, b: 0, a: 1}
+    - _HoveredColor: {r: 1, g: 0.79716337, b: 0, a: 1}
+    - _InMoveRangeColor: {r: 1, g: 0.7960785, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2069381910590212589

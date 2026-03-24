@@ -40,6 +40,10 @@ public class CombatEntity : MonoBehaviour
         while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            PlayerController_Combat.Instance.currentCharacter.movesAvailable -= (moveSpeed * Time.deltaTime) / PlayerController_Combat.Instance.currentCharacter.maxMovementDistance;
+            if (PlayerController_Combat.Instance.currentCharacter.movesAvailable < 0.05f)
+                PlayerController_Combat.Instance.currentCharacter.movesAvailable = 0;
+            CombatUI.Instance.UpdateCombatInfo();
             yield return null;
         }
     }

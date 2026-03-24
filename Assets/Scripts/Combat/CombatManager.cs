@@ -14,6 +14,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public List<Enemy_Combat> enemies_Combat = new List<Enemy_Combat>();
     
     public Team currentTurn;
+    public int SkillPointRegenEveryTurn;
     public float expEarnedAfterCombat;
     
     public UnityEvent OnCombatStart;

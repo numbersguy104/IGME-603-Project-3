@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
-  m_Name: FlareBlast
+  m_Name: NormalAttack_Hugo
   m_EditorClassIdentifier: 
-  skillName: Flare Blast
+  skillName: Normal Attack Hugo
   skillDescription: 
   skillIcon: {fileID: 0}
   skillType: 0
-  rangeType: 2
-  cost: 3
+  rangeType: 0
+  cost: 0
   cooldown: 0
   needAiming: 1
   range:
-    rid: 960499811303555609
+    rid: 960499811303555625
   param:
     rid: 960499811303555236
   references:
@@ -31,13 +31,9 @@ MonoBehaviour:
       type: {class: AttackParam, ns: , asm: Assembly-CSharp}
       data:
         ATKRatio: 1
-        statusOnHit:
-        - statusWithTurns:
-            status: {fileID: 11400000, guid: eb322da60ca9afe4eab2581d930df2ff, type: 2}
-            turns: 2
-          chance: 50
-    - rid: 960499811303555609
-      type: {class: SectorRange, ns: , asm: Assembly-CSharp}
+        statusOnHit: []
+    - rid: 960499811303555625
+      type: {class: GridRange, ns: , asm: Assembly-CSharp}
       data:
-        angle: 60
-        radius: 3
+        relativeCoordinates:
+        - {x: 0, y: 1}

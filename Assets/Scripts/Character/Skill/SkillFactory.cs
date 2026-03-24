@@ -8,7 +8,7 @@ public static class SkillFactory
 {
     private static Dictionary<string, ConstructorInfo> skillDict = new Dictionary<string, ConstructorInfo>();
 
-    [RuntimeInitializeOnLoadMethod]
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void RegisterAllSkills()
     {
         SkillData[] allSkills = Resources.LoadAll<SkillData>("Combat/Skills");
@@ -31,9 +31,9 @@ public static class SkillFactory
             }
             else
             {
-                Debug.Log($"Register: {skill.name}");
                 constructor = type?.GetConstructor(new Type[] { typeof(SkillData)});
             }
+            Debug.Log($"Register: {skill.name}");
             skillDict[skill.name] = constructor;
         }
     }

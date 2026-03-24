@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillPanelUI : MonoBehaviour
 {
     public List<SkillButton> buttonList;
-
     private void Awake()
     {
         Transform skillButtons = transform.Find("Skills");
@@ -34,6 +34,13 @@ public class SkillPanelUI : MonoBehaviour
         }
 
         UpdateSKillButtons();
+        
+        CombatUI.Instance.OnCombatInfoUpdated.AddListener(UpdateSKillButtons);
+    }
+
+    private void OnDisable()
+    {
+        CombatUI.Instance.OnCombatInfoUpdated.RemoveListener(UpdateSKillButtons);
     }
 
     public void UpdateSKillButtons()
@@ -45,7 +52,7 @@ public class SkillPanelUI : MonoBehaviour
             if(skillButton.gameObject.activeSelf == false)
                 continue;
             Skill skill = skillButton.skill;
-            skillButton.interactable = PlayerController_Combat.Instance.currentCharacter.CurrentMana >= skill.skillData.cost;
+            skillButton.interactable = skill.isReady && PlayerController_Combat.Instance.currentCharacter.CurrentSkillPoint >= skill.skillData.cost;
             switch (skill)
             {
                 case AttackSkill:
