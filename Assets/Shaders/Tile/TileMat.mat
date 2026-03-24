@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TileMaterial
+  m_Name: TileMat
   m_Shader: {fileID: -6465566751694194690, guid: 755b3dce94944d44f849d89fe026d6c8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,22 +38,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Interval: 2
     - _IsHovered: 0
     - _IsInAtkRange: 0
-    - _IsInMoveRange: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Type: 0
-    - _Width: 0.2
     - _isHighlighted: 0
     m_Colors:
     - _AttackedColor: {r: 1, g: 0.4009434, b: 0.4009434, a: 0}
     - _DefaultColor_0: {r: 1, g: 1, b: 1, a: 0}
     - _DefaultColor_1: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0}
     - _HighlightColor: {r: 1, g: 0.7719127, b: 0, a: 0}
-    - _HoveredColor: {r: 1, g: 0.79716337, b: 0, a: 1}
-    - _InMoveRangeColor: {r: 1, g: 0.7960785, b: 0, a: 1}
+    - _HoveredColor: {r: 1, g: 0.7971634, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2069381910590212589

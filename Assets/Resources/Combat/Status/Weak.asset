@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cac35f45a0ed47118d83f0e607055d53, type: 3}
-  m_Name: Crippled
+  m_Name: Weak
   m_EditorClassIdentifier: 
-  statusName: Crippled
+  StatusID: 1
+  statusName: Weak
   statusIcon: {fileID: 0}

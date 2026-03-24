@@ -16,14 +16,12 @@ public class Character
     protected float maxHealth;
     public float MaxHealth => maxHealth;
     
-    protected float skillPoint;
-    public float CurrentSkillPoint => skillPoint;
-    protected float maxSkillPoint;
-    public float MaxSkillPoint => maxSkillPoint;
+    protected float mana;
+    public float CurrentMana => mana;
+    protected float maxMana;
+    public float MaxMana => maxMana;
 
     public float ATK;
-    public float DEF;
-    public float maxMovementDistance;
 
     public float level;
     public float exp;
@@ -34,16 +32,14 @@ public class Character
     #endregion
 
     public GameObject entityPrefab;
-
+    
     public List<SkillData> skillSet;
     
     public Character(CharacterData data)
     {
         health = maxHealth = data.maxHP;
-        skillPoint = maxSkillPoint = data.initialSkillPoint;
+        mana = maxMana = data.maxMP;
         ATK = data.ATK;
-        DEF = data.DEF;
-        maxMovementDistance = data.maxMovementDistance;
         skillSet = data.InitialSkillSet;
         entityPrefab = data.entity;
     }
@@ -56,21 +52,17 @@ public class Character
     public void UpdateStateFromCombat(Character_Combat character)
     {
         health = character.CurrentHealth;
-        skillPoint = character.CurrentSkillPoint;
+        mana = character.CurrentMana;
     }
 
     public void GainExperience(float amount)
     {
         exp += amount;
-
-        if (expToNextLevel > 0)
+        while (exp > expToNextLevel)
         {
-            while (exp > expToNextLevel)
-            {
-                exp -= expToNextLevel;
-                level++;
-                OnLevelUp?.Invoke();
-            }
+            exp -= expToNextLevel;
+            level++;
+            OnLevelUp?.Invoke();
         }
     }
     

@@ -1,29 +1,21 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [Serializable]
 public class AttackParam : SkillParam
 {
     [Tooltip("The damage this skill going to deal will be the ATK Ratio times the ATK of the skill user")]
     public float ATKRatio;
-    
-    [Serializable]
-    public struct EffectByChances
-    {
-        public StatusWithTurns statusWithTurns;
-        public float chance;
-    }
+    [Tooltip("The relative coordinates of the cells to be affected when the skill is used.\n (x,y) means x cells to the right and y cell forward.")]
+    public List<Vector2Int> range;
     [Tooltip("List of the status to be added to the character hit by this skill")]
-    public List<EffectByChances> statusOnHit;
+    public List<StatusWithTurns> statusOnHit;
 }
 
 // An instance of a standard Attack Skill
 public class AttackSkill: Skill
 {
-    public RangeType rangeType;
-    
     public AttackSkill(SkillData skillData) : base(skillData)
     {
     }
@@ -35,13 +27,12 @@ public class AttackSkill: Skill
 
         void ApplyStatus(Character_Combat source, Character_Combat target, float dmg)
         {
-            foreach (var effectWithChances in attackParam.statusOnHit)
-                if(Random.Range(0f, 1f) < effectWithChances.chance)
-                    target.AddStatus(effectWithChances.statusWithTurns.status, effectWithChances.statusWithTurns.turns);
+            foreach (var status in attackParam.statusOnHit)
+                target.AddStatus(status.status, status.turns);
         }
 
-        GridManager.Instance.ApplyDamageToCells(instigator,
-            skillData.range.GetAllTileCovered(instigator),
+        GridManager.Instance.ApplyDamageToCells(instigator, 
+            instigator.TransformRangeToWorld(attackParam.range.ToArray()),
             attackParam.ATKRatio * instigator.ATK,
             ApplyStatus
             );

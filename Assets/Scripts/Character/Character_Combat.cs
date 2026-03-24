@@ -16,14 +16,13 @@ public class Character_Combat
     protected float maxHealth;
     public float CurrentHealth => health;
     public float MaxHealth => maxHealth;
-    protected float skillPoint;
-    protected float maxSkillPoint;
-    public float CurrentSkillPoint => skillPoint;
-    public float MaxSkillPoint => maxSkillPoint;
+    protected float mana;
+    protected float maxMana;
+    public float CurrentMana => mana;
+    public float MaxMana => maxMana;
 
     public float ATK;
-    public float DEF;
-    public float maxMovementDistance;
+    public float Def;
     
     public List<Vector2Int> attackRange;
     #endregion
@@ -31,7 +30,7 @@ public class Character_Combat
     public Team team;
     
     public CombatEntity entity;
-
+    
     public List<Skill> skills;
     public List<Status> statuses;
 
@@ -39,7 +38,6 @@ public class Character_Combat
     public Action OnTurnEnd;
     public Action<Character_Combat> OnCharacterDeath;
     public Action OnTakeDamage;
-    public Action OnSPChanged;
     public Action OnStatusUpdated;
     
     /// <summary>
@@ -50,19 +48,29 @@ public class Character_Combat
     {
         health = character.CurrentHealth;
         maxHealth = character.MaxHealth;
-        skillPoint = character.CurrentSkillPoint;
-        maxSkillPoint = character.MaxSkillPoint;
+        mana = character.CurrentMana;
+        maxMana = character.MaxMana;
         ATK = character.ATK;
-        DEF = character.DEF;
-        maxMovementDistance = character.maxMovementDistance;
         
         //TODO: Get attackRange from character (according to the weapon?);
         attackRange = new List<Vector2Int> { new(0, 1) }; // For week-1 Test Only
         
-        skills = new List<Skill>();
+        skills =  new List<Skill>();
         foreach (var skillData in character.skillSet)
         {
-            Skill skill = SkillFactory.GetSkill(skillData);
+            Skill skill = null;
+            switch (skillData.skillType)
+            {
+                case SkillType.Attack: 
+                    skill = new AttackSkill(skillData);
+                    break;
+                case SkillType.Defense:
+                    skill = new Defense(skillData);
+                    break;
+                case SkillType.Buff:
+                    skill = new BuffSkill(skillData);
+                    break;
+            }
             if(skill != null)
                 skills.Add(skill);
         }
@@ -101,13 +109,12 @@ public class Character_Combat
     }
 
     /// <summary>
-    /// Simply cost SP. Technically can also be used to refill SP.
+    /// Simply cost mana. Technically can also be used to refill mana.
     /// </summary>
-    /// <param name="cost">The amount of SP to be cost. Negative if to refill mana</param>
-    public virtual void CostSP(float cost)
+    /// <param name="cost">The amount of mana to be cost. Negative if to refill mana</param>
+    public virtual void CostMana(float cost)
     {
-        skillPoint -= cost;
-        OnSPChanged?.Invoke();
+        mana -= cost;
     }
     
     /// <summary>
@@ -134,7 +141,7 @@ public class Character_Combat
         OnTakeDamage?.Invoke();
         // TODO: VFX?
         
-        if (health <= 0)
+        if (health == 0)
         {
             Die();
         }

@@ -8,9 +8,8 @@ using Utility;
 
 public enum HighlightType
 {
-    InAttackingRange,
-    Hovered,
-    InMovingRange
+    Attacking,
+    Hovered
 }
 
 public struct GridHighlight
@@ -256,7 +255,9 @@ public class GridManager : SingletonBehavior<GridManager>
     public Vector2Int? GetHoveredTile(bool shouldHighlight)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        RaycastHit hit;
+        Vector2Int hitTile = new Vector2Int();
+        if (Physics.Raycast(ray, out hit))
         {
             return PosToGrid(hit.point, true);
             Debug.Log("Hit object: " + hit.collider.gameObject.name);
@@ -305,26 +306,6 @@ public class GridManager : SingletonBehavior<GridManager>
         //             }
         //         }
         //     }
-    }
-
-    public Vector2Int[] GetTilesWithinRange(Vector2Int origin, int range)
-    {
-        List<Vector2Int> tilesInRange = new List<Vector2Int>();
-        for (int x = -range; x < range; x++)
-        for (int y = -range; y < range; y++)
-        {
-            int X = origin.x + x;
-            int Y = origin.y + y;
-            if( X >=0  && X < grid.GetLength(0) && Y >= 0 && Y < grid.GetLength(1))
-                if( Mathf.Abs(x) + Mathf.Abs(y) < range)
-                    tilesInRange.Add(new Vector2Int(X, Y));
-        }
-        return tilesInRange.ToArray();
-    }
-
-    public bool CheckOnBoard(Vector2Int pos)
-    {
-        return pos.x >= 0 && pos.x < grid.GetLength(0) && pos.y >= 0 && pos.y < grid.GetLength(1);
     }
 
     public void AddHighlight(GridHighlight highlight)

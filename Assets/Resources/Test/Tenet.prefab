@@ -49,7 +49,6 @@ MonoBehaviour:
   characterImage: {fileID: 2471037137528597309}
   characterSpriteFront: {fileID: 21300000, guid: 8b0ee6e829ebb894d8208ec4a8f610b2, type: 3}
   characterSpriteBack: {fileID: 21300000, guid: e045b506daa166a418ddbb85b76ceb13, type: 3}
-  moveSpeed: 5
 --- !u!1 &1486132495522062310
 GameObject:
   m_ObjectHideFlags: 0

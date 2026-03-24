@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class PlayerCharacter_Combat : Character_Combat
 {
-    public float movesAvailable;
+    public int movesAvailable;
     public int attacksAvailable;
-    public Skill normalAttack;
-    public PlayerCharacter_Combat(PlayerCharacter character) : base(character)
+    public PlayerCharacter_Combat(Character data) : base(data)
     {
         team = Team.Player;
         CombatManager.Instance.OnPlayerTurnStart.AddListener(OnNotifiedTurnStart);
         CombatManager.Instance.OnPlayerTurnEnd.AddListener(OnNotifiedTurnEnd);
-        normalAttack = SkillFactory.GetSkill(character.normalAttack);
     }
     ~PlayerCharacter_Combat()
     {
@@ -27,7 +25,6 @@ public class PlayerCharacter_Combat : Character_Combat
         base.OnNotifiedTurnStart();
         movesAvailable = 1;
         attacksAvailable = 1;
-        skillPoint += CombatManager.Instance.SkillPointRegenEveryTurn;
     }
 
     public void Flee()
