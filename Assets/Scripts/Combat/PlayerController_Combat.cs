@@ -191,7 +191,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         while (true)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Ground")))
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("CombatGround")))
                 targetPosition = hit.point;
             else
                 targetPosition = null;
@@ -231,7 +231,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 target;
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Ground")))
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("CombatGround")))
                 target = hit.point;
             else
                 target = ray.origin + ray.direction * (ray.origin.y / -ray.direction.y);
