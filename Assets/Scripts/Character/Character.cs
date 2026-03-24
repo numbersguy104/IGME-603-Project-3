@@ -25,9 +25,9 @@ public class Character
     public float DEF;
     public float maxMovementDistance;
 
-    public float level;
+    public float level = 0;
     public float exp;
-    public float expToNextLevel;
+    public float expToNextLevel = 30;
     
     public Action OnLevelUp;
     

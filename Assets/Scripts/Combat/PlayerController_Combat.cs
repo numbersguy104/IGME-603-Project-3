@@ -235,7 +235,6 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
                 target = hit.point;
             else
                 target = ray.origin + ray.direction * (ray.origin.y / -ray.direction.y);
-            Debug.Log(target);
             Vector3 direction = target - currentCharacter.entity.transform.position;
             direction.y = 0;
             if(currentCharacter == teamMembers[0])
