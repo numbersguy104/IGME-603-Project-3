@@ -10,8 +10,8 @@ public class CharacterStatsManager : MonoBehaviour
     public PlayerCharacter hugo;
     public PlayerCharacter tenet;
     public List<PlayerCharacter> characters = new List<PlayerCharacter>();
-    [SerializeField] private CharacterData hugoData;
-    [SerializeField] private CharacterData tenetData;
+    [SerializeField] private PlayerData hugoData;
+    [SerializeField] private PlayerData tenetData;
 
     private void Awake()
     {
