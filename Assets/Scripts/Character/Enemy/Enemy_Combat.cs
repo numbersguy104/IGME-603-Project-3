@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Enemy_Combat: Character_Combat
@@ -165,23 +166,7 @@ public class Enemy_Combat: Character_Combat
 
         Vector2Int currentPosition = GridManager.Instance.PosToGrid(entity.transform.position);
 
-        //Get all tiles the enemy could move to this turn
-        List<Vector2Int> movableTiles = new List<Vector2Int>();
-        for (int x = 0; x < GridManager.Instance.Size.x; x++)
-        {
-            for (int y = 0; y < GridManager.Instance.Size.y; y++)
-            {
-                // TODO: Check movement cost
-
-                if (GridManager.Instance.GetAt(x, y) == null)
-                {
-                    movableTiles.Add(new Vector2Int(x, y));
-                }
-            }
-        }
-        //Add the enemy's current position (representing no movement)
-        //since otherwise it would be considered as occupied
-        movableTiles.Add(GridManager.Instance.PosToGrid(entity.transform.position));
+        List<Vector2Int> movableTiles = GridManager.Instance.GetTilesWithinRange(currentPosition, (int)maxMovementDistance).ToList();
 
         Skill chosenSkill = null;
         bool shouldBasicAttack = false;
@@ -250,16 +235,22 @@ public class Enemy_Combat: Character_Combat
             }
 
             closestDistance = int.MaxValue;
+            List<PositionData> closestTiles = new List<PositionData>();
             foreach (Vector2Int movableTile in movableTiles)
             {
                 int distance = Math.Abs(moveTowardsTile.x - movableTile.x) + Math.Abs(moveTowardsTile.y - movableTile.y);
                 if (distance < closestDistance)
                 {
-                    Debug.Log(movableTile);
-                    chosenPosition = new PositionData { tile = movableTile, rotation = 180 };
+                    closestTiles.Clear();
                     closestDistance = distance;
                 }
+                if (distance == closestDistance)
+                {
+                    PositionData data = new PositionData { tile = movableTile, rotation = 180 };
+                    closestTiles.Add(data);
+                }
             }
+            chosenPosition = SelectFarthestTile(closestTiles);
         }
 
         Vector2Int targetPosition = chosenPosition.Value.tile;
