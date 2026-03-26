@@ -16,31 +16,42 @@ public class Character
     protected float maxHealth;
     public float MaxHealth => maxHealth;
     
-    protected float mana;
-    public float CurrentMana => mana;
-    protected float maxMana;
-    public float MaxMana => maxMana;
+    protected float skillPoint;
+    public float CurrentSkillPoint => skillPoint;
+    protected float maxSkillPoint;
+    public float MaxSkillPoint => maxSkillPoint;
 
     public float ATK;
+    public float DEF;
+    public float maxMovementDistance;
 
-    public float level;
+    public float level = 0;
     public float exp;
-    public float expToNextLevel;
+    public float expToNextLevel = 30;
     
     public Action OnLevelUp;
     
     #endregion
 
     public GameObject entityPrefab;
-    
+
+    public int maxSkillSlots = 2;
     public List<SkillData> skillSet;
+    public List<SkillData> skillLearned;
     
     public Character(CharacterData data)
     {
         health = maxHealth = data.maxHP;
-        mana = maxMana = data.maxMP;
+        skillPoint = maxSkillPoint = data.initialSkillPoint;
         ATK = data.ATK;
-        skillSet = data.InitialSkillSet;
+        DEF = data.DEF;
+        maxMovementDistance = data.maxMovementDistance;
+        skillLearned = data.InitialSkillSet;
+        skillSet = new List<SkillData>();
+        foreach (var skillData in skillLearned)
+        {
+            skillSet.Add(skillData);
+        }
         entityPrefab = data.entity;
     }
 
@@ -52,18 +63,27 @@ public class Character
     public void UpdateStateFromCombat(Character_Combat character)
     {
         health = character.CurrentHealth;
-        mana = character.CurrentMana;
+        skillPoint = character.CurrentSkillPoint;
     }
 
     public void GainExperience(float amount)
     {
         exp += amount;
-        while (exp > expToNextLevel)
+
+        if (expToNextLevel > 0)
         {
-            exp -= expToNextLevel;
-            level++;
-            OnLevelUp?.Invoke();
+            while (exp > expToNextLevel)
+            {
+                exp -= expToNextLevel;
+                level++;
+                OnLevelUp?.Invoke();
+            }
         }
+    }
+
+    public void AddSkillSlot(int increment)
+    {
+        maxSkillSlots += increment;
     }
     
 }

@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/CombatTest.unity
     guid: 74b826342b1345c468cee5ebf026b244
   - enabled: 1
-    path: Assets/Scenes/CombatTestShuyang.unity
+    path: Assets/Scenes/CombatScene_New.unity
     guid: 8445bef8242c8b24795c3a1fc3694731
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

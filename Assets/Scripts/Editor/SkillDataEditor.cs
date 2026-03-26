@@ -4,23 +4,30 @@ using UnityEngine;
 [CustomEditor(typeof(SkillData))]
 public class SkillDataEditor : Editor
 {
+    RangeType rangeType;
     public override void OnInspectorGUI()
     {
         SkillData skill = (SkillData)target;
 
         DrawDefaultInspector();
 
-        if (skill.param == null || !IsMatch(skill.skillType, skill.param))
+        if (skill.param == null || !IsSkillTypeMatch(skill.skillType, skill.param))
         {
             skill.param = CreateParam(skill.skillType);
             EditorUtility.SetDirty(skill);
         }
+        
+        if (skill.range == null || !IsRangeTypeMatch(skill.rangeType, skill.range))
+        {
+            skill.range = RangeFactory.GetRange(skill.rangeType);
+            EditorUtility.SetDirty(skill);
+        }
+
     }
 
-    bool IsMatch(SkillType type, SkillParam param)
+    bool IsSkillTypeMatch(SkillType type, SkillParam param)
     {
         return (type == SkillType.Attack && param is AttackParam) ||
-               (type == SkillType.Defense && param is DefenseParam) ||
                (type == SkillType.Buff && param is BuffParam);
     }
 
@@ -29,9 +36,15 @@ public class SkillDataEditor : Editor
         switch (type)
         {
             case SkillType.Attack: return new AttackParam();
-            case SkillType.Defense: return new DefenseParam();
             case SkillType.Buff: return new BuffParam();
         }
         return null;
+    }
+    
+    bool IsRangeTypeMatch(RangeType type, Range range)
+    {
+        return (type == RangeType.Grid && range is GridRange) ||
+               (type == RangeType.Sector && range is SectorRange) ||
+               (type == RangeType.Circle && range is CircleRange);
     }
 }

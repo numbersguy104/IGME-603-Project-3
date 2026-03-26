@@ -1127,6 +1127,7 @@ GameObject:
   - component: {fileID: 245251120}
   - component: {fileID: 245251122}
   - component: {fileID: 245251121}
+  - component: {fileID: 245251123}
   m_Layer: 5
   m_Name: TenetHealth
   m_TagString: Untagged
@@ -1252,6 +1253,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245251119}
   m_CullTransparentMesh: 1
+--- !u!114 &245251123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245251119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 1
+  healthText: {fileID: 245251121}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1001 &255306964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1270,7 +1287,7 @@ PrefabInstance:
       objectReference: {fileID: 1989289569}
     - target: {fileID: 3124031866419055727, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
       propertyPath: sceneB
-      value: CombatTestShuyang
+      value: CombatScene_New
       objectReference: {fileID: 0}
     - target: {fileID: 4277664120459115559, guid: 7021aacf60dbda541afd8cd3f103380b, type: 3}
       propertyPath: characterTeam
@@ -2984,6 +3001,7 @@ GameObject:
   - component: {fileID: 554905989}
   - component: {fileID: 554905991}
   - component: {fileID: 554905990}
+  - component: {fileID: 554905992}
   m_Layer: 5
   m_Name: TenetHealth
   m_TagString: Untagged
@@ -3109,6 +3127,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554905988}
   m_CullTransparentMesh: 1
+--- !u!114 &554905992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554905988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 1
+  healthText: {fileID: 554905990}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &562515992
 GameObject:
   m_ObjectHideFlags: 0
@@ -5403,6 +5437,7 @@ GameObject:
   - component: {fileID: 1101753432}
   - component: {fileID: 1101753434}
   - component: {fileID: 1101753433}
+  - component: {fileID: 1101753435}
   m_Layer: 5
   m_Name: HugoHealth
   m_TagString: Untagged
@@ -5528,6 +5563,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101753431}
   m_CullTransparentMesh: 1
+--- !u!114 &1101753435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101753431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 1101753433}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1001 &1106645284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6805,6 +6856,7 @@ GameObject:
   - component: {fileID: 1282092498}
   - component: {fileID: 1282092500}
   - component: {fileID: 1282092499}
+  - component: {fileID: 1282092501}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6878,8 +6930,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6930,6 +6982,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282092497}
   m_CullTransparentMesh: 1
+--- !u!114 &1282092501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282092497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 1
+  healthText: {fileID: 1282092499}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &1290854842
 GameObject:
   m_ObjectHideFlags: 0
@@ -7781,6 +7849,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461723011}
   m_CullTransparentMesh: 1
+--- !u!1 &1462238274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462238276}
+  - component: {fileID: 1462238275}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1462238275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462238274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8f4a070803044db5d15b9bf4bf8ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hugoData: {fileID: 11400000, guid: 216a3a5d9d4b92745bdad07d0c6f1756, type: 2}
+  tenetData: {fileID: 11400000, guid: 864d6410553ba9742962fbe37c7b5eaa, type: 2}
+--- !u!4 &1462238276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462238274}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1467008027
 GameObject:
   m_ObjectHideFlags: 0
@@ -7792,6 +7906,7 @@ GameObject:
   - component: {fileID: 1467008028}
   - component: {fileID: 1467008030}
   - component: {fileID: 1467008029}
+  - component: {fileID: 1467008031}
   m_Layer: 5
   m_Name: TeamLevel
   m_TagString: Untagged
@@ -7917,6 +8032,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467008027}
   m_CullTransparentMesh: 1
+--- !u!114 &1467008031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467008027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 1467008029}
 --- !u!1 &1479807745
 GameObject:
   m_ObjectHideFlags: 0
@@ -8671,6 +8802,7 @@ GameObject:
   - component: {fileID: 1574553253}
   - component: {fileID: 1574553255}
   - component: {fileID: 1574553254}
+  - component: {fileID: 1574553256}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -8744,8 +8876,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8796,6 +8928,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574553252}
   m_CullTransparentMesh: 1
+--- !u!114 &1574553256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574553252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 1574553254}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &1606690011
 GameObject:
   m_ObjectHideFlags: 0
@@ -10101,6 +10249,7 @@ GameObject:
   - component: {fileID: 2006811330}
   - component: {fileID: 2006811332}
   - component: {fileID: 2006811331}
+  - component: {fileID: 2006811333}
   m_Layer: 5
   m_Name: EXP
   m_TagString: Untagged
@@ -10226,6 +10375,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006811329}
   m_CullTransparentMesh: 1
+--- !u!114 &2006811333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006811329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 0}
+  expText: {fileID: 2006811331}
+  levelText: {fileID: 0}
 --- !u!1 &2023781916
 GameObject:
   m_ObjectHideFlags: 0
@@ -10875,6 +11040,7 @@ GameObject:
   - component: {fileID: 2136255944}
   - component: {fileID: 2136255946}
   - component: {fileID: 2136255945}
+  - component: {fileID: 2136255947}
   m_Layer: 5
   m_Name: HugoHealth
   m_TagString: Untagged
@@ -11000,10 +11166,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136255943}
   m_CullTransparentMesh: 1
+--- !u!114 &2136255947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136255943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 2136255945}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1462238276}
   - {fileID: 255306964}
   - {fileID: 1492798325}
   - {fileID: 314606936}
