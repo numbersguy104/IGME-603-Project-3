@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework.Interfaces;
 using UnityEngine;
 
@@ -23,16 +22,6 @@ public class PauseMenuFunctions : MonoBehaviour
 
     [SerializeField]
     GameObject skillsTenet;
-
-    private void Start()
-    {
-        skillsMenu.GetComponent<SkillSettingUI>().UpdateSkill(skillsHugo.activeSelf);
-    }
-
-    private void OnEnable()
-    {
-        skillsMenu.GetComponent<SkillSettingUI>().UpdateSkill(skillsHugo.activeSelf);
-    }
 
     private void Update()
     {
@@ -82,7 +71,6 @@ public class PauseMenuFunctions : MonoBehaviour
     {
         skillsHugo.SetActive(!skillsHugo.activeSelf);
         skillsTenet.SetActive(!skillsTenet.activeSelf);
-        skillsMenu.GetComponent<SkillSettingUI>().UpdateSkill(skillsHugo.activeSelf);
     }
 
     public void OnBackClick()
