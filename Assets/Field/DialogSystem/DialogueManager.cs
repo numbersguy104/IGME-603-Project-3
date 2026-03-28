@@ -7,6 +7,11 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private DialogueUI dialogueUI;
     [SerializeField] private CharacterTeamController teamController;
 
+    [Header("Dialogue Scene Actor")]
+    [SerializeField] private DialogueSceneActor dialogueSceneActor;
+    [SerializeField] private Transform dialogueActorPosition;
+    [SerializeField] private Vector3 dialogueActorOffset = Vector3.zero;
+
     private SO_DialogueData _currentDialogue;
     private int _currentIndex;
     private bool _isPlaying;
@@ -34,6 +39,46 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private void ShowDialogueSceneActor()
+    {
+        if (teamController != null)
+        {
+            if (teamController.Active != null)
+                teamController.Active.SetVisualVisible(false);
+
+            if (teamController.Inactive != null)
+                teamController.Inactive.SetVisualVisible(false);
+        }
+
+        if (dialogueSceneActor != null)
+        {
+            Vector3 spawnPos = Vector3.zero;
+
+            if (dialogueActorPosition != null)
+                spawnPos = dialogueActorPosition.position + dialogueActorOffset;
+            else if (teamController != null && teamController.Active != null)
+                spawnPos = teamController.Active.transform.position + dialogueActorOffset;
+
+            dialogueSceneActor.SetPositionAndRotation(spawnPos, Quaternion.identity);
+            dialogueSceneActor.Show();
+        }
+    }
+
+    private void HideDialogueSceneActor()
+    {
+        if (dialogueSceneActor != null)
+            dialogueSceneActor.Hide();
+
+        if (teamController != null)
+        {
+            if (teamController.Active != null)
+                teamController.Active.SetVisualVisible(true);
+
+            if (teamController.Inactive != null)
+                teamController.Inactive.SetVisualVisible(true);
+        }
+    }
+
     public void StartDialogue(SO_DialogueData dialogue)
     {
         if (dialogue == null || dialogue.dialogueLines == null || dialogue.dialogueLines.Length == 0)
@@ -43,11 +88,12 @@ public class DialogueManager : MonoBehaviour
         _currentIndex = 0;
         _isPlaying = true;
 
-        if(teamController != null && teamController.Active != null)
+        if (teamController != null && teamController.Active != null)
         {
             teamController.Active.SetPlayerControlled(false);
         }
 
+        ShowDialogueSceneActor();
         ShowCurrentLine();
     }
 
@@ -73,8 +119,12 @@ public class DialogueManager : MonoBehaviour
         _currentDialogue = null;
         _currentIndex = 0;
 
+        HideDialogueSceneActor();
+
         if (teamController != null && teamController.Active != null)
+        {
             teamController.Active.SetPlayerControlled(true);
+        }
 
         if (dialogueUI != null)
             dialogueUI.Hide();

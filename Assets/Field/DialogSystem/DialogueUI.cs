@@ -27,42 +27,42 @@ public class DialogueUI : MonoBehaviour
         if (dialogueRoot != null)
             dialogueRoot.SetActive(true);
 
+        string cleanName = speakerName.Trim();
+        Debug.Log($"speakerName = [{cleanName}]");
+
         if (speakerNameText != null)
+            speakerNameText.text = cleanName;
+
+        if (dialogueLineText != null)
+            dialogueLineText.text = line;
+
+        if (speakerIcon != null)
         {
-            speakerNameText.text = speakerName;
-            Debug.Log(speakerName);
-            switch (speakerName)
+
+            switch (cleanName)
             {
-                case "Hugo":
-                    if (HugoIcon != null)
-                        speakerIcon.color = Color.white;
+                case "HUGO":
                     speakerIcon.sprite = HugoIcon;
+                    speakerIcon.color = new Color(1f, 1f, 1f, 1f);
                     break;
-                case "Tenet":
-                    if (TenetIcon != null)
-                        speakerIcon.color = Color.white;
+
+                case "TENET":
                     speakerIcon.sprite = TenetIcon;
+                    speakerIcon.color = new Color(1f, 1f, 1f, 1f);
                     break;
-                case "Resident":
-                    if (ResidentIcon != null)
-                        speakerIcon.color = Color.white;
+
+                case "SOLEMN RESIDENT":
                     speakerIcon.sprite = ResidentIcon;
+                    speakerIcon.color = new Color(1f, 1f, 1f, 1f);
                     break;
+
                 default:
+                    Debug.LogWarning($"No matching icon for speaker: [{cleanName}]");
                     speakerIcon.sprite = null;
+                    speakerIcon.color = new Color(1f, 1f, 1f, 0f);
                     break;
             }
-
-            if (speakerName == "Tenet")
-            {
-                Debug.Log("True");
-                speakerIcon.sprite = TenetIcon;
-            }
-
-            if (dialogueLineText != null)
-                dialogueLineText.text = line;
         }
-
     }
 
     public void Hide()
