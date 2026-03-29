@@ -337,8 +337,9 @@ public class GridManager : SingletonBehavior<GridManager>
             {
                 for (int y = origin.y - range; y <= origin.y + range; y++)
                 {
-                    //TODO: Also check for non-character obstacles (pits) here, if needed
-                    if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1) && GetAt(x, y) == null)
+                    
+                    //TODO: Also check for non-character obstacles (pits) here, if needed // Shaolin: Added a check for player characters so that they won't block each other
+                    if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1) && (GetAt(x, y) == null || GetAt(x,y).CompareTag("Player"))) 
                     {
                         unvisited.Add(new Vector2Int(x, y), int.MaxValue);
                     }

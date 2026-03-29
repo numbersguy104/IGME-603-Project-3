@@ -15,6 +15,7 @@ MonoBehaviour:
   gridSize: {x: 9, y: 9}
   enemies:
   - {fileID: 11400000, guid: 2a1b6e7ba99ef764289e5cd72e9488d9, type: 2}
+  - {fileID: 11400000, guid: 2a1b6e7ba99ef764289e5cd72e9488d9, type: 2}
   obstacles:
   - position: {x: 3, y: 3}
     prefab: {fileID: 919132149155446097, guid: 0466565b86721e04bb87cc48b27a4854, type: 3}
