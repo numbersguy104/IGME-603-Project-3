@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GrassBlade
+  m_Name: GrassBlade2
   m_Shader: {fileID: 4800000, guid: 6851cf6f004d3674aa8e958a0aa82fcc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -150,10 +150,10 @@ Material:
     - _p2Offset: 0.24
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BottomColor: {r: 0.7647059, g: 0.27843142, b: 0.31451306, a: 1}
+    - _BottomColor: {r: 0.3145062, g: 0.7647059, b: 0.27843142, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TopColor: {r: 1, g: 0.91999197, b: 0.8352941, a: 1}
+    - _TopColor: {r: 0.9296678, g: 1, b: 0.8352941, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

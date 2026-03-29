@@ -12,6 +12,7 @@ public class CombatEntity : MonoBehaviour
     public SpriteRenderer rangeRenderer;
     public Color moveRangeColor;
     public Color attackRangeColor;
+    public ParticleSystem attackedFX;
 
     public float moveSpeed = 1;
 
@@ -69,6 +70,16 @@ public class CombatEntity : MonoBehaviour
     public void HideRange()
     {
         rangeRenderer.enabled = false;
+    }
+
+    public void EntityGetAttacked()
+    {
+        var animator = gameObject.GetComponent<Animator>();
+        if (animator != null && attackedFX != null)
+        {
+            animator.Play("Attacked");
+            attackedFX.Play();
+        }
     }
 }
 
