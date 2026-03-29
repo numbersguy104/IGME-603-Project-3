@@ -30,10 +30,30 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public UnityEvent OnCombatLose;
     public void SwitchSide() {currentTurn = 1 - currentTurn;}
 
-    
+    // Debug Only
+    [Header("Debug")]
+    [SerializeField] private bool enableDebugWinShortcut = true;
+    [SerializeField] private KeyCode debugWinKey = KeyCode.F8;
+
+
     void Start()
     {
         LoadCombat("DefaultCombat"); // For Test Only
+    }
+
+    // Debug Only: Press the debugWinKey to force win the combat when combat is started
+    private void Update()
+    {
+        if (!enableDebugWinShortcut)
+            return;
+
+        if (!isCombatStarted)
+            return;
+
+        if (Input.GetKeyDown(debugWinKey))
+        {
+            DebugForceWin();
+        }
     }
 
     public void LoadCombat(string combatDataName, bool isPlayerTurnFirst = true)
@@ -226,6 +246,11 @@ public class CombatManager : SingletonBehavior<CombatManager>
         if (isWin)
         {
             OnCombatWin?.Invoke();
+
+            if (BattleStateManager.Instance != null)
+            {
+                BattleStateManager.Instance.MarkCurrentEnemyDefeated();
+            }
         }
         else
         {
@@ -253,6 +278,52 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     public void ExitCombatScene()
     {
-        SceneManager.LoadScene("SceneSettingNew");
+        if (BattleStateManager.Instance == null)
+        {
+            Debug.LogError("[CombatManager] BattleStateManager.Instance is NULL");
+            SceneManager.LoadScene("SceneSettingNew");
+            return;
+        }
+
+        string returnSceneName = BattleStateManager.Instance.returnSceneName;
+        Debug.Log($"[CombatManager] ExitCombatScene | returnSceneName={returnSceneName} | savedPos={BattleStateManager.Instance.returnPlayerPosition}");
+
+        SceneManager.sceneLoaded += OnFieldSceneLoaded;
+        SceneManager.LoadScene(returnSceneName);
+    }
+
+    private void OnFieldSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnFieldSceneLoaded;
+
+        Debug.Log($"[CombatManager] OnFieldSceneLoaded | scene={scene.name}");
+
+        if (BattleStateManager.Instance == null)
+        {
+            Debug.LogError("[CombatManager] BattleStateManager.Instance is NULL after scene load");
+            return;
+        }
+
+        CharacterTeamController team = FindFirstObjectByType<CharacterTeamController>();
+        if (team != null)
+        {
+            team.RestoreTeamState(
+                BattleStateManager.Instance.returnAsSolid,
+                BattleStateManager.Instance.returnPlayerPosition
+            );
+        }
+
+        // Prevent instantly re-entering battle right after returning to the field
+        BattleStateManager.Instance.suppressBattleUntilTime = Time.time + 0.5f;
+
+        BattleStateManager.Instance.ClearCurrentBattle();
+    }
+
+    public void DebugForceWin()
+    {
+        Debug.Log("[CombatManager] Debug force win triggered.");
+
+        EndCombat(true);
+        ExitCombatScene();
     }
 }

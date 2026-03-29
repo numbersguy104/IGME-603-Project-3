@@ -30,10 +30,13 @@ public class CharacterTeamController : MonoBehaviour
     public PlayerCharacterField Active { get; private set; }
 
     /// The character that is currently disabled and NOT player-controlled.
-
     private bool _switchRequested;
 
     public PlayerCharacterField Inactive { get; private set; }
+
+    /// True if the current active character is the solid character.
+    public bool IsActiveSolid => Active == solid;
+
 
     private void Start()
     {
@@ -57,6 +60,10 @@ public class CharacterTeamController : MonoBehaviour
 
         // Ensure only one character is enabled
         ActivateOnly(Active, Inactive);
+
+
+        if (cameraFollowPivot != null && Active != null)
+            cameraFollowPivot.position = Active.transform.position;
     }
 
     public void RequestSwitch()
@@ -129,7 +136,60 @@ public class CharacterTeamController : MonoBehaviour
         // 6) Update references
         Active = newActive;
         Inactive = newInactive;
+
+        if (cameraFollowPivot != null && Active != null)
+            cameraFollowPivot.position = Active.transform.position;
     }
+
+    /// <summary>
+    /// Restore the team state after returning from combat.
+    /// This places both characters at the same saved field position,
+    /// then re-applies which character should be active.
+    /// </summary>
+    public void RestoreTeamState(bool useSolidAsActive, Vector3 position)
+    {
+        if (solid == null || ghost == null)
+        {
+            Debug.LogError("CharacterTeamController: solid/ghost reference is missing.");
+            return;
+        }
+
+        // Put both characters at the saved position first,
+        // so whichever one becomes active will be correct.
+        SetCharacterPosition(solid, position);
+        SetCharacterPosition(ghost, position);
+
+        // Rebuild active / inactive references
+        Active = useSolidAsActive ? solid : ghost;
+        Inactive = useSolidAsActive ? ghost : solid;
+
+        // Re-apply enabled state and control state
+        ActivateOnly(Active, Inactive);
+
+        if (cameraFollowPivot != null && Active != null)
+            cameraFollowPivot.position = Active.transform.position;
+
+        Debug.Log(
+            $"[CharacterTeamController] RestoreTeamState | useSolidAsActive={useSolidAsActive} | position={position} | active={Active.name}"
+        );
+    }
+
+    private void SetCharacterPosition(PlayerCharacterField character, Vector3 position)
+    {
+        if (character == null) return;
+
+        if (character.TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.position = position;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+        else
+        {
+            character.transform.position = position;
+        }
+    }
+
 
     /// <summary>
     /// Ensures that only the given active character is enabled and player-controlled,
