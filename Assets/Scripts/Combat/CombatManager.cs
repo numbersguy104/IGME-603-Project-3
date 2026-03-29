@@ -8,6 +8,9 @@ using Utility;
 
 public class CombatManager : SingletonBehavior<CombatManager>
 {
+    private CombatData combatData;
+    private bool isCombatStarted = false;
+    
     public List<PlayerCharacter> playerCharacters;
     public List<Enemy> enemies;
     public List<PlayerCharacter_Combat> playerCharacters_Combat = new List<PlayerCharacter_Combat>();
@@ -30,26 +33,42 @@ public class CombatManager : SingletonBehavior<CombatManager>
     
     void Start()
     {
-        SampleCombat(); // For Test Only
+        LoadCombat("DefaultCombat"); // For Test Only
     }
 
-    void SampleCombat()
+    public void LoadCombat(string combatDataName, bool isPlayerTurnFirst = true)
     {
-        Enemy enemy = new Enemy(Resources.Load<EnemyData>("Test/Enemy"));
-
-        //CharacterStatsManager should exist already in the main game
-        //It may be null if entering combat scene directly from the editor
+        if (isCombatStarted)
+            return;
+        combatData = Resources.Load<CombatData>($"Combat/CombatData/{combatDataName}");
+        List<EnemyData> enemyData = combatData.enemies;
+        List<Enemy> enemies = new List<Enemy>();
+        foreach (var data in enemyData)
+        {
+            Enemy newEnemy = new Enemy(data);
+            enemies.Add(newEnemy);
+        }
+        
+        GridManager.Instance.Init(combatData.gridSize.x,  combatData.gridSize.y);
+        foreach (var obstacle in combatData.obstacles)
+        {
+            GameObject obstacleEntity = Instantiate(obstacle.prefab);
+            obstacleEntity.gameObject.tag = "Obstacle";
+            GridManager.Instance.Add(obstacleEntity, obstacle.position.x, obstacle.position.y, true);
+        }
+        
         if (CharacterStatsManager.Instance == null)
         {
-            PlayerCharacter hugo = new PlayerCharacter(Resources.Load<PlayerData>("Test/Hugo"));
-            PlayerCharacter tenet = new PlayerCharacter(Resources.Load<PlayerData>("Test/Tenet"));
-            StartCombat(new List<PlayerCharacter> { hugo, tenet }, new List<Enemy> { enemy }, false);
+            PlayerCharacter hugo = new PlayerCharacter(Resources.Load<PlayerData>("Character/Hugo"));
+            PlayerCharacter tenet = new PlayerCharacter(Resources.Load<PlayerData>("Character/Tenet"));
+            StartCombat(new List<PlayerCharacter> { hugo, tenet }, enemies, false);
         }
         else
         {
-            StartCombat(CharacterStatsManager.Instance.characters, new List<Enemy> { enemy }, false);
+            StartCombat(CharacterStatsManager.Instance.characters, enemies, false);
         }
-        currentTurn = Team.Player;
+        currentTurn = isPlayerTurnFirst ? Team.Player : Team.Enemy;
+        isCombatStarted = true;
     }
 
     /// <summary>
@@ -60,8 +79,6 @@ public class CombatManager : SingletonBehavior<CombatManager>
     /// <param name="isFirstStrike"> True if this combat starts with the player's first strike</param>
     void StartCombat(List<PlayerCharacter> playerCharacters, List<Enemy> enemies, bool isFirstStrike)
     {
-        GridManager.Instance.Init(9,9);
-        
         this.playerCharacters = playerCharacters;
         this.enemies = enemies;
         
@@ -118,7 +135,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
             enemyEntity.transform.rotation = Quaternion.Euler(0,180,0);
             enemies_Combat[i].entity = enemyEntity;
             enemyEntity.character = enemies_Combat[i];
-            GridManager.Instance.Add(enemyEntity.gameObject, 8 - i, 8, true);
+            GridManager.Instance.Add(enemyEntity.gameObject, combatData.gridSize.x - i - 1, combatData.gridSize.y - 1, true);
         }
         
         // TODO: Load Initial Character Positions on board From Asset?
