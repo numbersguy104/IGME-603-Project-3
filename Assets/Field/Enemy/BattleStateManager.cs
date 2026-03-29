@@ -16,6 +16,7 @@ public class BattleStateManager : MonoBehaviour
 
     private readonly HashSet<string> defeatedEnemies = new HashSet<string>();
     private readonly HashSet<string> triggeredDialogues = new HashSet<string>();
+    private readonly HashSet<string> collectedItems = new HashSet<string>();
 
     public float suppressBattleUntilTime;
 
@@ -65,6 +66,18 @@ public class BattleStateManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(dialogueId)) return false;
         return triggeredDialogues.Contains(dialogueId);
+    }
+
+    public void MarkItemCollected(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId)) return;
+        collectedItems.Add(itemId);
+    }
+
+    public bool IsItemCollected(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId)) return false;
+        return collectedItems.Contains(itemId);
     }
 
     public void ClearCurrentBattle()

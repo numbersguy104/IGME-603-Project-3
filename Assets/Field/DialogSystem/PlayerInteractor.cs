@@ -19,11 +19,24 @@ public class PlayerInteractor : MonoBehaviour
 
     private void TryInteract()
     {
-        for (int i = 0; i < interactablesInRange.Count; i++)
+        for (int i = interactablesInRange.Count - 1; i >= 0; i--)
         {
-            if (interactablesInRange[i] == null) continue;
+            IInteractable interactable = interactablesInRange[i];
 
-            interactablesInRange[i].Interact(gameObject);
+            if (interactable == null)
+            {
+                interactablesInRange.RemoveAt(i);
+                continue;
+            }
+
+            MonoBehaviour interactableBehaviour = interactable as MonoBehaviour;
+            if (interactableBehaviour == null || !interactableBehaviour.gameObject.activeInHierarchy)
+            {
+                interactablesInRange.RemoveAt(i);
+                continue;
+            }
+
+            interactable.Interact(gameObject);
             return;
         }
     }
