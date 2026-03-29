@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7293198757858408652}
   m_Layer: 0
   m_Name: Hugo
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

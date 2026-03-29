@@ -307,18 +307,95 @@ public class GridManager : SingletonBehavior<GridManager>
         //     }
     }
 
-    public Vector2Int[] GetTilesWithinRange(Vector2Int origin, int range)
+    //Get tiles within a certain range of the origin
+    //If ignoreObstacles is true, obstacles (characters and pits) will not be considered
+    public Vector2Int[] GetTilesWithinRange(Vector2Int origin, int range, bool ignoreObstacles = false)
     {
         List<Vector2Int> tilesInRange = new List<Vector2Int>();
-        for (int x = -range; x <= range; x++)
-        for (int y = -range; y <= range; y++)
+
+        if (ignoreObstacles)
         {
-            int X = origin.x + x;
-            int Y = origin.y + y;
-            if( X >=0  && X < grid.GetLength(0) && Y >= 0 && Y < grid.GetLength(1))
-                if( Math.Abs(x) + Math.Abs(y) <= range)
-                    tilesInRange.Add(new Vector2Int(X, Y));
+            for (int x = -range; x <= range; x++)
+                for (int y = -range; y <= range; y++)
+                {
+                    int X = origin.x + x;
+                    int Y = origin.y + y;
+                    if (X >= 0 && X < grid.GetLength(0) && Y >= 0 && Y < grid.GetLength(1))
+                        if (Math.Abs(x) + Math.Abs(y) <= range)
+                            tilesInRange.Add(new Vector2Int(X, Y));
+                }
         }
+        else
+        {
+            //Use Dijkstra's algorithm to calculate tile costs
+            Dictionary<Vector2Int, int> unvisited = new Dictionary<Vector2Int, int>();
+            Dictionary<Vector2Int, int> visited = new Dictionary<Vector2Int, int>();
+
+            //Start by filling in the "unvisited set"
+            //Only need to consider tiles within range, not the whole grid
+            for (int x = origin.x - range; x <= origin.x + range; x++)
+            {
+                for (int y = origin.y - range; y <= origin.y + range; y++)
+                {
+                    
+                    //TODO: Also check for non-character obstacles (pits) here, if needed // Shaolin: Added a check for player characters so that they won't block each other
+                    if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1) && (GetAt(x, y) == null || GetAt(x,y).CompareTag("Player"))) 
+                    {
+                        unvisited.Add(new Vector2Int(x, y), int.MaxValue);
+                    }
+                }
+            }
+            unvisited[origin] = 0;
+
+            //Helper vectors for checking tile adjacency
+            Vector2Int[] unitVectors = { Vector2Int.right, Vector2Int.up, Vector2Int.left, Vector2Int.down };
+
+            //Main Dijkstra loop
+            while (unvisited.Count > 0)
+            {
+                //Select the next tile to check
+                Vector2Int nextTile = Vector2Int.zero;
+                int lowestDistance = int.MaxValue;
+                foreach (KeyValuePair<Vector2Int, int> pair in unvisited)
+                {
+                    if (pair.Value < lowestDistance)
+                    {
+                        lowestDistance = pair.Value;
+                        nextTile = pair.Key;
+                    }
+                }
+
+                //Break the loop if all remaining tiles are unreachable
+                if (lowestDistance == int.MaxValue)
+                {
+                    break;
+                }
+
+                //Update distances to each neighboring tile
+                foreach (Vector2Int adjacentVector in unitVectors)
+                {
+                    Vector2Int adjacentTile = nextTile + adjacentVector;
+
+                    if (unvisited.ContainsKey(adjacentTile))
+                    {
+                        unvisited[adjacentTile] = lowestDistance + 1;
+                    }
+                }
+
+                visited.Add(nextTile, unvisited[nextTile]);
+                unvisited.Remove(nextTile);
+            }
+
+            //Return tiles at or below the specified cost
+            foreach (KeyValuePair<Vector2Int, int> pair in visited)
+            {
+                if (pair.Value <= range)
+                {
+                    tilesInRange.Add(pair.Key);
+                }
+            }
+        }
+
         return tilesInRange.ToArray();
     }
 

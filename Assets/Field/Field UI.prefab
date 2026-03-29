@@ -4988,6 +4988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f230950dcf763ef43b3bd04b607f8ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillPanel: {fileID: 0}
+  skillData: {fileID: 0}
 --- !u!1 &4287145989962107458
 GameObject:
   m_ObjectHideFlags: 0
@@ -8117,6 +8119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f230950dcf763ef43b3bd04b607f8ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillPanel: {fileID: 0}
+  skillData: {fileID: 0}
 --- !u!1 &7283790802922234205
 GameObject:
   m_ObjectHideFlags: 0
