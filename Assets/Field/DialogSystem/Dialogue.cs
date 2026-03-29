@@ -12,6 +12,9 @@ public class Dialogue : MonoBehaviour, IInteractable
     [Header("Dialogue")]
     [SerializeField] private SO_DialogueData dialogueData;
 
+    [Header("Persistent ID")]
+    [SerializeField] private string dialogueId;
+
     [Header("Trigger")]
     [SerializeField] private TriggerMode triggerMode = TriggerMode.InteractKey;
     [SerializeField] private bool canRepeat = true;
@@ -20,6 +23,14 @@ public class Dialogue : MonoBehaviour, IInteractable
     private bool _hasTriggered;
 
     public TriggerMode Mode => triggerMode;
+
+    private void Awake()
+    {
+        if (!canRepeat && BattleStateManager.Instance != null)
+        {
+            _hasTriggered = BattleStateManager.Instance.IsDialogueTriggered(dialogueId);
+        }
+    }
 
     public void Interact(GameObject interactor)
     {
@@ -57,6 +68,15 @@ public class Dialogue : MonoBehaviour, IInteractable
             return;
 
         DialogueManager.Instance.StartDialogue(dialogueData);
-        _hasTriggered = true;
+
+        if (!canRepeat)
+        {
+            _hasTriggered = true;
+
+            if (BattleStateManager.Instance != null)
+            {
+                BattleStateManager.Instance.MarkDialogueTriggered(dialogueId);
+            }
+        }
     }
 }

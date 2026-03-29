@@ -21,6 +21,9 @@ public class PlayerCharacterField : MonoBehaviour
     [SerializeField] private AbilityBase primaryAbility;
     [SerializeField] private CharacterSpriteView spriteView;
 
+    [Header("Visual")]
+    [SerializeField] private GameObject visualRoot;
+
     [Header("Movement Rule")]
     [SerializeField] private bool useBlockCheck = false;
     [SerializeField] private LayerMask blockingLayers;
@@ -30,6 +33,12 @@ public class PlayerCharacterField : MonoBehaviour
 
     /// True if this character currently accepts player input and can use abilities.
     public bool IsPlayerControlled { get; private set; }
+
+    public void SetVisualVisible(bool visible)
+    {
+        if (visualRoot != null)
+            visualRoot.SetActive(visible);
+    }
 
     private void Awake()
     {
