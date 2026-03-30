@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef659fb6f36bdb429daea399a91329e, type: 3}
+  m_Name: SO_Enemy01Dead
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - speakerName: 
+    text: "You\u2019ve leveled up and obtained a new skill!\r"
+  - speakerName: 
+    text: "You can equip it by pressing ESC to open the menu and selecting Skills.\r"
+  - speakerName: 
+    text: "Do note that both Hugo and Tenet have limited skill slots. Think carefully
+      about which skills you want each to have.\r"

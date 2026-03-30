@@ -1488,7 +1488,7 @@ Transform:
   m_GameObject: {fileID: 325605524}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.054, z: 0.609}
+  m_LocalPosition: {x: 1.69, y: -2.054, z: 0.609}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1531,6 +1531,8 @@ MonoBehaviour:
   enemyId: 01
   droppedItemPrefab: {fileID: 1909221897}
   dropOffset: {x: 0, y: 0, z: 0}
+  defeatDialogue: {fileID: 11400000, guid: 032cee4c2dbca4c468d973c196508864, type: 2}
+  defeatDialogueId: Enemy01Dead
 --- !u!114 &325605528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9041,6 +9043,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622056320}
   m_CullTransparentMesh: 1
+--- !u!1 &1630815517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1630815521}
+  - component: {fileID: 1630815520}
+  - component: {fileID: 1630815519}
+  - component: {fileID: 1630815518}
+  m_Layer: 0
+  m_Name: BeforeFirstEnemyDialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1630815518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630815517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3a9c6733d1aa446bc0ce878d7110fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 1630815519}
+--- !u!114 &1630815519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630815517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c97b3a401e8a78d4bad2a76b37bab935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueData: {fileID: 11400000, guid: 7e3abd20f599b794b8ee302b98f92246, type: 2}
+  dialogueId: BeforeEnemy01
+  triggerMode: 1
+  canRepeat: 0
+  onlyPlayerCanTrigger: 1
+--- !u!65 &1630815520
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630815517}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1630815521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630815517}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 52.19, y: 1.72, z: 5.219}
+  m_LocalScale: {x: 0.7529414, y: 1.2832, z: 10.7584}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1668137143
 GameObject:
   m_ObjectHideFlags: 0
@@ -11282,6 +11369,7 @@ SceneRoots:
   - {fileID: 691365122}
   - {fileID: 1668137146}
   - {fileID: 512563614}
+  - {fileID: 1630815521}
   - {fileID: 824327557}
   - {fileID: 1994980389}
   - {fileID: 3373741864721295857}

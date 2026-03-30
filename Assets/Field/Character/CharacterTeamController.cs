@@ -31,11 +31,13 @@ public class CharacterTeamController : MonoBehaviour
 
     /// The character that is currently disabled and NOT player-controlled.
     private bool _switchRequested;
+    private bool _justSwitched;
 
     public PlayerCharacterField Inactive { get; private set; }
 
     /// True if the current active character is the solid character.
     public bool IsActiveSolid => Active == solid;
+
 
 
     private void Start()
@@ -93,18 +95,13 @@ public class CharacterTeamController : MonoBehaviour
         Quaternion rot;
         Vector3 vel = Vector3.zero;
 
-
         if (Active.TryGetComponent<Rigidbody>(out var rbA))
         {
             vel = rbA.linearVelocity;
-            pos = rbA.position;
-            rot = rbA.rotation;
         }
-        else
-        {
-            pos = Active.transform.position;
-            rot = Active.transform.rotation;
-        }
+
+        pos = Active.transform.position;
+        rot = Active.transform.rotation;
 
         // 2) Swap roles: newActive becomes the previously inactive character
         PlayerCharacterField newActive = Inactive;
@@ -137,8 +134,8 @@ public class CharacterTeamController : MonoBehaviour
         Active = newActive;
         Inactive = newInactive;
 
-        if (cameraFollowPivot != null && Active != null)
-            cameraFollowPivot.position = Active.transform.position;
+        // Mark that we just switched, so camera pivot can hard-sync once in LateUpdate
+        _justSwitched = true;
     }
 
     /// <summary>
@@ -206,9 +203,19 @@ public class CharacterTeamController : MonoBehaviour
 
     private void LateUpdate()
     {
-        // Keep the camera follow pivot aligned with the active character each frame
-        if (cameraFollowPivot != null && Active != null)
+        if (cameraFollowPivot == null || Active == null) return;
+
+        // After a switch, force one hard sync in LateUpdate
+        // so the camera target matches the new active character in the same rendered frame.
+        if (_justSwitched)
+        {
             cameraFollowPivot.position = Active.transform.position;
+            _justSwitched = false;
+            return;
+        }
+
+        // Normal follow
+        cameraFollowPivot.position = Active.transform.position;
     }
 }
 
