@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
   m_Name: NormalAttack_Tenet
   m_EditorClassIdentifier: 
-  skillName: Normal Attack Tenet
+  skillName: Normal Attack (Tenet)
   skillDescription: 
   skillIcon: {fileID: 0}
   skillType: 0

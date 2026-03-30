@@ -268,6 +268,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         
         currentCharacter.entity.HideRange();
         isSelectingPosition = false;
+
+        DataTracker.Instance.AddSkillUse(currentCharacter.normalAttack);
     }
     
     private GridHighlight attackingHighlight;
@@ -385,5 +387,20 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     {
         EndAllSelecting();
         CombatManager.Instance.EndTurn(Team.Player);
+    }
+
+    private void Update()
+    {
+        if (CombatManager.Instance.currentTurn == Team.Player)
+        {
+            if (currentCharacterName == Characters.HUGO)
+            {
+                DataTracker.Instance.hugoTime += Time.deltaTime;
+            }
+            else if (currentCharacterName == Characters.TENET)
+            {
+                DataTracker.Instance.tenetTime += Time.deltaTime;
+            }
+        }
     }
 }
