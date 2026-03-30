@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
-  m_Name: Decree
+  m_Name: Shrouded Field
   m_EditorClassIdentifier: 
-  skillName: Decree
-  skillDescription: 
+  skillName: Shrouded Field
+  skillDescription: Create a field that deals 100% ATK damge to all enemy within
+    the range at the end of Tenet's turn.
   skillIcon: {fileID: 0}
   skillType: 1
   rangeType: 3
   cost: 5
   cooldown: 0
-  needAiming: 1
+  needAiming: 0
   range:
-    rid: 960499965623533717
+    rid: 960499968419561585
   param:
     rid: 960499965623533671
   references:
@@ -32,15 +33,11 @@ MonoBehaviour:
       data:
         statusForAllies:
         - statusWithTurns:
-            status: {fileID: 11400000, guid: 55c6d24d4dd4ba6498103baccd45ddf4, type: 2}
-            turns: -1
-          chance: 1
-        statusForEnemies:
-        - statusWithTurns:
-            status: {fileID: 11400000, guid: 058b258df73f15f49b7e2639bd797b6a, type: 2}
+            status: {fileID: 11400000, guid: 3ac0ec7cf12c07c478da3911e64571b5, type: 2}
             turns: 2
-          chance: 0.5
-    - rid: 960499965623533717
+          chance: 1
+        statusForEnemies: []
+    - rid: 960499968419561585
       type: {class: TileDistanceRange, ns: , asm: Assembly-CSharp}
       data:
-        distance: 3
+        distance: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DashThrough
   m_EditorClassIdentifier: 
   skillName: Dash Through
-  skillDescription: Charge through enemies in a straight line, dealing damage and
-    moving to the end of the line.
+  skillDescription: Charge through enemies in a straight line, dealing 120% ATK damage
+    and moving to the end of the line.
   skillIcon: {fileID: 0}
   skillType: 0
   rangeType: 0

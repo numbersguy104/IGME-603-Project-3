@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Spin Slash
   skillDescription: A spinning sword move that hits all enemies adjacent to Hugo.
+    Deals 150% ATK damage.
   skillIcon: {fileID: 0}
   skillType: 0
   rangeType: 0

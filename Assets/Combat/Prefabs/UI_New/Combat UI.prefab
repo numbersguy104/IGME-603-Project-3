@@ -2448,8 +2448,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde3bb10857abc24582b795eee062186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HugoSPColor: {r: 1, g: 1, b: 1, a: 1}
-  TenetSPColor: {r: 1, g: 1, b: 1, a: 1}
+  HugoSPColor: {r: 1, g: 0.9639575, b: 0, a: 1}
+  TenetSPColor: {r: 0.4, g: 1, b: 0.8, a: 1}
 --- !u!114 &67159263290522826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5702,8 +5702,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde3bb10857abc24582b795eee062186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HugoSPColor: {r: 1, g: 1, b: 1, a: 1}
-  TenetSPColor: {r: 1, g: 1, b: 1, a: 1}
+  HugoSPColor: {r: 1, g: 0.9647059, b: 0, a: 1}
+  TenetSPColor: {r: 0.4, g: 1, b: 0.8, a: 1}
 --- !u!1 &5489802642400707694
 GameObject:
   m_ObjectHideFlags: 0
@@ -7545,7 +7545,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 48495db48ad40a84e824a8c77e75cf23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5dfcbb80cff80f64aa3f49b786e87fcb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8749,7 +8749,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 48495db48ad40a84e824a8c77e75cf23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5dfcbb80cff80f64aa3f49b786e87fcb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

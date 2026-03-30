@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: NormalAttack_Tenet
   m_EditorClassIdentifier: 
   skillName: Normal Attack (Tenet)
-  skillDescription: 
+  skillDescription: Attack an enemy within the range. Deals 100% ATK damage with
+    20% chance of burn.
   skillIcon: {fileID: 0}
   skillType: 0
   rangeType: 1
