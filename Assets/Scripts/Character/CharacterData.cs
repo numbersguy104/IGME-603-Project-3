@@ -11,5 +11,6 @@ public class CharacterData : ScriptableObject
 
     public GameObject entity;
     // public float armor;
+    public int initialSkillSlot;
     public List<SkillData> InitialSkillSet;
 }

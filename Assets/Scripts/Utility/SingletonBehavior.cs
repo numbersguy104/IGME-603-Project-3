@@ -23,6 +23,7 @@ namespace Utility
                     {
                         GameObject singletonObject = new GameObject(typeof(T).Name);
                         instance = singletonObject.AddComponent<T>();
+                        (instance as SingletonBehavior<T>)?.Init();
                         DontDestroyOnLoad(singletonObject);
                     }
                 }
@@ -32,12 +33,19 @@ namespace Utility
 
         protected virtual void Awake()
         {
-            instance = this as T;
+            if(instance == null)
+                instance = this as T;
+            Init();
         }
 
         protected virtual void OnDestroy()
         {
             instance = null;
+        }
+
+        protected virtual void Init()
+        {
+            
         }
     }
 }

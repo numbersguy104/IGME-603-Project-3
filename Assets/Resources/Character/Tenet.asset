@@ -18,6 +18,7 @@ MonoBehaviour:
   DEF: 0
   maxMovementDistance: 5
   entity: {fileID: 245729318324569779, guid: 54d393fe579f0e44b9231488b08cc3f5, type: 3}
+  initialSkillSlot: 2
   InitialSkillSet:
   - {fileID: 11400000, guid: c93b59c9b8fb7a242a545bec44d9d73f, type: 2}
   - {fileID: 11400000, guid: b3e730cef212db945820d2083d97c75f, type: 2}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FlareBlast
   m_EditorClassIdentifier: 
   skillName: Flare Blast
-  skillDescription: Shoot fire in a small cone in any direction. Deals damage and
-    has a chance to burn enemies.
+  skillDescription: Shoot fire in a small cone in any direction. Deals 150% ATK damage
+    and has 50% chance to burn enemies.
   skillIcon: {fileID: 0}
   skillType: 0
   rangeType: 2

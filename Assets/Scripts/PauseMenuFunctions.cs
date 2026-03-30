@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework.Interfaces;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuFunctions : MonoBehaviour
 {
@@ -24,12 +25,9 @@ public class PauseMenuFunctions : MonoBehaviour
     [SerializeField]
     GameObject skillsTenet;
 
-    private void Start()
-    {
-        skillsMenu.GetComponent<SkillSettingUI>().UpdateSkill(skillsHugo.activeSelf);
-    }
+    public bool isHugoSkill => skillsHugo.activeSelf;
 
-    private void OnEnable()
+    private void Start()
     {
         skillsMenu.GetComponent<SkillSettingUI>().UpdateSkill(skillsHugo.activeSelf);
     }
@@ -58,6 +56,16 @@ public class PauseMenuFunctions : MonoBehaviour
                 isPaused = false;
             }
         }
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        skillsMenu.SetActive(false);
+        itemsMenu.SetActive(false);
+        configMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+        isPaused = false;
     }
 
     public void OnSkillsMenuClick() 
@@ -91,5 +99,10 @@ public class PauseMenuFunctions : MonoBehaviour
         itemsMenu.SetActive(false);
         configMenu.SetActive(false);
         pauseMenu.SetActive(true);
+    }
+
+    public void OnReturnToTitleClick()
+    {
+        SceneManager.LoadScene("Scenes/TitleScreen");
     }
 }
