@@ -5,6 +5,8 @@ public class InteractableDroppedItem : MonoBehaviour, IInteractable
 {
     [SerializeField] private string itemId;
     [SerializeField] private UnityEvent onInteracted;
+    [SerializeField] private SkillData skillToLearn;
+    [SerializeField] private bool isHugo;
 
     private bool hasBeenInteracted = false;
 
@@ -38,7 +40,11 @@ public class InteractableDroppedItem : MonoBehaviour, IInteractable
         Debug.Log($"Item interacted by: {interactor.name}, itemId={itemId}");
 
         onInteracted?.Invoke();
-
+        if(isHugo)
+            CharacterStatsManager.Instance.hugo.LearnNewSkill(skillToLearn);
+        else
+            CharacterStatsManager.Instance.tenet.LearnNewSkill(skillToLearn);
         Destroy(gameObject);
     }
+    
 }
