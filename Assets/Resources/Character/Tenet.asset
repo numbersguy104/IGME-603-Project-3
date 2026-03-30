@@ -21,4 +21,5 @@ MonoBehaviour:
   InitialSkillSet:
   - {fileID: 11400000, guid: c93b59c9b8fb7a242a545bec44d9d73f, type: 2}
   - {fileID: 11400000, guid: b3e730cef212db945820d2083d97c75f, type: 2}
+  - {fileID: 11400000, guid: 1ae11efa1bcaccc48a4b1a3d5a6fa0f8, type: 2}
   normalAttack: {fileID: 11400000, guid: 564f5f2438d3c3f4bbb650f6621501fb, type: 2}

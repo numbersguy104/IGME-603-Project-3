@@ -129,9 +129,9 @@ public class Character_Combat
     /// <param name="amount"> The amount of damage to be dealt. </param>
     public virtual void TakeDamage(float amount)
     {
-        // TODO: How does the Defense affect the damage?
+        float dmg = amount * (100f + DEF ) / 100f; 
         
-        health = Mathf.Max(health - amount, 0);
+        health = Mathf.Max(health - dmg, 0);
         OnTakeDamage?.Invoke();
 
         entity.EntityGetAttacked();

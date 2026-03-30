@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
+  m_Name: Survival ...
+  m_EditorClassIdentifier: 
+  skillName: Survival ...
+  skillDescription: 
+  skillIcon: {fileID: 0}
+  skillType: 1
+  rangeType: 1
+  cost: 5
+  cooldown: 0
+  needAiming: 1
+  range:
+    rid: 960499968419561610
+  param:
+    rid: 960499965623533671
+  references:
+    version: 2
+    RefIds:
+    - rid: 960499965623533671
+      type: {class: BuffParam, ns: , asm: Assembly-CSharp}
+      data:
+        statusForAllies:
+        - statusWithTurns:
+            status: {fileID: 11400000, guid: e18e601daef80114893c5f3deeecc48a, type: 2}
+            turns: 2
+          chance: 1
+        statusForEnemies: []
+    - rid: 960499968419561610
+      type: {class: CircleRange, ns: , asm: Assembly-CSharp}
+      data:
+        radius: 3
