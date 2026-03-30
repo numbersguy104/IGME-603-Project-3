@@ -12,9 +12,11 @@ public class InteractableDroppedItem : MonoBehaviour, IInteractable
 
     public string ItemId => itemId;
 
-    public void Initialize(string newItemId)
+    public void Initialize(string newItemId, SkillData newSkillToLearn, bool newIsHugo)
     {
         itemId = newItemId;
+        skillToLearn = newSkillToLearn;
+        isHugo = newIsHugo;
     }
 
     private void Start()

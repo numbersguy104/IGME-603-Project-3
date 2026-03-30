@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyInstance : MonoBehaviour
@@ -5,6 +6,12 @@ public class EnemyInstance : MonoBehaviour
     [SerializeField] private string enemyId;
     [SerializeField] private GameObject droppedItemPrefab;
     [SerializeField] private Vector3 dropOffset = Vector3.zero;
+    [SerializeField] private SkillData skillToLearn;
+    [SerializeField] private bool isHugoCheck;
+
+    [Header("Post Battle Dialogue")]
+    [SerializeField] private SO_DialogueData defeatDialogue;
+    [SerializeField] private string defeatDialogueId;
 
     public string EnemyId => enemyId;
 
@@ -14,14 +21,35 @@ public class EnemyInstance : MonoBehaviour
 
         if (BattleStateManager.Instance.IsEnemyDefeated(enemyId))
         {
-            HandleDefeated();
+            StartCoroutine(HandleDefeatedRoutine());
         }
     }
 
-    public void HandleDefeated()
-    {
+    private IEnumerator HandleDefeatedRoutine() 
+    { 
+        yield return null;
+
+        TryPlayDefeatDialogue();
+
         SpawnDrop();
         Destroy(gameObject);
+    }
+
+    private void TryPlayDefeatDialogue()
+    {
+        if (BattleStateManager.Instance == null) return;
+        if (defeatDialogue == null) return;
+        if (string.IsNullOrEmpty(defeatDialogueId)) return;
+        if (DialogueManager.Instance == null) return;
+        if (DialogueManager.Instance.IsPlaying) return;
+
+        if (BattleStateManager.Instance.IsDialogueTriggered(defeatDialogueId))
+            return;
+
+        DialogueManager.Instance.StartDialogue(defeatDialogue);
+        BattleStateManager.Instance.MarkDialogueTriggered(defeatDialogueId);
+
+        Debug.Log($"[EnemyInstance] Played defeat dialogue: {defeatDialogueId}");
     }
 
     private void SpawnDrop()
@@ -38,7 +66,7 @@ public class EnemyInstance : MonoBehaviour
         if (droppedItem != null)
         {
             string generatedItemId = $"drop_{enemyId}";
-            droppedItem.Initialize(generatedItemId);
+            droppedItem.Initialize(generatedItemId, skillToLearn, isHugoCheck);
         }
     }
 }
