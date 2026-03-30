@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FlareBlast
   m_EditorClassIdentifier: 
   skillName: Flare Blast
-  skillDescription: 
+  skillDescription: Shoot fire in a small cone in any direction. Deals damage and
+    has a chance to burn enemies.
   skillIcon: {fileID: 0}
   skillType: 0
   rangeType: 2
