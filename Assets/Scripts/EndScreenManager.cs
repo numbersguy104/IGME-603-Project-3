@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -45,6 +46,12 @@ public class EndScreenManager : MonoBehaviour
                 skillString += skillCount.Key + ": " + skillCount.Value + "\n";
             }
             skillUseText.text = skillString;
+
+            if (!Directory.Exists("Data Tracking"))
+            {
+                Directory.CreateDirectory("Data Tracking");
+            }
+            ScreenCapture.CaptureScreenshot("Data Tracking/data-" + System.DateTime.Now.ToString("yyyy-dd-MM-HH-mm-ss") + ".png");
         }
     }
 }

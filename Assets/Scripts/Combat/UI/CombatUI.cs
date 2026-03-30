@@ -16,7 +16,6 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private Button moveButton;
     private UnityAction moveAction = () => PlayerController_Combat.Instance.RequestMove();
     [SerializeField] private SkillPanelUI skillPanelUI;
-    [SerializeField] private ItemPanelUI itemPanelUI;
     //[SerializeField] private Image playerHPBar;
     [SerializeField] private Transform playerStatuses;
     //[SerializeField] private Image enemyHPBar;
@@ -79,7 +78,6 @@ public class CombatUI : SingletonBehavior<CombatUI>
             bar.UpdateIcon(enemy.entity.characterImage.sprite);
         }
 
-        UpdateItems();
         UpdateCombatInfo();
 
         foreach (var character in playerCharacters)
@@ -125,14 +123,6 @@ public class CombatUI : SingletonBehavior<CombatUI>
                 endTurnButton.GetComponent<Outline>().enabled = true;
             }
         }
-    }
-
-    public void UpdateItems()
-    {
-        //Temp
-        itemPanelUI.itemList = new List<Item> {new HealingPotion(Resources.Load<ItemData>("Item/HealPotion"))};
-        
-        // TODO: itemPanelUI.itemList = Inventory.items;
     }
 
     public void UpdateHP()
