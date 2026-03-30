@@ -62,6 +62,8 @@ public class AttackSkill: Skill
         {
             playerCharacter.attacksAvailable--;
             CombatUI.Instance.UpdateCombatInfo();
+
+            DataTracker.Instance.AddSkillUse(this);
         }
         
     }

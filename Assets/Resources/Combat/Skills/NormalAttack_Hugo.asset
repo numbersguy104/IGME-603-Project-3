@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
   m_Name: NormalAttack_Hugo
   m_EditorClassIdentifier: 
-  skillName: Normal Attack Hugo
+  skillName: Normal Attack (Hugo)
   skillDescription: 
   skillIcon: {fileID: 0}
   skillType: 0
