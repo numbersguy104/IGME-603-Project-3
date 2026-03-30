@@ -30,6 +30,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
     [SerializeField] private Button tenetButton;
     private UnityAction tenetAction = () => Instance.ChangeCharacter(Characters.TENET);
     [SerializeField] private GameObject healthDisplayPrefab;
+    [SerializeField] private GameObject[] tooltips;
 
     public UnityEvent OnCombatInfoUpdated;
     public UnityEvent OnNotifiedWin;
@@ -99,7 +100,31 @@ public class CombatUI : SingletonBehavior<CombatUI>
         UpdateStatus();
         OnCombatInfoUpdated?.Invoke();
 
-        moveButton.interactable = PlayerController_Combat.Instance.currentCharacter.movesAvailable > 0.01f;
+        PlayerCharacter_Combat currentCharacter = PlayerController_Combat.Instance.currentCharacter;
+        moveButton.interactable = currentCharacter.movesAvailable > 0.01f;
+
+        //Combat UI guidance
+        hugoButton.GetComponent<Outline>().enabled = false;
+        tenetButton.GetComponent<Outline>().enabled = false;
+        endTurnButton.GetComponent<Outline>().enabled = false;
+
+        if (currentCharacter.attacksAvailable == 0)
+        {
+            if (PlayerController_Combat.Instance.currentCharacterName == Characters.HUGO
+                && PlayerController_Combat.Instance.teamMembers[1].attacksAvailable > 0)
+            {
+                tenetButton.GetComponent<Outline>().enabled = true;
+            }
+            else if (PlayerController_Combat.Instance.currentCharacterName == Characters.TENET
+                && PlayerController_Combat.Instance.teamMembers[0].attacksAvailable > 0)
+            {
+                hugoButton.GetComponent<Outline>().enabled = true;
+            }
+            else
+            {
+                endTurnButton.GetComponent<Outline>().enabled = true;
+            }
+        }
     }
 
     public void UpdateItems()
@@ -204,5 +229,13 @@ public class CombatUI : SingletonBehavior<CombatUI>
     public void EndSelecting()
     {
         PlayerController_Combat.Instance.EndAllSelecting();
+    }
+
+    public void HideTooltips()
+    {
+        foreach (GameObject tooltip in tooltips)
+        {
+            tooltip.SetActive(false);
+        }
     }
 }

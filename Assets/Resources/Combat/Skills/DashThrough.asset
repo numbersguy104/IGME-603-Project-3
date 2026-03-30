@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: DashThrough
   m_EditorClassIdentifier: 
   skillName: Dash Through
-  skillDescription: 
+  skillDescription: Charge through enemies in a straight line, dealing damage and
+    moving to the end of the line.
   skillIcon: {fileID: 0}
   skillType: 0
   rangeType: 0
