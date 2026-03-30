@@ -16,6 +16,7 @@ public class CharacterStatsManager : SingletonBehavior<CharacterStatsManager>
         base.Init();
         hugo = new PlayerCharacter(Resources.Load<PlayerData>("Character/Hugo"));
         tenet = new PlayerCharacter(Resources.Load<PlayerData>("Character/Tenet"));
+        characters.Clear();
         characters.Add(hugo);
         characters.Add(tenet);
     }

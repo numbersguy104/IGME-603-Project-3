@@ -6,7 +6,7 @@ namespace Utility
     public class SingletonBehavior<T>: MonoBehaviour where T: MonoBehaviour
     {
         private static T instance;
-        private static bool applicationIsQuitting = false;
+        private static bool applicationIsQuitting;
 
         public static T Instance
         {
@@ -33,9 +33,11 @@ namespace Utility
 
         protected virtual void Awake()
         {
-            if(instance == null)
+            if (instance == null)
+            {
                 instance = this as T;
-            Init();
+                Init();
+            }
         }
 
         protected virtual void OnDestroy()
@@ -46,6 +48,11 @@ namespace Utility
         protected virtual void Init()
         {
             
+        }
+
+        protected void OnApplicationQuit()
+        {
+            applicationIsQuitting = true;
         }
     }
 }
