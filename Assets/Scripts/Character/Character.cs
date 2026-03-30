@@ -36,7 +36,7 @@ public class Character
     public GameObject entityPrefab;
 
     public int maxSkillSlots = 2;
-    public List<SkillData> skillSet;
+    public List<SkillData> skillEquipped;
     public List<SkillData> skillLearned;
     
     public Character(CharacterData data)
@@ -47,10 +47,10 @@ public class Character
         DEF = data.DEF;
         maxMovementDistance = data.maxMovementDistance;
         skillLearned = data.InitialSkillSet;
-        skillSet = new List<SkillData>();
+        skillEquipped = new List<SkillData>();
         foreach (var skillData in skillLearned)
         {
-            skillSet.Add(skillData);
+            skillEquipped.Add(skillData);
         }
         entityPrefab = data.entity;
     }
@@ -84,6 +84,11 @@ public class Character
     public void AddSkillSlot(int increment)
     {
         maxSkillSlots += increment;
+    }
+
+    public void LearnNewSkill(SkillData skill)
+    {
+        skillLearned.Add(skill);
     }
     
 }

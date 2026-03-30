@@ -34,9 +34,10 @@ public class Character_Combat
 
     public List<Skill> skills;
     public List<Status> statuses;
+    public float ATK_Multiplier;
 
-    public Action OnTurnStart;
-    public Action OnTurnEnd;
+    public Action<Character_Combat> OnTurnStart;
+    public Action<Character_Combat> OnTurnEnd;
     public Action<Character_Combat> OnCharacterDeath;
     public Action OnTakeDamage;
     public Action OnSPChanged;
@@ -60,7 +61,7 @@ public class Character_Combat
         attackRange = new List<Vector2Int> { new(0, 1) }; // For week-1 Test Only
         
         skills = new List<Skill>();
-        foreach (var skillData in character.skillSet)
+        foreach (var skillData in character.skillEquipped)
         {
             Skill skill = SkillFactory.GetSkill(skillData);
             if(skill != null)
@@ -75,7 +76,7 @@ public class Character_Combat
     /// </summary>
     public virtual void OnNotifiedTurnStart()
     {
-        OnTurnStart?.Invoke();
+        OnTurnStart?.Invoke(this);
     }
     
     /// <summary>
@@ -83,7 +84,7 @@ public class Character_Combat
     /// </summary>
     public virtual void OnNotifiedTurnEnd()
     {
-        OnTurnEnd?.Invoke();
+        OnTurnEnd?.Invoke(this);
         
         foreach (Skill skill in skills)
         {
@@ -93,7 +94,7 @@ public class Character_Combat
         {
             Status status = statuses[i];
             status.NotifyTurnEnd();
-            if (status.TurnsRemained > 0)
+            if (status.TurnsRemained != 0)
                 i++;
         }
         
@@ -132,7 +133,8 @@ public class Character_Combat
         
         health = Mathf.Max(health - amount, 0);
         OnTakeDamage?.Invoke();
-        // TODO: VFX?
+
+        entity.EntityGetAttacked();
         
         if (health <= 0)
         {
@@ -169,6 +171,32 @@ public class Character_Combat
             };
         }
         
+        OnStatusUpdated?.Invoke();
+    }
+
+    public Status GetStatus(Type statusType)
+    {
+        foreach (var status in statuses)
+        {
+            if (statusType.IsAssignableFrom(status.GetType()))
+                return status;
+        }
+    
+        return null;
+    }
+    
+    public void RemoveAllStatus(Type statusType)
+    {
+        for(int i = 0; i < statuses.Count;)
+        {
+            Status status = statuses[i];
+            if (statusType.IsAssignableFrom(status.GetType()))
+            {
+                statuses.Remove(status);
+                continue;
+            }
+            i++;
+        }
         OnStatusUpdated?.Invoke();
     }
 

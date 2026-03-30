@@ -203,6 +203,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1690403654103314883, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690403654103314883, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690403654103314883, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 235504537}
+    - target: {fileID: 1690403654103314883, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690403654103314883, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: EndSelecting
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690403654103314883, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: CombatUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690403654103314883, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1911600963961710999, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -471,6 +499,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5340953013092514993, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340953013092514993, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340953013092514993, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 235504537}
+    - target: {fileID: 5340953013092514993, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340953013092514993, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: EndSelecting
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340953013092514993, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: CombatUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340953013092514993, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6457739746658507607, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -707,6 +763,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7810521610894632654, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810521610894632654, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810521610894632654, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 235504537}
+    - target: {fileID: 7810521610894632654, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810521610894632654, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndSelecting
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810521610894632654, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CombatUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810521610894632654, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7810645792698575372, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -799,6 +883,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1007048714}
+    - target: {fileID: 8774105542755731753, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774105542755731753, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774105542755731753, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 549149830}
+    - target: {fileID: 8774105542755731753, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9058369868054595293, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -833,7 +933,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5770469501341327045, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
   m_PrefabInstance: {fileID: 235504536}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 549149830}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 902126c6f5b651a46a822b4ce2feb3de, type: 3}
@@ -1329,6 +1429,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 45, y: -90, z: 0}
+--- !u!1 &549149830 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4815979690788885733, guid: c5d04ac62394aa34689e3f3d913bb728, type: 3}
+  m_PrefabInstance: {fileID: 235504536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &630578763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,6 +1685,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enableDebugWinShortcut: 1
+  debugWinKey: 289
 --- !u!114 &1077232761
 MonoBehaviour:
   m_ObjectHideFlags: 0

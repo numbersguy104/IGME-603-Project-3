@@ -10,33 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a7be77ed68b4ea5a2dbb3f15df59fad, type: 3}
-  m_Name: NormalAttack_Tenet
+  m_Name: The Voices
   m_EditorClassIdentifier: 
-  skillName: Normal Attack Tenet
+  skillName: The Voices
   skillDescription: 
   skillIcon: {fileID: 0}
-  skillType: 0
-  rangeType: 1
-  cost: 0
+  skillType: 1
+  rangeType: 3
+  cost: 5
   cooldown: 0
-  needAiming: 1
+  needAiming: 0
   range:
-    rid: 960499832875123526
+    rid: 960499968419561585
   param:
-    rid: 960499811303555236
+    rid: 960499965623533671
   references:
     version: 2
     RefIds:
-    - rid: 960499811303555236
-      type: {class: AttackParam, ns: , asm: Assembly-CSharp}
+    - rid: 960499965623533671
+      type: {class: BuffParam, ns: , asm: Assembly-CSharp}
       data:
-        ATKRatio: 1
-        statusOnHit:
+        statusForAllies:
         - statusWithTurns:
-            status: {fileID: 11400000, guid: eb322da60ca9afe4eab2581d930df2ff, type: 2}
+            status: {fileID: 11400000, guid: 3ac0ec7cf12c07c478da3911e64571b5, type: 2}
             turns: 2
-          chance: 0.2
-    - rid: 960499832875123526
-      type: {class: CircleRange, ns: , asm: Assembly-CSharp}
+          chance: 1
+        statusForEnemies: []
+    - rid: 960499968419561585
+      type: {class: TileDistanceRange, ns: , asm: Assembly-CSharp}
       data:
-        radius: 6
+        distance: 0

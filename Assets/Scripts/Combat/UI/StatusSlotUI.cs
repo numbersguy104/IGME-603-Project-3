@@ -14,7 +14,10 @@ public class StatusSlotUI : MonoBehaviour
     {
         this.status = status;
         statusIcon.sprite = status.statusData.statusIcon;
-        turnRemainedText.SetText(status.TurnsRemained.ToString());
+        if (status.TurnsRemained > 0)
+            turnRemainedText.SetText(status.TurnsRemained.ToString());
+        else
+            turnRemainedText.enabled = false;
     }
 
     public void SetVisible(bool visible)

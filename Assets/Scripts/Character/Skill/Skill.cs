@@ -33,6 +33,20 @@ public class Skill
 
         cooldownRemained = maxCooldown;
     }
+    
+    public virtual void Execute(Character_Combat instigator, Character_Combat target)
+    {
+        if (instigator.CurrentSkillPoint < skillData.cost)
+        {
+            // TODO: No Enough SP
+        }
+        else
+        {
+            instigator.CostSP(skillData.cost);
+        }
+
+        cooldownRemained = maxCooldown;
+    }
 
     public virtual void NotifyTurnEnd()
     {

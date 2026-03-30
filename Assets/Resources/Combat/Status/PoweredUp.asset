@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PoweredUp
   m_EditorClassIdentifier: 
   statusName: PoweredUp
-  statusIcon: {fileID: 0}
+  statusIcon: {fileID: 21300000, guid: f37e1a31cdfc0e94e9b39da4591a95a7, type: 3}

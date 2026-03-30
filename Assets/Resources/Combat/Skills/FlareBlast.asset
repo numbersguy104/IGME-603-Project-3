@@ -30,7 +30,7 @@ MonoBehaviour:
     - rid: 960499811303555236
       type: {class: AttackParam, ns: , asm: Assembly-CSharp}
       data:
-        ATKRatio: 1
+        ATKRatio: 1.5
         statusOnHit:
         - statusWithTurns:
             status: {fileID: 11400000, guid: eb322da60ca9afe4eab2581d930df2ff, type: 2}

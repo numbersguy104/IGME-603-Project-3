@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Crippled
   m_EditorClassIdentifier: 
   statusName: Crippled
-  statusIcon: {fileID: 0}
+  statusIcon: {fileID: 21300000, guid: abf9db4001c18034892772a136771e8d, type: 3}

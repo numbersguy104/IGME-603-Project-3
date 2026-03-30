@@ -16,6 +16,18 @@ public class CombatEntity : MonoBehaviour
 
     public float moveSpeed = 1;
 
+    private int highlightCounter;
+
+    private void Update()
+    {
+        if (highlightCounter > 0)
+        {
+            highlightCounter--;
+            if(highlightCounter == 0)
+                characterImage.material.SetFloat("_IsHighlighted", 0);
+        }
+    }
+
     private void LateUpdate()
     {
         Turn();
@@ -72,6 +84,12 @@ public class CombatEntity : MonoBehaviour
         rangeRenderer.enabled = false;
     }
 
+    public void SetSpriteHighlight()
+    {
+        characterImage.material.SetFloat("_IsHighlighted", 1);
+        highlightCounter = 2;
+    }
+    
     public void EntityGetAttacked()
     {
         var animator = gameObject.GetComponent<Animator>();

@@ -271,7 +271,7 @@ public class Enemy_Combat: Character_Combat
             }
             else
             {
-                GridManager.Instance.ApplyDamageToCells(this, TransformRangeToWorld(attackRange.ToArray()), ATK);
+                GridManager.Instance.ApplyDamageToTiles(this, TransformRangeToWorld(attackRange.ToArray()), ATK);
                 CombatUI.Instance.UpdateCombatInfo();
             }
         }

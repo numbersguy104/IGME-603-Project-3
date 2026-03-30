@@ -35,6 +35,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     {
         if (CombatManager.Instance.currentTurn != Team.Player)
             return;
+        EndAllSelecting();
         if(currentCharacter == teamMembers[0])
             UseSkill(currentCharacter.normalAttack);
         else
@@ -58,13 +59,15 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
                 {
                     attack.Execute(currentCharacter);
                 }
-                // EndPlayerTurn();
                 break;
-            case Defense defense:
-                defense.Execute(currentCharacter);
-                break;
+            // case Defense defense:
+            //     defense.Execute(currentCharacter);
+            //     break;
             case BuffSkill buff:
-                buff.Execute(currentCharacter);
+                if (buff.skillData.needAiming)
+                    StartSelecting(SelectionType.Orientation, buff);
+                else
+                    buff.Execute(currentCharacter);
                 break;
         }
     }
@@ -83,6 +86,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     {
         if (CombatManager.Instance.currentTurn != Team.Player)
             return;
+        EndAllSelecting();
         if (currentCharacter == teamMembers[0])
         {
             if (isSelectingTile)
@@ -168,7 +172,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         }
         if (isAiming)
         {
-            GridManager.Instance.RemoveHighlight(attackingHighlight);
+            GridManager.Instance.RemoveHighlight(highlight);
             StopCoroutine(nameof(Aiming));
             isAiming = false;
         }
@@ -236,41 +240,32 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
     {
         isSelectingTarget = true;
         GameObject target = null;
+        CombatEntity targetEntity = null;
         Vector2Int targetPosition;
         currentCharacter.entity.DisplayRange((currentCharacter.normalAttack.skillData.range as CircleRange).radius, RoundRangeHighlight.Attack);
         while (true)
         {
             targetPosition = GridManager.Instance.GetHoveredTile(true) ?? new Vector2Int(-1,-1);
             target = GridManager.Instance.GetAt(targetPosition.x, targetPosition.y);
+            if (target != null && target.TryGetComponent(out CombatEntity entity) && entity.character.team != Team.Player)
+            {
+                targetEntity = entity;
+                targetEntity.SetSpriteHighlight();
+            }
             yield return null;
             if (Input.GetMouseButtonDown(0) && targetPosition.x >= 0 && target !=null && target.GetComponent<CombatEntity>().character.team != Team.Player)
                 break;
             if(Input.GetMouseButtonDown(1))
                 EndAllSelecting();
         }
-        
-        AttackParam attackParam = currentCharacter.normalAttack.skillData.param as AttackParam;
-
-        void ApplyStatus(Character_Combat source, Character_Combat target, float dmg)
-        {
-            foreach (var effectWithChances in attackParam.statusOnHit)
-                if(Random.Range(0f, 1f) < effectWithChances.chance)
-                    target.AddStatus(effectWithChances.statusWithTurns.status, effectWithChances.statusWithTurns.turns);
-        }
-
-        GridManager.Instance.ApplyDamageToCells(currentCharacter,
-            new []{targetPosition},
-            attackParam.ATKRatio * currentCharacter.ATK,
-            ApplyStatus
-        );
-        currentCharacter.attacksAvailable--;
-        CombatUI.Instance.UpdateCombatInfo();
+        if(targetEntity != null)
+            currentCharacter.normalAttack.Execute(currentCharacter, targetEntity.character);
         
         currentCharacter.entity.HideRange();
         isSelectingPosition = false;
     }
     
-    private GridHighlight attackingHighlight;
+    private GridHighlight highlight;
     IEnumerator Aiming(object obj)
     {
         isAiming = true;
@@ -278,11 +273,18 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         switch (obj)
         {
             case AttackSkill attack:
-                Vector2Int[] tiles = attack.skillData.range.GetAllTileCovered(currentCharacter);
-                for (int i = 0; i < tiles.Length; i++)
-                    highlightedTiles[i] = tiles[i];
-                attackingHighlight = new GridHighlight(highlightedTiles, HighlightType.InAttackingRange);
-                GridManager.Instance.AddHighlight(attackingHighlight);
+                Vector2Int[] tilesToAttack = attack.skillData.range.GetAllTileCovered(currentCharacter);
+                for (int i = 0; i < tilesToAttack.Length; i++)
+                    highlightedTiles[i] = tilesToAttack[i];
+                highlight = new GridHighlight(highlightedTiles, HighlightType.InAttackingRange);
+                GridManager.Instance.AddHighlight(highlight);
+                break;
+            case BuffSkill buff:
+                Vector2Int[] tilesToBuff = buff.skillData.range.GetAllTileCovered(currentCharacter);
+                for (int i = 0; i < tilesToBuff.Length; i++)
+                    highlightedTiles[i] = tilesToBuff[i];
+                highlight = new GridHighlight(highlightedTiles, HighlightType.InBuffRange);
+                GridManager.Instance.AddHighlight(highlight);
                 break;
         }
         while (true)
@@ -308,11 +310,19 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
             switch (obj)
             {
                 case AttackSkill attack:
-                    Vector2Int[] newRange = attack.skillData.range.GetAllTileCovered(currentCharacter);
-                    for (int i = 0; i < newRange.Length; i++)
-                        highlightedTiles[i] = newRange[i];
+                    Vector2Int[] newRangeToAttack = attack.skillData.range.GetAllTileCovered(currentCharacter);
+                    for (int i = 0; i < newRangeToAttack.Length; i++)
+                        highlightedTiles[i] = newRangeToAttack[i];
 
-                    for (int i = newRange.Length; i < highlightedTiles.Length; i++)
+                    for (int i = newRangeToAttack.Length; i < highlightedTiles.Length; i++)
+                        highlightedTiles[i] = new (-1, -1);
+                    break;
+                case BuffSkill buff:
+                    Vector2Int[] newRangeToBuff = buff.skillData.range.GetAllTileCovered(currentCharacter);
+                    for (int i = 0; i < newRangeToBuff.Length; i++)
+                        highlightedTiles[i] = newRangeToBuff[i];
+
+                    for (int i = newRangeToBuff.Length; i < highlightedTiles.Length; i++)
                         highlightedTiles[i] = new (-1, -1);
                     break;
             }
@@ -336,7 +346,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
                 break;
         }
         
-        GridManager.Instance.RemoveHighlight(attackingHighlight);
+        GridManager.Instance.RemoveHighlight(highlight);
     }
 
     public void MoveTo(Vector2Int tile)

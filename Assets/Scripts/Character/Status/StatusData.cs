@@ -13,4 +13,5 @@ public class StatusData : ScriptableObject
 {
     public string statusName;
     public Sprite statusIcon;
+    public bool hideInStatusUI;
 }

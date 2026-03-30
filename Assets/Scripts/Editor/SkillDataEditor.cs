@@ -45,6 +45,7 @@ public class SkillDataEditor : Editor
     {
         return (type == RangeType.Grid && range is GridRange) ||
                (type == RangeType.Sector && range is SectorRange) ||
-               (type == RangeType.Circle && range is CircleRange);
+               (type == RangeType.Circle && range is CircleRange) ||
+               (type == RangeType.TileDistance && range is TileDistanceRange);
     }
 }

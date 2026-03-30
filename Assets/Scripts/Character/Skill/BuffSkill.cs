@@ -5,14 +5,21 @@ using UnityEngine;
 [Serializable]
 public class BuffParam : SkillParam
 {
-    [Tooltip("If this buff is applied to all allies at any position")]
-    public bool applyOnAllies;
-    [Tooltip("The status to be applied along with the turns it will last for")]
-    public List<StatusWithTurns> statusList;
+    [Serializable]
+    public struct EffectByChances
+    {
+        public StatusWithTurns statusWithTurns;
+        public float chance;
+    }
+    public List<EffectByChances> statusForAllies;
+    public List<EffectByChances> statusForEnemies;
 }
 
+// An instance of a standard Attack Skill
 public class BuffSkill: Skill
 {
+    public RangeType rangeType;
+    
     public BuffSkill(SkillData skillData) : base(skillData)
     {
     }
@@ -21,11 +28,21 @@ public class BuffSkill: Skill
     {
         base.Execute(instigator);
         BuffParam buffParam = skillData.param as BuffParam;
-        // TODO: Implement applying status
-        // foreach status,turns in buffParam.statusList
-        // if(buffParam.applyOnAllies)
-        //  CombatManager.ApplyStatus(instigator is Player, status, turns)
-        // else
-        //  Grid.ApplyStatus(instigator, buffParam.range, status, turns)
+
+        foreach (var effectWithChances in buffParam.statusForAllies)
+            GridManager.Instance.ApplyEffectToTiles(instigator,
+                skillData.range.GetAllTileCovered(instigator),
+                effectWithChances,
+                true
+            );
+        
+        foreach (var effectWithChances in buffParam.statusForEnemies)
+            GridManager.Instance.ApplyEffectToTiles(instigator,
+                skillData.range.GetAllTileCovered(instigator),
+                effectWithChances,
+                false
+            );
+
+        CombatUI.Instance.UpdateCombatInfo();
     }
 }

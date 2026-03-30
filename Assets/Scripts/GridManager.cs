@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Utility;
+using Random = UnityEngine.Random;
 
 //Manage the grid system for combat.
 //Documentation: https://docs.google.com/document/d/1HdIbCRw4Lso9VstncTPQ-jHqG9BYdMHayuyans9pvLk/edit?usp=sharing
@@ -9,6 +10,7 @@ using Utility;
 public enum HighlightType
 {
     InAttackingRange,
+    InBuffRange,
     Hovered,
     InMovingRange
 }
@@ -258,7 +260,7 @@ public class GridManager : SingletonBehavior<GridManager>
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            return PosToGrid(hit.point, true);
+            return PosToGrid(hit.point, false);
             Debug.Log("Hit object: " + hit.collider.gameObject.name);
         }
 
@@ -274,8 +276,7 @@ public class GridManager : SingletonBehavior<GridManager>
     /// <param name="dmg">The damage to be done</param>
     /// <param name="onDamageDealt">An action for post-damage event</param>
 
-    // This is a Temporary Version for Week-1 Test. Feel free to Modify -- Shaolin
-    public void ApplyDamageToCells(Character_Combat instigator, Vector2Int[] range, float dmg, Action<Character_Combat, Character_Combat, float> onDamageDealt = null)
+    public void ApplyDamageToTiles(Character_Combat instigator, Vector2Int[] range, float dmg, Action<Character_Combat, Character_Combat, float> onDamageDealt = null)
     {
         foreach (var coor in range)
         {
@@ -291,20 +292,25 @@ public class GridManager : SingletonBehavior<GridManager>
                 }
             }
         }
-        
-        // for(int x = 0; x < grid.GetLength(0); x++)
-        //     for(int y = 0; y < grid.GetLength(1); y++)
-        //     {
-        //         if (GetAt(x, y)!= null && GetAt(x, y).TryGetComponent<CombatEntity>(out var entity))
-        //         {
-        //             Character_Combat character = entity.character;
-        //             if (character.team != instigator.team)
-        //             {
-        //                 character.TakeDamage(dmg);
-        //                 onDamageDealt?.Invoke(instigator, character, dmg);
-        //             }
-        //         }
-        //     }
+    }
+    
+    public void ApplyEffectToTiles(Character_Combat instigator, Vector2Int[] range, BuffParam.EffectByChances effectByChances, bool applyOnAlly)
+    {
+        foreach (var coor in range)
+        {
+            int x = coor.x;
+            int y = coor.y;
+            if (GetAt(x, y)!= null && GetAt(x, y).TryGetComponent<CombatEntity>(out var entity))
+            {
+                Character_Combat character = entity.character;
+                if((character.team == instigator.team) == applyOnAlly)
+                    if(Random.Range(0,1f) < effectByChances.chance)
+                    {
+                        StatusWithTurns statusWithTurns = effectByChances.statusWithTurns;
+                        character.AddStatus(statusWithTurns.status, statusWithTurns.turns);
+                    }
+            }
+        }
     }
 
     //Get tiles within a certain range of the origin

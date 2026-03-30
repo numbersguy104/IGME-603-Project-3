@@ -30,7 +30,7 @@ MonoBehaviour:
     - rid: 960499811303555236
       type: {class: AttackParam, ns: , asm: Assembly-CSharp}
       data:
-        ATKRatio: 1
+        ATKRatio: 1.5
         statusOnHit: []
     - rid: 960499811303555625
       type: {class: GridRange, ns: , asm: Assembly-CSharp}

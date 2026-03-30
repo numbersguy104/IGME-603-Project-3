@@ -7,7 +7,7 @@ public class GridTile : MonoBehaviour
     private MaterialPropertyBlock mpb;
     private void Awake()
     {
-        renderer = GetComponent<Renderer>();
+        renderer = transform.GetChild(1).GetComponent<Renderer>();
         mpb = new MaterialPropertyBlock();
     }
 
@@ -19,13 +19,16 @@ public class GridTile : MonoBehaviour
             switch (i)
             {
                 case (int)HighlightType.InAttackingRange:
-                    mpb.SetFloat("_IsInAtkRange", (type & j) > 0 ? 1 : 0);
+                    mpb.SetFloat("_IsInAttackRange", (type & j) > 0 ? 1 : 0);
                     break;
                 case (int)HighlightType.Hovered:
                     mpb.SetFloat("_IsHovered", (type & j) > 0 ? 1 : 0);
                     break;
                 case (int)HighlightType.InMovingRange:
                     mpb.SetFloat("_IsInMoveRange", (type & j) > 0 ? 1 : 0);
+                    break;
+                case (int)HighlightType.InBuffRange:
+                    mpb.SetFloat("_IsInBuffRange", (type & j) > 0 ? 1 : 0);
                     break;
             }
             renderer.SetPropertyBlock(mpb);

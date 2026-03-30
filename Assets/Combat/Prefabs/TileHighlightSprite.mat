@@ -7,23 +7,26 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TileMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 755b3dce94944d44f849d89fe026d6c8, type: 3}
+  m_Name: TileHighlightSprite
+  m_Shader: {fileID: -6465566751694194690, guid: 2be5918749af1c3498004aaeab21041d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses:
-  - MOTIONVECTORS
-  m_LockedProperties: _DefaultColor_1
+  disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -38,27 +41,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _EdgeWidth: 0.44
     - _Interval: 2
     - _IsHovered: 0
-    - _IsInAtkRange: 0
+    - _IsInAttackRange: 0
     - _IsInBuffRange: 0
     - _IsInMoveRange: 0
-    - _QueueControl: 0
-    - _QueueOffset: 0
-    - _Type: 0
     - _Width: 0.2
-    - _isHighlighted: 0
     m_Colors:
-    - _AttackedColor: {r: 1, g: 0.4009434, b: 0.4009434, a: 0}
-    - _DefaultColor_0: {r: 1, g: 1, b: 1, a: 0}
-    - _DefaultColor_1: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0}
-    - _HighlightColor: {r: 1, g: 0.7719127, b: 0, a: 0}
-    - _HoveredColor: {r: 1, g: 0.79716337, b: 0, a: 1}
-    - _InBuffRangeColor: {r: 1, g: 0.55060375, b: 0, a: 1}
-    - _InMoveRangeColor: {r: 1, g: 0.7960785, b: 0, a: 1}
+    - _HoveredColor: {r: 1, g: 0.8705883, b: 0, a: 1}
+    - _InAttackRangeColor: {r: 1, g: 0.23036563, b: 0.16509432, a: 1}
+    - _InBuffRangeColor: {r: 1, g: 0.5287268, b: 0, a: 1}
+    - _InMoveRangeColor: {r: 1, g: 0.87176263, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &2069381910590212589
+--- !u!114 &4404531038669353341
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

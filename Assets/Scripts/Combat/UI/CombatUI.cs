@@ -105,7 +105,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
     public void UpdateItems()
     {
         //Temp
-        itemPanelUI.itemList = new List<Item> {new HealingPotion(Resources.Load<ItemData>("Test/HealPotion"))};
+        itemPanelUI.itemList = new List<Item> {new HealingPotion(Resources.Load<ItemData>("Item/HealPotion"))};
         
         // TODO: itemPanelUI.itemList = Inventory.items;
     }
@@ -133,12 +133,18 @@ public class CombatUI : SingletonBehavior<CombatUI>
         void UpdateCharStatus(Character_Combat character, int characterIndex, Transform teamStatuses)
         {
             StatusSlotUI[] statusSlots = teamStatuses.GetChild(characterIndex).GetComponentsInChildren<StatusSlotUI>();
+            List<Status> statuses = new List<Status>();
+            foreach (var status in character.statuses)
+            {
+                if(!status.statusData.hideInStatusUI)
+                    statuses.Add(status);
+            }
             for (int i = 0; i < statusSlots.Length; i++)
             {
-                if (i < character.statuses.Count)
+                if (i < statuses.Count)
                 {
                     statusSlots[i].SetVisible(true);
-                    statusSlots[i].UpdateStatus(character.statuses[i]);
+                    statusSlots[i].UpdateStatus(statuses[i]);
                 }
                 else
                 {

@@ -10,6 +10,8 @@ public static class RangeFactory
                 return new SectorRange();
             case RangeType.Circle:
                 return new CircleRange();
+            case RangeType.TileDistance:
+                return new TileDistanceRange();
         }
 
         return null;

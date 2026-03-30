@@ -33,7 +33,8 @@ public class SkillPointDisplay : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerController_Combat.Instance.currentCharacter.OnSPChanged -= UpdateSPInfo;
+        if(PlayerController_Combat.Instance.currentCharacter != null)
+            PlayerController_Combat.Instance.currentCharacter.OnSPChanged -= UpdateSPInfo;
         CombatUI.Instance.OnCombatInfoUpdated.RemoveListener(UpdateSPInfo);
     }
 
