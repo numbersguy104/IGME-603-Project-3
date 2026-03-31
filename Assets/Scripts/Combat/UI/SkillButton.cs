@@ -42,7 +42,6 @@ public class SkillButton : MonoBehaviour
     {
         text.SetText(skill.skillData.skillName);
         description.SetText("Cost: " + skill.skillData.cost + "\n"
-                            + "Cooldown: " + skill.skillData.cooldown + "\n"
                             + skill.skillData.skillDescription);
     }
 }
