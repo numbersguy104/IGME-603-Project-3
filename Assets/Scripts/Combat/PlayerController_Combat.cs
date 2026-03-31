@@ -401,7 +401,7 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
 
     private void Update()
     {
-        if (CombatManager.Instance.currentTurn == Team.Player)
+        if (CombatManager.Instance.currentTurn == Team.Player && DataTracker.Instance != null)
         {
             if (currentCharacterName == Characters.HUGO)
             {
