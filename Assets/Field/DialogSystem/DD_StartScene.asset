@@ -38,3 +38,15 @@ MonoBehaviour:
     text: "Fine, but don\u2019t wander off and get me in trouble."
   - speakerName: TENET
     text: As you wish, master. I will protect you until we arrive!
+  - speakerName: Tutorial
+    text: "Use WASD to move.\r\nSwap between characters by pressing Q.\r\nInteract
+      with items and other characters by pressing E.\r"
+  - speakerName: Tutorial
+    text: 'Hugo can push heavy objects in the field.
+
+      Tenet can phase through
+      special objects.
+
+      Use both to make your way to the village!
+
+'
