@@ -61,8 +61,8 @@ public class InteractableDroppedItem : MonoBehaviour, IInteractable
         else
         {
             // Healing potion
-            CharacterStatsManager.Instance.hugo.Healed(20);
-            CharacterStatsManager.Instance.tenet.Healed(20);
+            CharacterStatsManager.Instance.hugo.Healed(40);
+            CharacterStatsManager.Instance.tenet.Healed(40);
         }
         Destroy(gameObject);
     }
