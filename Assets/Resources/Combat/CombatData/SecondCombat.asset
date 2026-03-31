@@ -16,7 +16,6 @@ MonoBehaviour:
   enemies:
   - {fileID: 11400000, guid: 2a1b6e7ba99ef764289e5cd72e9488d9, type: 2}
   - {fileID: 11400000, guid: d89e3262bf8352348a4756c6d709a968, type: 2}
-  - {fileID: 11400000, guid: d89e3262bf8352348a4756c6d709a968, type: 2}
   obstacles:
   - position: {x: 1, y: 6}
     prefab: {fileID: 1844511393940878295, guid: 3d20fdc1c62a7924b89ffdb3085283c8, type: 3}

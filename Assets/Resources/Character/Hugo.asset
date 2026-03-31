@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Hugo
   m_EditorClassIdentifier: 
   maxHP: 100
+  maxSP: 0
   initialSkillPoint: 0
-  ATK: 10
+  ATK: 15
   DEF: 0
   maxMovementDistance: 5
   entity: {fileID: 245729318324569779, guid: 3ebbf0f931ef3444baadb0c740c4bf76, type: 3}
