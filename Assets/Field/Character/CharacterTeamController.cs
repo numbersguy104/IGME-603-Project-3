@@ -54,43 +54,12 @@ public class CharacterTeamController : MonoBehaviour
     }
 
     /// <summary>
-    /// Initializes the team state on scene start, either from restore or default configuration.
+    /// Initializes the team state on scene start
     /// </summary>
     private void Start()
     {
         InitializeDefaultState();
     }
-
-
-    /*
-    private void Start()
-    {
-        if (solid == null || ghost == null)
-        {
-            Debug.LogError("CharacterTeamController: solid/ghost reference is missing.");
-            return;
-        }
-
-        // Initialize Active / Inactive
-        if (startAsSolid)
-        {
-            Active = solid;
-            Inactive = ghost;
-        }
-        else
-        {
-            Active = ghost;
-            Inactive = solid;
-        }
-
-        // Ensure only one character is enabled
-        ActivateOnly(Active, Inactive);
-
-
-        if (cameraFollowPivot != null && Active != null)
-            cameraFollowPivot.position = Active.transform.position;
-    }
-    */
 
     /// <summary>
     /// Initializes the default active/inactive character state and camera pivot.

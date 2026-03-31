@@ -6,29 +6,23 @@ using UnityEngine;
 /// </summary>
 public class CameraRigFollow3D : MonoBehaviour
 {
-    /// <summary>
-    /// The target transform for the camera to follow.
-    /// </summary>
+    // The target transform for the camera to follow.
     public Transform target;
 
+    // Position smoothing factor. Higher values result in more responsive following.
     [Header("Follow")]
-    /// <summary>
-    /// Position smoothing factor. Higher values result in more responsive following.
-    /// </summary>
+
     public float smoothPos = 10f;
 
-    /// <summary>
-    /// Offset from the target in world space.
-    /// </summary>
+
+    // Offset from the target in world space.
     public Vector3 worldOffset = new Vector3(0f, 6f, -6f);
 
     [Header("Camera Bounds")]
     public BoxCollider cameraBoundsCollider;
 
+    //If true, the camera's rotation is locked to its initial value.
     [Header("Lock Rotation")]
-    /// <summary>
-    /// If true, the camera's rotation is locked to its initial value.
-    /// </summary>
     public bool lockRotation = true;
 
     private Quaternion _lockedRot;
