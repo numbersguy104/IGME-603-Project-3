@@ -11921,6 +11921,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1993437947711881162, guid: ce6b1078509c48840a351ee54e970fa9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2282028870247597546, guid: ce6b1078509c48840a351ee54e970fa9, type: 3}
       propertyPath: m_Name
       value: Field UI
@@ -12013,6 +12017,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "Press \u201CQ\u201D to switch characters\nHugo (Human) can push boxes\nTenet
         (Soul) can pass through boxes\nPress \"Esc\" to open menu"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6485045196278170474, guid: ce6b1078509c48840a351ee54e970fa9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8004959721496234472, guid: ce6b1078509c48840a351ee54e970fa9, type: 3}
       propertyPath: m_AnchoredPosition.x

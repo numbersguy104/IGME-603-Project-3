@@ -146,6 +146,12 @@ public class Character_Combat
     public virtual void Die()
     {
         OnCharacterDeath?.Invoke(this);
+        OnTurnStart = null;
+        OnTurnEnd = null;
+        OnCharacterDeath = null;
+        OnTakeDamage = null;
+        OnSPChanged = null;
+        OnStatusUpdated = null;
     }
 
     /// <summary>

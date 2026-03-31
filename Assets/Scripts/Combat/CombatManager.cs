@@ -214,7 +214,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         {
             character.OnCharacterDeath -= OnNotifiedCharacterDeath;
             enemies_Combat.Remove(enemy);
-            Destroy(enemy.entity);
+            Destroy(enemy.entity.gameObject);
             
             if (enemies_Combat.Count == 0)
             {
