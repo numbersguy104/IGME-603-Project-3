@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 48495db48ad40a84e824a8c77e75cf23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9caf7e9a5104a98438f46aa6b90e91ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2404922108508270759}
   - component: {fileID: 3949604877768516592}
   m_Layer: 0
-  m_Name: Item
+  m_Name: Potion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,7 +158,5 @@ MonoBehaviour:
   onInteracted:
     m_PersistentCalls:
       m_Calls: []
-  skillToLearn_Hugo: {fileID: 11400000, guid: e75c7ee5baa7f4f4886d3e8e06a9b6df, type: 2}
-  skillToLearn_Tenet: {fileID: 11400000, guid: 1ae11efa1bcaccc48a4b1a3d5a6fa0f8, type: 2}
-  pickupDialogue: {fileID: 11400000, guid: ee7cf4fa34d66d34db5f1d46bf636415, type: 2}
-  pickupDialogueId: NewSkill
+  skillToLearn: {fileID: 0}
+  isHugo: 0

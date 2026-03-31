@@ -44,5 +44,8 @@ public class BuffSkill: Skill
             );
 
         CombatUI.Instance.UpdateCombatInfo();
+        
+        if(DataTracker.Instance != null)
+            DataTracker.Instance.AddSkillUse(this);
     }
 }

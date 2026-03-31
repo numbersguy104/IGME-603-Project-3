@@ -26,6 +26,10 @@ public class StatsTextUpdater : MonoBehaviour
         if (healthText != null)
         {
             healthText.text = characterStats.CurrentHealth + "/" + characterStats.MaxHealth;
+            characterStats.OnHPUpdated += () =>
+            {
+                healthText.text = characterStats.CurrentHealth + "/" + characterStats.MaxHealth;
+            };
         }
 
         if (expText != null)

@@ -16,8 +16,8 @@ public class Character
     protected float maxHealth;
     public float MaxHealth => maxHealth;
     
-    protected float skillPoint;
-    public float CurrentSkillPoint => skillPoint;
+    protected float initialSkillPoint;
+    public float InitialSkillPoint => initialSkillPoint;
     protected float maxSkillPoint;
     public float MaxSkillPoint => maxSkillPoint;
 
@@ -37,11 +37,14 @@ public class Character
     public int maxSkillSlots;
     public List<SkillData> skillEquipped;
     public List<SkillData> skillLearned;
+
+    public Action OnHPUpdated;
     
     public Character(CharacterData data)
     {
         health = maxHealth = data.maxHP;
-        skillPoint = maxSkillPoint = data.initialSkillPoint;
+        maxSkillPoint = data.initialSkillPoint;
+        initialSkillPoint = data.initialSkillPoint;
         ATK = data.ATK;
         DEF = data.DEF;
         maxMovementDistance = data.maxMovementDistance;
@@ -58,12 +61,12 @@ public class Character
     public void Healed(float amount)
     {
         health = Mathf.Min(health + amount, maxHealth);
+        OnHPUpdated?.Invoke();
     }
 
     public void UpdateStateFromCombat(Character_Combat character)
     {
         health = character.CurrentHealth;
-        skillPoint = character.CurrentSkillPoint;
     }
 
 }

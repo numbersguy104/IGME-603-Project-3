@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -115,6 +116,11 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+        if (_currentDialogue.name == "SO_EndDialog")
+        {
+            SceneManager.LoadScene("EndScreen");
+        }
+        
         _isPlaying = false;
         _currentDialogue = null;
         _currentIndex = 0;
@@ -128,6 +134,7 @@ public class DialogueManager : MonoBehaviour
 
         if (dialogueUI != null)
             dialogueUI.Hide();
+        
     }
 
     private void ShowCurrentLine()

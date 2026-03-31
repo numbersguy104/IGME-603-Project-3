@@ -10,6 +10,8 @@ public class DataTracker : MonoBehaviour
     public float hugoTime = 0;
     public float tenetTime = 0;
 
+    public float expEarned = 0;
+
     private void Awake()
     {
         if (Instance == null)

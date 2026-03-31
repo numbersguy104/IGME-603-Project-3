@@ -51,7 +51,7 @@ public class Character_Combat
     {
         health = character.CurrentHealth;
         maxHealth = character.MaxHealth;
-        skillPoint = character.CurrentSkillPoint;
+        skillPoint = character.InitialSkillPoint;
         maxSkillPoint = character.MaxSkillPoint;
         ATK = character.ATK;
         DEF = character.DEF;

@@ -264,8 +264,8 @@ public class PlayerController_Combat : SingletonBehavior<PlayerController_Combat
         currentCharacter.entity.HideRange();
         isSelectingPosition = false;
 
-        if(DataTracker.Instance != null)
-            DataTracker.Instance.AddSkillUse(currentCharacter.normalAttack);
+        // if(DataTracker.Instance != null)
+        //     DataTracker.Instance.AddSkillUse(currentCharacter.normalAttack);
     }
     
     private GridHighlight highlight;

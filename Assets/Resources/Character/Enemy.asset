@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db6e01506bbe4da09384b4b553ca6fc0, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
-  maxHP: 100
+  maxHP: 80
   initialSkillPoint: 0
   ATK: 10
   DEF: 0
   maxMovementDistance: 4
   entity: {fileID: 8854560056607780965, guid: 6f6d928789b26674f8856fa4bdcdd83d, type: 3}
+  initialSkillSlot: 0
   InitialSkillSet: []

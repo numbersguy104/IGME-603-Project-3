@@ -4,6 +4,7 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     public float maxHP;
+    public float maxSP;
     public float initialSkillPoint;
     public float ATK;
     public float DEF;

@@ -6,8 +6,8 @@ public class EnemyInstance : MonoBehaviour
     [SerializeField] private string enemyId;
     [SerializeField] private GameObject droppedItemPrefab;
     [SerializeField] private Vector3 dropOffset = Vector3.zero;
-    [SerializeField] private SkillData skillToLearn;
-    [SerializeField] private bool isHugoCheck;
+    // [SerializeField] private SkillData skillToLearn;
+    // [SerializeField] private bool isHugoCheck;
 
     [Header("Post Battle Dialogue")]
     [SerializeField] private SO_DialogueData defeatDialogue;
@@ -66,7 +66,7 @@ public class EnemyInstance : MonoBehaviour
         if (droppedItem != null)
         {
             string generatedItemId = $"drop_{enemyId}";
-            droppedItem.Initialize(generatedItemId, skillToLearn, isHugoCheck);
+            droppedItem.Initialize(generatedItemId);
         }
     }
 }

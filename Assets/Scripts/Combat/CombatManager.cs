@@ -266,6 +266,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
             character.GainExperience(expEarnedAfterCombat);
         }
 
+        if (DataTracker.Instance != null)
+            DataTracker.Instance.expEarned += expEarnedAfterCombat;
+
         // TODO: Update the win/lose screen with amount of EXP earned
 
         foreach (var player_combat in playerCharacters_Combat)

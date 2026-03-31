@@ -21,7 +21,7 @@ public class EndScreenManager : MonoBehaviour
     {
         if (CharacterStatsManager.Instance != null)
         {
-            expText.text = "You earned " + CharacterStatsManager.Instance.hugo.exp + " total EXP and reached level " + CharacterStatsManager.Instance.hugo.level + ".";
+            expText.text = "You earned " + DataTracker.Instance.expEarned + " total EXP and reached level " + CharacterStatsManager.Instance.hugo.level + ".";
 
             float hugoTime = DataTracker.Instance.hugoTime;
             float tenetTime = DataTracker.Instance.tenetTime;
