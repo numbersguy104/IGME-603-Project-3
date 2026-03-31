@@ -17,5 +17,6 @@ MonoBehaviour:
   ATK: 20
   DEF: 0
   maxMovementDistance: 2
-  entity: {fileID: 8854560056607780965, guid: 6f6d928789b26674f8856fa4bdcdd83d, type: 3}
+  entity: {fileID: 8854560056607780965, guid: 7fb4afa4ee9ad8a4b98c02a16a07c7c9, type: 3}
+  initialSkillSlot: 0
   InitialSkillSet: []
