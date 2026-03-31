@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manages a two-character team (Solid and Ghost) where only one character is active and player-controlled at a time.
@@ -38,8 +39,38 @@ public class CharacterTeamController : MonoBehaviour
     /// True if the current active character is the solid character.
     public bool IsActiveSolid => Active == solid;
 
+    private bool _initializedFromRestore;
 
+    /// <summary>
+    /// Initializes the team controller and attempts to restore state from a battle return if applicable.
+    /// </summary>
+    private void Awake()
+    {
+        if (solid == null || ghost == null)
+        {
+            Debug.LogError("CharacterTeamController: solid/ghost reference is missing.");
+            return;
+        }
 
+        TryInitializeFromBattleReturn();
+    }
+
+    /// <summary>
+    /// Initializes the team state on scene start, either from restore or default configuration.
+    /// </summary>
+    private void Start()
+    {
+        if (_initializedFromRestore)
+        {
+            if (cameraFollowPivot != null && Active != null)
+                cameraFollowPivot.position = Active.transform.position;
+            return;
+        }
+
+        InitializeDefaultState();
+    }
+
+    /*
     private void Start()
     {
         if (solid == null || ghost == null)
@@ -67,12 +98,77 @@ public class CharacterTeamController : MonoBehaviour
         if (cameraFollowPivot != null && Active != null)
             cameraFollowPivot.position = Active.transform.position;
     }
+    */
 
+    /// <summary>
+    /// Initializes the default active/inactive character state and camera pivot.
+    /// </summary>
+    private void InitializeDefaultState()
+    {
+        if (startAsSolid)
+        {
+            Active = solid;
+            Inactive = ghost;
+        }
+        else
+        {
+            Active = ghost;
+            Inactive = solid;
+        }
+
+        ActivateOnly(Active, Inactive);
+
+        if (cameraFollowPivot != null && Active != null)
+            cameraFollowPivot.position = Active.transform.position;
+    }
+
+    /// <summary>
+    /// Attempts to initialize the team state from a battle return, restoring positions and active character.
+    /// </summary>
+    private void TryInitializeFromBattleReturn()
+    {
+        if (BattleStateManager.Instance == null)
+            return;
+
+        if (SceneManager.GetActiveScene().name != BattleStateManager.Instance.returnSceneName)
+            return;
+
+        if (string.IsNullOrEmpty(BattleStateManager.Instance.currentEnemyId))
+            return;
+
+        Vector3 savedPos = BattleStateManager.Instance.returnPlayerPosition;
+        bool useSolidAsActive = BattleStateManager.Instance.returnAsSolid;
+
+        SetCharacterPosition(solid, savedPos);
+        SetCharacterPosition(ghost, savedPos);
+
+        Active = useSolidAsActive ? solid : ghost;
+        Inactive = useSolidAsActive ? ghost : solid;
+
+        ActivateOnly(Active, Inactive);
+
+        if (cameraFollowPivot != null && Active != null)
+            cameraFollowPivot.position = Active.transform.position;
+
+        _initializedFromRestore = true;
+
+        Debug.Log(
+            $"[CharacterTeamController] Awake restore from battle | " +
+            $"useSolidAsActive={useSolidAsActive} | pos={savedPos} | active={Active.name}"
+        );
+    }
+
+    /// <summary>
+    /// Requests a character switch to be processed in the next FixedUpdate.
+    /// </summary>
     public void RequestSwitch()
     {
         _switchRequested = true;
     }
 
+    /// <summary>
+    /// Handles character switching logic in the physics update loop.
+    /// </summary>
     private void FixedUpdate()
     {
         if (!_switchRequested) return;
