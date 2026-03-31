@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class EnemyInstance : MonoBehaviour
@@ -6,8 +6,6 @@ public class EnemyInstance : MonoBehaviour
     [SerializeField] private string enemyId;
     [SerializeField] private GameObject droppedItemPrefab;
     [SerializeField] private Vector3 dropOffset = Vector3.zero;
-    // [SerializeField] private SkillData skillToLearn;
-    // [SerializeField] private bool isHugoCheck;
 
     [Header("Post Battle Dialogue")]
     [SerializeField] private SO_DialogueData defeatDialogue;
@@ -15,23 +13,35 @@ public class EnemyInstance : MonoBehaviour
 
     public string EnemyId => enemyId;
 
+    private bool _resolvedAfterDefeat;
+
     private void Start()
     {
-        if (BattleStateManager.Instance == null) return;
+        if (BattleStateManager.Instance == null)
+            return;
 
-        if (BattleStateManager.Instance.IsEnemyDefeated(enemyId))
-        {
-            StartCoroutine(HandleDefeatedRoutine());
-        }
+        if (!BattleStateManager.Instance.IsEnemyDefeated(EnemyId))
+            return;
+
+        if (_resolvedAfterDefeat)
+            return;
+
+        _resolvedAfterDefeat = true;
+        StartCoroutine(HandleDefeatedRoutine());
     }
 
-    private IEnumerator HandleDefeatedRoutine() 
-    { 
+    private IEnumerator HandleDefeatedRoutine()
+    {
+        yield return new WaitUntil(() =>
+            BattleStateManager.Instance == null ||
+            BattleStateManager.Instance.restoreCompleted
+        );
+
         yield return null;
 
         TryPlayDefeatDialogue();
-
         SpawnDrop();
+
         Destroy(gameObject);
     }
 
@@ -56,6 +66,13 @@ public class EnemyInstance : MonoBehaviour
     {
         if (droppedItemPrefab == null) return;
 
+        string generatedItemId = $"drop_{enemyId}";
+        if (BattleStateManager.Instance != null &&
+            BattleStateManager.Instance.IsItemCollected(generatedItemId))
+        {
+            return;
+        }
+
         GameObject drop = Instantiate(
             droppedItemPrefab,
             transform.position + dropOffset,
@@ -65,7 +82,6 @@ public class EnemyInstance : MonoBehaviour
         InteractableDroppedItem droppedItem = drop.GetComponent<InteractableDroppedItem>();
         if (droppedItem != null)
         {
-            string generatedItemId = $"drop_{enemyId}";
             droppedItem.Initialize(generatedItemId);
         }
     }

@@ -14,6 +14,10 @@ public class BattleStateManager : MonoBehaviour
     [Header("Current Battle")]
     public string currentEnemyId;
 
+    [Header("Restore State")]
+    public bool isReturningFromCombat;
+    public bool restoreCompleted;
+
     private readonly HashSet<string> defeatedEnemies = new HashSet<string>();
     private readonly HashSet<string> triggeredDialogues = new HashSet<string>();
     private readonly HashSet<string> collectedItems = new HashSet<string>();
@@ -39,9 +43,31 @@ public class BattleStateManager : MonoBehaviour
         returnSceneName = SceneManager.GetActiveScene().name;
         returnAsSolid = activeIsSolid;
 
+        isReturningFromCombat = false;
+        restoreCompleted = false;
+
         Debug.Log(
             $"[BattleStateManager] StartBattle | enemyId={enemyId} | returnScene={returnSceneName} | returnPos={returnPlayerPosition} | returnAsSolid={returnAsSolid}"
         );
+    }
+
+    public void PrepareReturnFromCombat(float suppressDuration = 1.5f)
+    {
+        isReturningFromCombat = true;
+        restoreCompleted = false;
+        suppressBattleUntilTime = Time.time + suppressDuration;
+
+        Debug.Log(
+            $"[BattleStateManager] PrepareReturnFromCombat | suppressUntil={suppressBattleUntilTime}"
+        );
+    }
+
+    public void MarkRestoreCompleted()
+    {
+        restoreCompleted = true;
+        isReturningFromCombat = false;
+
+        Debug.Log("[BattleStateManager] Restore completed.");
     }
 
     public void MarkCurrentEnemyDefeated()

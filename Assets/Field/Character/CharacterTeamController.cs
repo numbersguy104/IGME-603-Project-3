@@ -30,16 +30,16 @@ public class CharacterTeamController : MonoBehaviour
     /// The character that is currently enabled and player-controlled.
     public PlayerCharacterField Active { get; private set; }
 
-    /// The character that is currently disabled and NOT player-controlled.
-    private bool _switchRequested;
-    private bool _justSwitched;
-
     public PlayerCharacterField Inactive { get; private set; }
 
     /// True if the current active character is the solid character.
-    public bool IsActiveSolid => Active == solid;
 
-    private bool _initializedFromRestore;
+    /// The character that is currently disabled and NOT player-controlled.
+    private bool _switchRequested;
+    private bool _justSwitched;
+    private bool _isInitialized;
+
+    public bool IsActiveSolid => Active == solid;
 
     /// <summary>
     /// Initializes the team controller and attempts to restore state from a battle return if applicable.
@@ -51,8 +51,6 @@ public class CharacterTeamController : MonoBehaviour
             Debug.LogError("CharacterTeamController: solid/ghost reference is missing.");
             return;
         }
-
-        TryInitializeFromBattleReturn();
     }
 
     /// <summary>
@@ -60,15 +58,9 @@ public class CharacterTeamController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        if (_initializedFromRestore)
-        {
-            if (cameraFollowPivot != null && Active != null)
-                cameraFollowPivot.position = Active.transform.position;
-            return;
-        }
-
         InitializeDefaultState();
     }
+
 
     /*
     private void Start()
@@ -105,42 +97,32 @@ public class CharacterTeamController : MonoBehaviour
     /// </summary>
     private void InitializeDefaultState()
     {
-        if (startAsSolid)
-        {
-            Active = solid;
-            Inactive = ghost;
-        }
-        else
-        {
-            Active = ghost;
-            Inactive = solid;
-        }
+        if (_isInitialized) return;
+
+        Active = startAsSolid ? solid : ghost;
+        Inactive = startAsSolid ? ghost : solid;
 
         ActivateOnly(Active, Inactive);
 
         if (cameraFollowPivot != null && Active != null)
             cameraFollowPivot.position = Active.transform.position;
+
+        _isInitialized = true;
     }
 
     /// <summary>
-    /// Attempts to initialize the team state from a battle return, restoring positions and active character.
+    /// Explicit entry point for field restore. Only the restore coordinator should call this.
     /// </summary>
-    private void TryInitializeFromBattleReturn()
+    public void ApplyRestoredFieldState(bool useSolidAsActive, Vector3 position)
     {
-        if (BattleStateManager.Instance == null)
+        if (solid == null || ghost == null)
+        {
+            Debug.LogError("CharacterTeamController: solid/ghost reference is missing.");
             return;
+        }
 
-        if (SceneManager.GetActiveScene().name != BattleStateManager.Instance.returnSceneName)
-            return;
-
-        if (string.IsNullOrEmpty(BattleStateManager.Instance.currentEnemyId))
-            return;
-
-        Vector3 savedPos = BattleStateManager.Instance.returnPlayerPosition;
-        bool useSolidAsActive = BattleStateManager.Instance.returnAsSolid;
-
-        SetCharacterPosition(solid, savedPos);
-        SetCharacterPosition(ghost, savedPos);
+        SetCharacterPosition(solid, position);
+        SetCharacterPosition(ghost, position);
 
         Active = useSolidAsActive ? solid : ghost;
         Inactive = useSolidAsActive ? ghost : solid;
@@ -150,12 +132,21 @@ public class CharacterTeamController : MonoBehaviour
         if (cameraFollowPivot != null && Active != null)
             cameraFollowPivot.position = Active.transform.position;
 
-        _initializedFromRestore = true;
+        _isInitialized = true;
+        _justSwitched = true;
 
         Debug.Log(
-            $"[CharacterTeamController] Awake restore from battle | " +
-            $"useSolidAsActive={useSolidAsActive} | pos={savedPos} | active={Active.name}"
+            $"[CharacterTeamController] ApplyRestoredFieldState | useSolidAsActive={useSolidAsActive} | position={position} | active={Active.name}"
         );
+    }
+
+    public void SetInputEnabled(bool enabled)
+    {
+        if (solid != null)
+            solid.SetPlayerControlled(enabled && Active == solid);
+
+        if (ghost != null)
+            ghost.SetPlayerControlled(enabled && Active == ghost);
     }
 
     /// <summary>
@@ -239,33 +230,7 @@ public class CharacterTeamController : MonoBehaviour
     /// This places both characters at the same saved field position,
     /// then re-applies which character should be active.
     /// </summary>
-    public void RestoreTeamState(bool useSolidAsActive, Vector3 position)
-    {
-        if (solid == null || ghost == null)
-        {
-            Debug.LogError("CharacterTeamController: solid/ghost reference is missing.");
-            return;
-        }
-
-        // Put both characters at the saved position first,
-        // so whichever one becomes active will be correct.
-        SetCharacterPosition(solid, position);
-        SetCharacterPosition(ghost, position);
-
-        // Rebuild active / inactive references
-        Active = useSolidAsActive ? solid : ghost;
-        Inactive = useSolidAsActive ? ghost : solid;
-
-        // Re-apply enabled state and control state
-        ActivateOnly(Active, Inactive);
-
-        if (cameraFollowPivot != null && Active != null)
-            cameraFollowPivot.position = Active.transform.position;
-
-        Debug.Log(
-            $"[CharacterTeamController] RestoreTeamState | useSolidAsActive={useSolidAsActive} | position={position} | active={Active.name}"
-        );
-    }
+    /// 
 
     private void SetCharacterPosition(PlayerCharacterField character, Vector3 position)
     {
@@ -301,8 +266,6 @@ public class CharacterTeamController : MonoBehaviour
     {
         if (cameraFollowPivot == null || Active == null) return;
 
-        // After a switch, force one hard sync in LateUpdate
-        // so the camera target matches the new active character in the same rendered frame.
         if (_justSwitched)
         {
             cameraFollowPivot.position = Active.transform.position;
@@ -310,7 +273,6 @@ public class CharacterTeamController : MonoBehaviour
             return;
         }
 
-        // Normal follow
         cameraFollowPivot.position = Active.transform.position;
     }
 }

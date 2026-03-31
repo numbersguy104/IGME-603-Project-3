@@ -33,6 +33,8 @@ public class CameraRigFollow3D : MonoBehaviour
 
     private Quaternion _lockedRot;
 
+    private bool _followEnabled = true;
+
     /// <summary>
     /// Caches the initial rotation to maintain a fixed camera direction if rotation locking is enabled.
     /// </summary>
@@ -47,13 +49,40 @@ public class CameraRigFollow3D : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
+        if (!_followEnabled) return;
         if (target == null) return;
 
-        // Follow position (including Y) so the camera stays centered even when the target moves uphill/downhill
+        Vector3 desiredPos = GetDesiredPosition();
+
+        transform.position = Vector3.Lerp(
+            transform.position,
+            desiredPos,
+            1f - Mathf.Exp(-smoothPos * Time.deltaTime)
+        );
+
+        if (lockRotation)
+            transform.rotation = _lockedRot;
+    }
+
+    public void SetFollowEnabled(bool enabled)
+    {
+        _followEnabled = enabled;
+    }
+
+    public void SnapToTargetNow()
+    {
+        if (target == null) return;
+
+        transform.position = GetDesiredPosition();
+
+        if (lockRotation)
+            transform.rotation = _lockedRot;
+    }
+
+    private Vector3 GetDesiredPosition()
+    {
         Vector3 desiredPos = target.position + worldOffset;
 
-
-        // Clamp to bounds if provided
         if (cameraBoundsCollider != null)
         {
             Bounds camBounds = cameraBoundsCollider.bounds;
@@ -62,14 +91,6 @@ public class CameraRigFollow3D : MonoBehaviour
             desiredPos.z = Mathf.Clamp(desiredPos.z, camBounds.min.z, camBounds.max.z);
         }
 
-        transform.position = Vector3.Lerp(
-            transform.position,
-            desiredPos,
-            1f - Mathf.Exp(-smoothPos * Time.deltaTime)
-        );
-
-        // Lock rotation so the camera does not rotate based on the target's movement direction (2.5D style)
-        if (lockRotation)
-            transform.rotation = _lockedRot;
+        return desiredPos;
     }
 }

@@ -17,16 +17,21 @@ public class EnemyBattleTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (BattleStateManager.Instance != null &&
-            Time.time < BattleStateManager.Instance.suppressBattleUntilTime)
-        {
-            return;
-        }
-
         if (_triggered) return;
         if (!other.CompareTag("Player")) return;
         if (BattleStateManager.Instance == null) return;
         if (enemyInstance == null) return;
+
+        if (BattleStateManager.Instance.isReturningFromCombat) return;
+        if (!BattleStateManager.Instance.restoreCompleted &&
+            BattleStateManager.Instance.suppressBattleUntilTime > 0f)
+            return;
+
+        if (Time.time < BattleStateManager.Instance.suppressBattleUntilTime)
+            return;
+
+        if (BattleStateManager.Instance.IsEnemyDefeated(enemyInstance.EnemyId))
+            return;
 
         CharacterTeamController team = FindFirstObjectByType<CharacterTeamController>();
         if (team == null || team.Active == null)

@@ -297,37 +297,14 @@ public class CombatManager : SingletonBehavior<CombatManager>
         }
 
         string returnSceneName = BattleStateManager.Instance.returnSceneName;
-        Debug.Log($"[CombatManager] ExitCombatScene | returnSceneName={returnSceneName} | savedPos={BattleStateManager.Instance.returnPlayerPosition}");
 
-        SceneManager.sceneLoaded += OnFieldSceneLoaded;
+        BattleStateManager.Instance.PrepareReturnFromCombat(1.5f);
+
+        Debug.Log(
+            $"[CombatManager] ExitCombatScene | returnSceneName={returnSceneName} | savedPos={BattleStateManager.Instance.returnPlayerPosition}"
+        );
+
         SceneManager.LoadScene(returnSceneName);
-    }
-
-    private void OnFieldSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        SceneManager.sceneLoaded -= OnFieldSceneLoaded;
-
-        Debug.Log($"[CombatManager] OnFieldSceneLoaded | scene={scene.name}");
-
-        if (BattleStateManager.Instance == null)
-        {
-            Debug.LogError("[CombatManager] BattleStateManager.Instance is NULL after scene load");
-            return;
-        }
-
-        CharacterTeamController team = FindFirstObjectByType<CharacterTeamController>();
-        if (team != null)
-        {
-            team.RestoreTeamState(
-                BattleStateManager.Instance.returnAsSolid,
-                BattleStateManager.Instance.returnPlayerPosition
-            );
-        }
-
-        // Prevent instantly re-entering battle right after returning to the field
-        BattleStateManager.Instance.suppressBattleUntilTime = Time.time + 0.5f;
-
-        BattleStateManager.Instance.ClearCurrentBattle();
     }
 
     public void DebugForceWin()
@@ -337,4 +314,5 @@ public class CombatManager : SingletonBehavior<CombatManager>
         EndCombat(true);
         ExitCombatScene();
     }
+
 }
