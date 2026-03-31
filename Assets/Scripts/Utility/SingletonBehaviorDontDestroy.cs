@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Utility
 {
-    public class SingletonBehavior<T>: MonoBehaviour where T: MonoBehaviour
+    public class SingletonBehaviorDontDestroy<T>: MonoBehaviour where T: MonoBehaviour
     {
         private static T instance;
         private static bool applicationIsQuitting;
@@ -23,7 +23,8 @@ namespace Utility
                     {
                         GameObject singletonObject = new GameObject(typeof(T).Name);
                         instance = singletonObject.AddComponent<T>();
-                        (instance as SingletonBehavior<T>)?.Init();
+                        (instance as SingletonBehaviorDontDestroy<T>)?.Init();
+                        DontDestroyOnLoad(singletonObject);
                     }
                 }
                 return instance;

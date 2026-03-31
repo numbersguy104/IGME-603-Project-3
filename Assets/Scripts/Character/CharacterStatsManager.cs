@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utility;
 
-public class CharacterStatsManager : SingletonBehavior<CharacterStatsManager>
+public class CharacterStatsManager : SingletonBehaviorDontDestroy<CharacterStatsManager>
 {
     public PlayerCharacter hugo;
     public PlayerCharacter tenet;
