@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 6613893896389428099}
   - component: {fileID: 4754887363085414545}
   - component: {fileID: 3332717559766505510}
+  - component: {fileID: 3941769397419220175}
   m_Layer: 5
   m_Name: HugoHealth
   m_TagString: Untagged
@@ -212,6 +213,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3941769397419220175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402534151648713146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 3332717559766505510}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &423584412460453865
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,6 +804,7 @@ GameObject:
   - component: {fileID: 3366710424657012550}
   - component: {fileID: 6026544377177833036}
   - component: {fileID: 3581569737729321172}
+  - component: {fileID: 5787108308074271035}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -868,8 +886,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -912,6 +930,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5787108308074271035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913834516303479938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 1
+  healthText: {fileID: 3581569737729321172}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &1290077921784951170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,6 +1177,7 @@ GameObject:
   - component: {fileID: 265205049172819192}
   - component: {fileID: 4018922866637866441}
   - component: {fileID: 2877139807522061648}
+  - component: {fileID: 6320549966634834868}
   m_Layer: 5
   m_Name: TeamLevel
   m_TagString: Untagged
@@ -1268,6 +1303,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6320549966634834868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634156505554800555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 0}
+  expText: {fileID: 0}
+  levelText: {fileID: 2877139807522061648}
 --- !u!1 &1769763219808750653
 GameObject:
   m_ObjectHideFlags: 0
@@ -4403,6 +4454,7 @@ GameObject:
   - component: {fileID: 8394434844008571809}
   - component: {fileID: 4289194282750837024}
   - component: {fileID: 1207883606510599663}
+  - component: {fileID: 1961080121543313387}
   m_Layer: 5
   m_Name: EXP
   m_TagString: Untagged
@@ -4528,6 +4580,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1961080121543313387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834023417539930185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 0}
+  expText: {fileID: 1207883606510599663}
+  levelText: {fileID: 0}
 --- !u!1 &5002694462832621999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4899,6 +4967,7 @@ GameObject:
   - component: {fileID: 3708034655775908275}
   - component: {fileID: 2234155057101907268}
   - component: {fileID: 7563528393176492116}
+  - component: {fileID: 1993675330100269217}
   m_Layer: 5
   m_Name: TenetHealth
   m_TagString: Untagged
@@ -5024,6 +5093,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1993675330100269217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5465540837909435431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 1
+  healthText: {fileID: 7563528393176492116}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &5561635281533354445
 GameObject:
   m_ObjectHideFlags: 0
@@ -6654,6 +6739,7 @@ GameObject:
   - component: {fileID: 9035067246161265882}
   - component: {fileID: 6096803107149726309}
   - component: {fileID: 5665646646902269377}
+  - component: {fileID: 7708463877904644471}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6735,8 +6821,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6779,6 +6865,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7708463877904644471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7343698385154994648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 5665646646902269377}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &7348248088048070830
 GameObject:
   m_ObjectHideFlags: 0
@@ -8032,6 +8134,7 @@ GameObject:
   - component: {fileID: 4795118636126194994}
   - component: {fileID: 4081842839018772557}
   - component: {fileID: 2255224760986084862}
+  - component: {fileID: 606672039656423249}
   m_Layer: 5
   m_Name: TenetHealth
   m_TagString: Untagged
@@ -8157,6 +8260,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &606672039656423249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8257079448943106949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 1
+  healthText: {fileID: 2255224760986084862}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &8339504507777934005
 GameObject:
   m_ObjectHideFlags: 0
@@ -8899,6 +9018,7 @@ GameObject:
   - component: {fileID: 8746250131368912385}
   - component: {fileID: 8796628969191224379}
   - component: {fileID: 2266012071235327288}
+  - component: {fileID: 2055006501948731093}
   m_Layer: 5
   m_Name: HugoHealth
   m_TagString: Untagged
@@ -9024,6 +9144,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2055006501948731093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9030981151254890944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d7b8095a522fe45853f94c2af2a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: 0
+  healthText: {fileID: 2266012071235327288}
+  expText: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1001 &4821797525722945215
 PrefabInstance:
   m_ObjectHideFlags: 0
