@@ -25,11 +25,10 @@ public class Character
     public float DEF;
     public float maxMovementDistance;
 
-    public float level = 0;
+    public int level = 0;
     public float exp;
-    public float expToNextLevel = 30;
-    
-    public Action OnLevelUp;
+    public float expToNextLevel = 10;
+    public float expGrowth = 5;
     
     #endregion
 
@@ -67,29 +66,4 @@ public class Character
         skillPoint = character.CurrentSkillPoint;
     }
 
-    public void GainExperience(float amount)
-    {
-        exp += amount;
-
-        if (expToNextLevel > 0)
-        {
-            while (exp > expToNextLevel)
-            {
-                exp -= expToNextLevel;
-                level++;
-                OnLevelUp?.Invoke();
-            }
-        }
-    }
-
-    public void AddSkillSlot(int increment)
-    {
-        maxSkillSlots += increment;
-    }
-
-    public void LearnNewSkill(SkillData skill)
-    {
-        skillLearned.Add(skill);
-    }
-    
 }
