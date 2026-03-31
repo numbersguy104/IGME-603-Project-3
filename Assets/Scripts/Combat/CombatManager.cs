@@ -30,6 +30,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public UnityEvent OnCombatLose;
     public void SwitchSide() {currentTurn = 1 - currentTurn;}
 
+    [Header("Combat Data")]
+    [SerializeField] private string CombatDataName = "DefaultCombat";
+
     // Debug Only
     [Header("Debug")]
     [SerializeField] private bool enableDebugWinShortcut = true;
@@ -38,7 +41,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     void Start()
     {
-        LoadCombat("DefaultCombat"); // For Test Only
+        LoadCombat(CombatDataName); // For Test Only
     }
 
     // Debug Only: Press the debugWinKey to force win the combat when combat is started
