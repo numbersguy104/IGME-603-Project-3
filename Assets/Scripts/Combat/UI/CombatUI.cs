@@ -65,7 +65,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
         foreach (PlayerCharacter_Combat player in CombatManager.Instance.playerCharacters_Combat)
         {
             HealthBarUI bar = Instantiate(healthDisplayPrefab, playerStatuses).GetComponent<HealthBarUI>();
-            bar.character = player;
+            bar.SetTarget(player);
             bar.UpdateHealthValue(player.CurrentHealth, player.MaxHealth);
             bar.UpdateIcon(player.entity.characterImage.sprite);
 
@@ -73,7 +73,7 @@ public class CombatUI : SingletonBehavior<CombatUI>
         foreach (Enemy_Combat enemy in CombatManager.Instance.enemies_Combat)
         {
             HealthBarUI bar = Instantiate(healthDisplayPrefab, enemyStatuses).GetComponent<HealthBarUI>();
-            bar.character = enemy;
+            bar.SetTarget(enemy);
             bar.UpdateHealthValue(enemy.CurrentHealth, enemy.MaxHealth);
             bar.UpdateIcon(enemy.entity.characterImage.sprite);
         }

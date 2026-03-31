@@ -1,15 +1,23 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBarUI : MonoBehaviour
 {
-    public Character_Combat character = null;
+    // public Character_Combat character = null;
 
     [SerializeField] private LayoutElement healthFull;
     [SerializeField] private LayoutElement healthMissing;
 
     //for the character icon below the health bar - currently unused
     [SerializeField] private Image icon;
+
+    private Action<Character_Combat> RemoveAfterDeath => (x) => { gameObject.SetActive(false); };
+
+    public void SetTarget(Character_Combat character)
+    {
+        character.OnCharacterDeath += RemoveAfterDeath;
+    }
 
     //Updates this health bar graphic to a fraction of remaining HP.
     //The input will be clamped to between 0 and 1 (inclusive).

@@ -187,7 +187,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
             foreach (Enemy_Combat enemy in enemies_Combat)
             {
                 yield return enemy.Act();
-            } 
+            }
             EndTurn(Team.Enemy);
             OnEnemyTurnEnd?.Invoke();
             CombatUI.Instance.SetPanelVisible(true);
@@ -214,6 +214,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         {
             character.OnCharacterDeath -= OnNotifiedCharacterDeath;
             enemies_Combat.Remove(enemy);
+            Destroy(enemy.entity);
             
             if (enemies_Combat.Count == 0)
             {
@@ -258,6 +259,10 @@ public class CombatManager : SingletonBehavior<CombatManager>
         else
         {
             expEarnedAfterCombat = 0;
+            if(playerCharacters_Combat[0].CurrentHealth <= 0f)
+                playerCharacters_Combat[0].Healed(5f);
+            if(playerCharacters_Combat[1].CurrentHealth <= 0f)
+                playerCharacters_Combat[1].Healed(5f);
             OnCombatLose?.Invoke();
         }
         
